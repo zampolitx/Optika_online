@@ -1,0 +1,49 @@
+body {
+    margin: 0px;                    /* Убираем белую линию сверзу*/
+    margin-left: 2px;               /* Белая линия по краям сайта */
+    margin-right: 2px;
+}
+
+.body_header {                      /*Голубое поле сверху*/
+    background: #def5ff;
+    height: 100px;
+}
+
+ul.nav {                       /* Стили панели навигации (оранжевая полоска)*/
+    background: #f03624;
+    height: 70px;
+    border-top: 3px solid rgb(0,0,0);       /*Черная полоска сверху над оранжевым блоком*/
+    border-bottom: 3px solid rgb(0,0,0);     /*Черная полоска снизу под оранжевым блоком*/
+    text-align: center;
+}
+
+.nav li {
+    display: inline-block;
+    border-right: 3px black;
+}
+
+.nav a {
+    display: inline-block;
+    border-right: 3px solid #000;
+    font-family: Arial;
+    color: white;
+    text-decoration: none;
+    font-size: 3em;
+}
+/* внешние границы таблицы серого цвета толщиной 1px */
+table {
+   border: 1px solid grey;
+}
+/* границы ячеек первого ряда таблицы */
+.main_table th{
+   border: 1px solid grey;
+   width: 400px;
+}
+/* границы ячеек тела таблицы */
+td {
+   border: 1px solid grey;
+}
+
+.internal_table th{
+  width: 200px;
+}

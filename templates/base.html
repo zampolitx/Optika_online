@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title -%}
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% endblock %}
+</head>
+<body>
+{% block content -%}
+<h1>OPTIKA ONLINE</h1>
+<ul>
+    {% for m in menu %}
+    <li>
+        {{m}}
+    </li>
+    {% endfor %}
+</ul>
+
+<table class="main_table">
+    <tr>    <!--1 ряд с ячейками объектов-->
+        {% for f in facility %}
+        <th>{{f}}</th>
+        {% endfor %}
+    </tr>
+    {% for s in systems %}      <!-- ячейки с названиями систем -->
+    <tr>
+        <th>
+            {{s}}
+        </th>
+    </tr>
+    {% endfor %}
+    {% for f in range(1) %}      <!-- количество рядов равно количеству объектов -->
+    <tr>
+        {% for f in facility %}
+        <th>
+            <table class="internal_table">
+                <tr><th>1</th> <th> 1 строка </th></tr>
+                <tr><th>2</th> <th> 2 строка </th></tr>
+            </table>
+        </th>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+</body>
+</html>
