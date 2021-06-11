@@ -9,31 +9,23 @@
     {% endblock %}
 </head>
 <body>
-{% block content -%}
+{% block menu -%}
 <h1>OPTIKA ONLINE</h1>
-<ul>
+<ul>        <!--это меню -->
     {% for m in menu %}
-    <li>
-        {{m}}
-    </li>
+        <li><a href="{{m.url}}">{{m.name}}</a></li>
     {% endfor %}
 </ul>
-
+{% endblock %}
+{% block content %}
 <table class="main_table">
     <tr>    <!--1 ряд с ячейками объектов-->
         {% for f in facility %}
         <th>{{f}}</th>
         {% endfor %}
     </tr>
-    {% for s in systems %}      <!-- ячейки с названиями систем -->
-    <tr>
-        <th>
-            {{s}}
-        </th>
-    </tr>
-    {% endfor %}
     {% for f in range(1) %}      <!-- количество рядов равно количеству объектов -->
-    <tr>
+    <tr>n'
         {% for f in facility %}
         <th>
             <table class="internal_table">

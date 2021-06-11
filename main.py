@@ -1,10 +1,12 @@
 from flask import Flask, render_template
 app = Flask(__name__)
 
-menu = ('Главная', 'Добавить', 'Поиск')
-systems = ('АСУП', 'ГГС', 'Громкая')
-facility = ('', 'АПК-1', 'АПК-2', 'АПК-3', 'ЩБ')
-volokno = ('', '1', 'волокно 1')
+menu = [{"name": "Главная", "url": "/"},
+        {"name": "Добавить", "url": "add"},
+        {"name": "Поиск", "url": "find"}]
+systems = ('Система1', 'Система2', 'Система3')
+facility = ('Помещение1', 'Помещение2', 'Помещение3', 'Помещение4')
+volokno = ('1', 'волокно 1')
 @app.route("/")
 def index():
     return render_template('index.html', title="Optika-главная", menu=menu, systems=systems, facility=facility)
