@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="/add_opt_coupler" method="post" class="form-add">
+        <p><label>Тип муфты: </label> <input type="text" name="type_of_coupler" value="" required></p>
+        <p><input type="submit" value="Отправить"></p>
+    </form>
+{% endblock %}

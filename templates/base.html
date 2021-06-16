@@ -4,16 +4,18 @@
     {% block title -%}
     <meta charset="UTF-8">
     <title>{{title}}</title>
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    {% endblock %}
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='/css/reset.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='/css/main.css') }}">
+    {% endblock title %}
 </head>
 <body>
-{% block menu -%}
-<h1>OPTIKA ONLINE</h1>
-<ul>        <!--это меню -->
+{%- block menu -%}
+<div class="header">
+    <h1>OPTIKA ONLINE</h1>
+</div>
+<ul class="nav">        <!--это меню -->
     {% for m in menu %}
-        <li><a href="{{m.url}}">{{m.name}}</a></li>
+        <li><a href="{{m.url}}">{{m.title}}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}
@@ -25,7 +27,7 @@
         {% endfor %}
     </tr>
     {% for f in range(1) %}      <!-- количество рядов равно количеству объектов -->
-    <tr>n'
+    <tr>
         {% for f in facility %}
         <th>
             <table class="internal_table">

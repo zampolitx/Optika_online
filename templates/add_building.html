@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for cat, msg in get_flashed_messages(True) %}
+    <div class="flash {{cat}}">{{msg}}</div>
+    {% endfor %}
+    <form action="/add_building" method="post" class="form-add">
+        <p><label>Название: </label> <input type="text" name="building_name" value="" required></p>
+        <p><input type="submit" value="Отправить"></p>
+    </form>
+{% endblock %}

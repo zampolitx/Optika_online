@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="/add_room" method="post" class="form-add">
+        <p><label>Название: </label> <input type="text" name="room_name" value="" required></p>
+        <p><label>Номер: </label> <input type="text" name="room_number" value="" required></p>
+        <p><input type="submit" value="Отправить"></p>
+    </form>
+{% endblock %}

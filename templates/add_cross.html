@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="/add_cross" method="post" class="form-add">
+        <p><label>количество разъемов: </label> <input type="text" name="number_of_connector" value="" required></p>
+        <p><label>тип разъемов: </label> <input type="text" name="type_of_connector" value="" required></p>
+        <p><input type="submit" value="Отправить"></p>
+    </form>
+{% endblock %}
