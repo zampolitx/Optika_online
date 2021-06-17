@@ -55,6 +55,13 @@ table {
   padding: 10px;
   color: black;
 }
+/*Свойства кросса*/
+.cross {
+  margin: 10px;
+  border: solid 3px black;
+  padding: 10px;
+  color: black;
+}
 /* границы ячеек тела таблицы */
 td {
    border: 1px solid grey;

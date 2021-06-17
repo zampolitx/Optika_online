@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash, g, url_for
-import sqlite3, os
+import sqlite3, os, re
 from FDataBase import FDataBase
 # Конфигурация приложения
 DATABASE = '/tmp/flsite.db'
@@ -43,12 +43,14 @@ volokno = ('1', 'волокно 1')
 def index():
     db = get_db()
     dbase=FDataBase(db)
-    return render_template('index.html', title="Optika-главная", menu=menu, systems=systems, facility=facility)
+    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), systems=systems, facility=facility)
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():
+    db = get_db()
+    dbase=FDataBase(db)
     colours = ['Здание', 'Помещение', 'Панель', 'Кабель', 'Кросс', 'Муфта']
-    return render_template('add.html', title="Optika-add", menu=menu, colours=colours)
+    return render_template('add.html', title="Optika-add", menu=dbase.getMenu(), colours=colours)
 
 @app.route("/add_building", methods=['GET', 'POST'])
 def add_building():
