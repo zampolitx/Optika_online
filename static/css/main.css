@@ -6,13 +6,13 @@ body {
 
 .header {                      /*Голубое поле сверху*/
     background: #def5ff;
-    height: 40px;
+    height: 30px;
     font-size: 2em;
 }
 
 ul.nav {                       /* Стили панели навигации (оранжевая полоска)*/
-    background: #959595;
-    height: 40px;
+    background: #000000;                    /*Цвет панели навигации*/
+    height: 40px;                           /*Высота панели навигации*/
     border-top: 3px solid rgb(0,0,0);       /*Черная полоска сверху над оранжевым блоком*/
     border-bottom: 3px solid rgb(0,0,0);     /*Черная полоска снизу под оранжевым блоком*/
     text-align: center;
@@ -20,7 +20,7 @@ ul.nav {                       /* Стили панели навигации (о
 
 .nav li {
     display: inline-block;
-    border-right: 3px black;
+    border-right: 3px red;
 }
 
 .nav a {
@@ -29,7 +29,7 @@ ul.nav {                       /* Стили панели навигации (о
     font-family: Arial;
     color: white;
     text-decoration: none;
-    font-size: 2em;
+    font-size: 1em;
 }
 /* внешние границы таблицы серого цвета толщиной 1px */
 table {
@@ -37,16 +37,30 @@ table {
 }
 /* границы ячеек первого ряда таблицы */
 .main_table th{
-   border: 1px solid grey;
-   width: 400px;
+   border: 1px solid grey;                  /*Границы основной таблицы*/
+   width: 400px;                            /*Ширина основной таблицы*/
+}
+/*Свойства кабинета*/
+.facility {
+  margin: 10px;
+  border: solid 3px brown;
+  padding: 10px;
+  color: brown;
+}
+
+/*Свойства панели (телекоммуникационного шкафа)*/
+.panel {
+  margin: 10px;
+  border: dashed 3px black;
+  padding: 10px;
+  color: black;
 }
 /* границы ячеек тела таблицы */
 td {
    border: 1px solid grey;
 }
-
 .internal_table th{
-  width: 200px;
+  width: 150px;                             /*Ширина каждой из колонок вложенной таблицы*/
 }
 /* Стили для мгновенных сообщений */
 .flash {padding: 10px;}

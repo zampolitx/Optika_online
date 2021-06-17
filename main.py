@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, g
+from flask import Flask, render_template, request, flash, g, url_for
 import sqlite3, os
 from FDataBase import FDataBase
 # Конфигурация приложения
@@ -43,10 +43,7 @@ volokno = ('1', 'волокно 1')
 def index():
     db = get_db()
     dbase=FDataBase(db)
-    menu=dbase.getMenu()
-    for m in menu:
-        print(dir(m))
-    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), systems=systems, facility=facility)
+    return render_template('index.html', title="Optika-главная", menu=menu, systems=systems, facility=facility)
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():
