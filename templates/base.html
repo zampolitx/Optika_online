@@ -21,16 +21,16 @@
 {% endblock %}
 {% block content %}
 <table class="main_table">
-    <tr>    <!--1 ряд с ячейками объектов-->
+    <tr>    <!--1 ряд с ячейками зданий-->
         {% for f in facility %}
-        <th>{{f}}</th>
+        <th>{{f.title}}</th>
         {% endfor %}
     </tr>
     {% for f in range(1) %}      <!-- количество рядов равно количеству объектов -->
     <tr>
         {% for f in facility %}
         <th>
-            <div class="facility">              <!--div это кабинет-->
+            <div class="parlor">              <!--div это кабинет-->
                 <h5> Кабинет №1</h5>
                 <div class="panel">             <!--div это панель(телекоммуникационный шкаф)-->
                     <h1>Панель 1</h1>

@@ -15,12 +15,12 @@ class FDataBase:
         return [1]
 
     def getFacility(self):
-        sql="""SELECT * FROM facility"""
+        sql="""SELECT * FROM building"""
         try:
             self.__cur.execute(sql)
-            res=self.__cur.fetchall()
-            if res:
-                return res
+            res2=self.__cur.fetchall()
+            if res2:
+                return res2
         except:
             print("Ошибка чтения базы данных")
         return [1]

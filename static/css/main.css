@@ -41,7 +41,7 @@ table {
    width: 400px;                            /*Ширина основной таблицы*/
 }
 /*Свойства кабинета*/
-.facility {
+.parlor {
   margin: 10px;
   border: solid 3px brown;
   padding: 10px;
