@@ -43,7 +43,10 @@ volokno = ('1', 'волокно 1')
 def index():
     db = get_db()
     dbase=FDataBase(db)
-    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), systems=systems, facility=facility)
+    xxx=dbase.getFacility()
+    for m in xxx:
+        print(m)
+    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), systems=systems, facility=dbase.getFacility())
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():

@@ -9,8 +9,18 @@ class FDataBase:
             self.__cur.execute(sql)
             res=self.__cur.fetchall()
             if res:
-                print('ok')
                 return res
         except:
-            print("Ошибка чтения базы данныъ")
+            print("Ошибка чтения базы данных")
+        return [1]
+
+    def getFacility(self):
+        sql="""SELECT * FROM facility"""
+        try:
+            self.__cur.execute(sql)
+            res=self.__cur.fetchall()
+            if res:
+                return res
+        except:
+            print("Ошибка чтения базы данных")
         return [1]
