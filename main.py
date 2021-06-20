@@ -42,9 +42,10 @@ volokno = ('1', 'волокно 1')
 @app.route("/")
 def index():
     db = get_db()
-    dbase=FDataBase(db)
-    xxx=dbase.getFacility()
-    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), systems=systems, facility=dbase.getFacility())
+    dbase=FDataBase(db)         #FDataBase - это класс, dbase - экземляр класса FDataBase
+    my_id = (1, 2, 3)           #getParlor - метод, возвращает коллекцию из словарей
+    xxx=dbase.getFacility()     # Возвращает коллекцию из словарей
+    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), systems=systems, facility=dbase.getFacility(),parlor=dbase.getParlor(my_id))
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():

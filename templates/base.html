@@ -26,23 +26,25 @@
         <th>{{f.title}}</th>
         {% endfor %}
     </tr>
-    {% for f in range(1) %}      <!-- количество рядов равно количеству объектов -->
+    {% for f in range(1) %}      <!-- Одна строка в которой все кабинеты -->
     <tr>
-        {% for f in facility %}
-        <th>
-            <div class="parlor">              <!--div это кабинет-->
-                <h5> Кабинет №1</h5>
-                <div class="panel">             <!--div это панель(телекоммуникационный шкаф)-->
-                    <h1>Панель 1</h1>
-                    <div class="cross">         <!--div это кросс -->
-                        <h5>ОК-1</h5>
-                        <table class="internal_table">
-                            <tr><th>1</th> <th> 1 строка </th></tr>
-                            <tr><th>2</th> <th> 2 строка </th></tr>
-                        </table>
+        {% for f in facility %}     <!--Для каждого из зданий отдельный столбец-->
+        <th>                        <!--Столбец с кабинетами-->
+            {% for p in parlor %}   <!--для каждого из кабинетов-->
+                <div class="parlor">              <!--div это кабинет-->
+                    <h5> {{p.number}} </h5>         <!--номер кабинета-->
+                    <div class="panel">             <!--div это панель(телекоммуникационный шкаф)-->
+                        <h1>Панель 1</h1>
+                        <div class="cross">         <!--div это кросс -->
+                            <h5>ОК-1</h5>
+                            <table class="internal_table">
+                                <tr><th>1</th> <th> 1 строка </th></tr>
+                                <tr><th>2</th> <th> 2 строка </th></tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         </th>
         {% endfor %}
     </tr>
