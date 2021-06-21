@@ -27,25 +27,16 @@ def get_db():
         g.link_db = connect_db()
     return g.link_db
 
-menu = [{"name": "Главная", "url": "/"},
-        {"name": "Добавить", "url": "add"},
-        {"name": "Добавить здание", "url": "add_building"},
-        {"name": "Добавить помещение", "url": "add_room"},
-        {"name": "Добавить панель", "url": "add_panel"},
-        {"name": "Добавить кросс", "url": "add_cross"},
-        {"name": "Добавить кабель", "url": "add_cable"},
-        {"name": "Добавить муфту", "url": "add_opt_coupler"},
-        {"name": "Поиск", "url": "find"}]
-systems = ('Система1', 'Система2', 'Система3')
-facility = ('Помещение1', 'Помещение2', 'Помещение3', 'Помещение4')
-volokno = ('1', 'волокно 1')
 @app.route("/")
 def index():
     db = get_db()
     dbase=FDataBase(db)         #FDataBase - это класс, dbase - экземляр класса FDataBase
-    my_id = (1, 2, 3)           #getParlor - метод, возвращает коллекцию из словарей
-    xxx=dbase.getFacility()     # Возвращает коллекцию из словарей
-    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), systems=systems, facility=dbase.getFacility(),parlor=dbase.getParlor(my_id))
+    xxx=dbase.getParlor()     # Возвращает коллекцию из словарей
+    print(xxx[3][1])
+    print(xxx)
+    parlor1={'building1': ['100', '101', '102', '103', '104'], 'building2': ['103', '104', '105'], 'building3': ['106', '107', '108'], 'building4': ['110', '111', '112']}            # Список строк из базы данных (вторая строка)
+    parlor2=[xxx[0], xxx[2]]    # Список строк из базы данных (первая и третья строка)
+    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=dbase.getBuilding(), parlor=parlor1)
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():

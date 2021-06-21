@@ -1,5 +1,5 @@
 class FDataBase:
-    def __init__(self, db, my):
+    def __init__(self, db):
         self.__db = db
         self.__cur = db.cursor()
 
@@ -14,7 +14,7 @@ class FDataBase:
             print("Ошибка чтения базы данных")
         return [1]
 
-    def getFacility(self):
+    def getBuilding(self):
         sql="""SELECT * FROM building"""
         try:
             self.__cur.execute(sql)
@@ -25,14 +25,11 @@ class FDataBase:
             print("Ошибка чтения базы данных")
         return [1]
 
-    def getParlor(self, my_id):
-        sql="""SELECT * FROM parlor where (?)"""
+    def getParlor(self):
+        sql = """SELECT * FROM parlor"""
         try:
-            for m in my_id:
-                print(m)
-            self.__cur.execute(sql, my_id)
-            res3=self.__cur.fetchall()
-            print(res3)
+            self.__cur.execute(sql)
+            res3 = self.__cur.fetchall()
             if res3:
                 return res3
         except:
