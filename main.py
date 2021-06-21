@@ -34,7 +34,11 @@ def index():
     xxx=dbase.getParlor()     # Возвращает коллекцию из словарей
     print(xxx[3][1])
     print(xxx)
-    parlor1={'building1': ['100', '101', '102', '103', '104'], 'building2': ['103', '104', '105'], 'building3': ['106', '107', '108'], 'building4': ['110', '111', '112']}            # Список строк из базы данных (вторая строка)
+    parlor1={'building1': [{'100': ['Панель 1', 'Панель 2']}, {'101': ['Панель 3', 'Панель 4']}, {'102': ['Панель 5', 'Панель 6']}], 'building2': [{'200': ['Панель 21', 'Панель 22']}, {'202': ['Панель 25', 'Панель 26']}], 'building3': [{'300': ['Панель 31', 'Панель 32']}]}            # Список строк из базы данных (вторая строка)
+    for key, value in parlor1.items():
+        print(type(value))
+        for v in value:
+            print(list(v.keys()))
     parlor2=[xxx[0], xxx[2]]    # Список строк из базы данных (первая и третья строка)
     return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=dbase.getBuilding(), parlor=parlor1)
 
