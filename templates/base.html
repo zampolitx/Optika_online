@@ -22,33 +22,34 @@
 {% block content %}
 <table class="main_table">
     <tr>    <!--1 ряд с ячейками зданий-->
-        {% for b in building %}
-        <th>{{b.title}}</th>
+        {% for key, value in parlor.items() %}
+        <th>{{key}}</th>
         {% endfor %}
     </tr>
-    {% for f in range(1) %}      <!-- Одна строка в которой все кабинеты -->
-    <tr>                            <!--Одна главная строка, в которой все кабинеты в каждом из зданий-->
-        {% for key, value in parlor.items() %}     <!--Для каждого из зданий отдельный столбец-->
-        <th>                        <!--Столбец с кабинетами-->
-            {% for list(v.keys()) in value %}   <!-- value это список, v это словари====для каждого из кабинетов (в каждом p находится обьект (строка) из базы данных, а parlor - это список (объектов) строк из БД)-->
-                <div class="parlor">              <!--div это кабинет-->
-                    <h5> {{v}} </h5>         <!--номер кабинета-->
-                    <div class="panel">             <!--div это панель(телекоммуникационный шкаф)-->
-                        <h1>{{v.values()}}</h1>
-                        <div class="cross">         <!--div это кросс -->
-                            <h5>ОК-1</h5>
-                            <table class="internal_table">
-                                <tr><th>1</th> <th> 1 строка </th></tr>
-                                <tr><th>2</th> <th> 2 строка </th></tr>
-                            </table>
+    <tr>                                                    <!--Одна главная строка, в которой все кабинеты в каждом из зданий-->
+        {% for key, value in parlor.items() %}              <!--key это название зданий, value - это список вида ***[{'100': [{'Панель 1': ['Кросс 1', 'Кросс 2']}, {'Панель 2': ['Кросс 3', 'Кросс 4']}]}***-->
+        <th>                                                <!--Столбец с кабинетами-->
+            {% for v in value %}                            <!-- value это список кабинетов [{'300': ['Панель 31', 'Панель 32']}] -->
+                {{kab_num=v}}
+                <div class="parlor">                        <!--div это кабинет-->
+                    <h5> {{v.keys()}} </h5>                 <!--номер кабинета-->
+                    {% for pan_key, pan_val in v.items() %} <!---->
+                        <div class="panel">                     <!--div это панель(телекоммуникационный шкаф)-->
+                            <h1>{{pan_key}}</h1>
+                            <div class="cross">                 <!--div это кросс -->
+                                <h5>ОК-1</h5>
+                                <table class="internal_table">
+                                    <tr><th>1</th> <th> 1 строка </th></tr>
+                                    <tr><th>2</th> <th> 2 строка </th></tr>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
             {% endfor %}
         </th>
         {% endfor %}
     </tr>
-    {% endfor %}
 </table>
 {% endblock %}
 </body>
