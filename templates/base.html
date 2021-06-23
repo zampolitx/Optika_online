@@ -30,22 +30,33 @@
         {% for key, value in parlor.items() %}              <!--key это название зданий, value - это список вида ***[{'100': [{'Панель 1': ['Кросс 1', 'Кросс 2']}, {'Панель 2': ['Кросс 3', 'Кросс 4']}]}***-->
         <th>                                                <!--Столбец с кабинетами-->
             {% for v in value %}                            <!-- value это список кабинетов [{'300': ['Панель 31', 'Панель 32']}] -->
-                {{kab_num=v}}
+            {% for cab_num, val_it1 in v.items() %}
+
                 <div class="parlor">                        <!--div это кабинет-->
-                    <h5> {{v.keys()}} </h5>                 <!--номер кабинета-->
-                    {% for pan_key, pan_val in v.items() %} <!---->
+                    <h5> Кабинет №{{cab_num}} </h5>                 <!--номер кабинета-->
+                    {% for pan_dict in val_it1 %}
+                    {% for pan_key, pan_val in pan_dict.items() %} <!---->
                         <div class="panel">                     <!--div это панель(телекоммуникационный шкаф)-->
                             <h1>{{pan_key}}</h1>
-                            <div class="cross">                 <!--div это кросс -->
-                                <h5>ОК-1</h5>
-                                <table class="internal_table">
-                                    <tr><th>1</th> <th> 1 строка </th></tr>
-                                    <tr><th>2</th> <th> 2 строка </th></tr>
-                                </table>
-                            </div>
+                            {% for cross_dict in pan_val %}
+                            {% for cross_key, cross_val in cross_dict.items() %}
+                                <div class="cross">                 <!--div это кросс -->
+                                    <h5>{{cross_key}}</h5>
+                                    <table class="internal_table">
+                                        {% for opt_dict in cross_val %}
+                                        {% for opt_key, opt_val in opt_dict.items() %}
+                                            <tr><th>{{opt_key}}</th> <th> 1 строка </th></tr>
+                                        {% endfor %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                            {% endfor %}
+                            {% endfor %}
                         </div>
                     {% endfor %}
+                    {% endfor %}
                 </div>
+            {% endfor %}
             {% endfor %}
         </th>
         {% endfor %}
