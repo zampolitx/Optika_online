@@ -45,7 +45,9 @@
                                     <table class="internal_table">
                                         {% for opt_dict in cross_val %}
                                         {% for opt_key, opt_val in opt_dict.items() %}
-                                            <tr><th>{{opt_key}}</th> <th> 1 строка </th></tr>
+                                            {% for vol_dict in opt_val %}
+                                                <tr><th class="vol_num">{{opt_key}}</th> <th class="vol_device">{{vol_dict['device']}}</th> <th class="vol_system"> {{vol_dict['system']}} </th></tr>
+                                            {% endfor %}
                                         {% endfor %}
                                         {% endfor %}
                                     </table>

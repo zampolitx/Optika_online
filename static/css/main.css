@@ -69,6 +69,15 @@ td {
 .internal_table th{
   width: 150px;                             /*Ширина каждой из колонок вложенной таблицы*/
 }
+/*Стили для колонок тиблицы с волокнами*/
+th.vol_num {
+    width: 60px;
+}
+th.vol_dev {
+}
+th.vol_system {
+    width: 80px;
+}
 /* Стили для мгновенных сообщений */
 .flash {padding: 10px;}
 .flash.success {
