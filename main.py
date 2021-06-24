@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, flash, g, url_for
 import sqlite3, os, re
 from FDataBase import FDataBase
+from Building import Building
 # Конфигурация приложения
 DATABASE = '/tmp/flsite.db'
 DEBUG = True
@@ -31,52 +32,34 @@ def get_db():
 def index():
     db = get_db()
     dbase=FDataBase(db)         #FDataBase - это класс, dbase - экземляр класса FDataBase
-    xxx=dbase.getParlor()     # Возвращает коллекцию из словарей
-    print(xxx[3][1])
-    print(xxx)
+    mydbase=Building(db)
+    parlor2=mydbase.getBuilding()     # Возвращает коллекцию из словарей
     parlor1={'Здание 1':
                  [{'100':
                        [{'Панель 1':
                              [{'Кросс 1-24SM-ST':
-                                   [{'ОВ1': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                    {'ОВ2': [{'device': 'Moxa EDS408A', 'system': 'АСУ'}]},
-                                    {'ОВ2': [{'device': 'Moxa EDS405A', 'system': 'АСУ'}]},
-                                    {'ОВ2': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                    {'ОВ2': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                    {'ОВ2': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                    {'ОВ3': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]},
-                              {'Кросс 2-12SM-LS':
-                                   [{'ОВ9': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                    {'ОВ10': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]}]},
-                        {'Панель 2':
-                             [{'Кросс 3-24MM-LC':
-                                   [{'ОВ4': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]},
-                              {'Кросс 4-24SM-LC':
-                                   [{'ОВ6': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                    {'ОВ7': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]}]}]}],  # Список строк из базы данных (вторая строка)
+                                   [{'Кабель КО-1':
+                                         [{'ОВ1': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
+                                          {'ОВ3': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]},
+                                    {'Кабель КО-6':
+                                         [{'ОВ9': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
+                                          {'ОВ10': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]}]},
 
-            'Здание 2':
-                [{'200':
-                    [{'Панель 1':
-                            [{'Кросс 1':
-                                [{'ОВ1': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                {'ОВ2': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                {'ОВ3': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]},
-                            {'Кросс 2':
-                                [{'ОВ9': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                {'ОВ10': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]}]},
-                    {'Панель 2':
-                            [{'Кросс 3':
-                                [{'ОВ4': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                {'ОВ5': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]},
-                            {'Кросс 4':
-                                [{'ОВ6': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                {'ОВ7': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]}]}]}]}
-    for key, value in parlor1.items():
-        print(type(value))
-        for v in value:
-            print(list(v.keys()))
-    parlor2=[xxx[0], xxx[2]]    # Список строк из базы данных (первая и третья строка)
+                            {'Кросс 1-24SM-ST':
+                                [{'Кабель КО-1':
+                                   [{'ОВ1': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
+                                    {'ОВ3': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]},
+                                {'Кабель КО-6':
+                                   [{'ОВ9': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
+                                    {'ОВ10': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]}]}]},
+                        {'Панель 2':
+                            [{'Кросс 3-24MM-LC':
+                                [{'Кабель КО-2':
+                                   [{'ОВ4': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]},
+                                {'Кабель КО-4':
+                                   [{'ОВ6': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
+                                    {'ОВ7': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]}]}]}]}]}  # Список строк из базы данных (вторая строка)
+
     return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=dbase.getBuilding(), parlor=parlor1)
 
 @app.route("/add", methods=['GET', 'POST'])

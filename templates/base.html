@@ -42,15 +42,22 @@
                             {% for cross_key, cross_val in cross_dict.items() %}
                                 <div class="cross">                 <!--div это кросс -->
                                     <h5>{{cross_key}}</h5>
-                                    <table class="internal_table">
-                                        {% for opt_dict in cross_val %}
-                                        {% for opt_key, opt_val in opt_dict.items() %}
+                                    {% for cable_dict in cross_val %}
+                                    {% for cable_key, cable_val in cable_dict.items() %}
+                                        <div class="cable">
+                                        <h5>{{cable_key}}</h5>
+                                        <table class="internal_table">
+                                            {% for opt_dict in cable_val %}
+                                            {% for opt_key, opt_val in opt_dict.items() %}
                                             {% for vol_dict in opt_val %}
                                                 <tr><th class="vol_num">{{opt_key}}</th> <th class="vol_device">{{vol_dict['device']}}</th> <th class="vol_system"> {{vol_dict['system']}} </th></tr>
                                             {% endfor %}
-                                        {% endfor %}
-                                        {% endfor %}
-                                    </table>
+                                            {% endfor %}
+                                            {% endfor %}
+                                        </table>
+                                        </div>
+                                    {% endfor %}
+                                    {% endfor %}
                                 </div>
                             {% endfor %}
                             {% endfor %}
