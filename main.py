@@ -31,9 +31,10 @@ def get_db():
 @app.route("/")
 def index():
     db = get_db()
-    dbase=FDataBase(db)         #FDataBase - это класс, dbase - экземляр класса FDataBase
+    dbase=FDataBase(db)                 #FDataBase - это класс, dbase - экземляр класса FDataBase
     mydbase=Building(db)
-    parlor2=mydbase.getBuilding()     # Возвращает коллекцию из словарей
+    parlor2=mydbase.getBuilding()       # Возвращает коллекцию из словарей
+    print(parlor2)
     parlor1={'Здание 1':
                  [{'100':
                        [{'Панель 1':

@@ -5,16 +5,18 @@ class Building:
         self.__cur = db.cursor()
 
     def getBuilding(self):
+        my_dbase = Parlor(self.__db)
         sql="""SELECT * FROM building"""
         try:
             self.__cur.execute(sql)
-            res=self.__cur.fetchall()
+            res = self.__cur.fetchall()
             if res:
-                d={}
+                d = {}
                 for i in res:
-                    d[i[1]]=Parlor.getParlor(i[0], i[1])
-                    print(d)
-                return res
+                    print(self.__db)
+                    d[i[1]] = my_dbase.getParlor()
+                print(d)
+                return d
         except:
             print("Ошибка чтения базы данных")
         return [1]
