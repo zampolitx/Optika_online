@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form name="Item_1" action="/getLigand" method="POST">
+    {% for cat, msg in get_flashed_messages(True) %}
+    <div class="flash {{cat}}">{{msg}}</div>
+    {% endfor %}
+    <form name="Item_1" action="/add" method="POST">
       <label for="exampleFormControlFile2">Добавляем</label>
-        <select name="colours">
-          {% for colour in colours %}
-            <option value="{{ colour }}" SELECTED>{{ colour }}</option>
+        <select name="add_items">
+          {% for items in add_items %}
+            <option value="{{ items }}" SELECTED>{{ items }}</option>
           {% endfor %}
         </select>
+      <input type="submit" value="Добавить">
     </form>
 {% endblock %}

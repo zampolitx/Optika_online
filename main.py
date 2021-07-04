@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, flash, g, url_for
 import sqlite3, os, re
 from FDataBase import FDataBase
 from Building import Building
+from Parlor import Parlor
 # Конфигурация приложения
 DATABASE = '/tmp/flsite.db'
 DEBUG = True
@@ -36,7 +37,7 @@ def index():
     parlor2=mydbase.getBuilding()       # Возвращает коллекцию из словарей
     print(parlor2)
     parlor1={'Здание 1':
-                 [{'100':
+                 [{'title':'КОВИ', 'number': '101', 'child':
                        [{'Панель 1':
                              [{'Кросс 1-24SM-ST':
                                    [{'Кабель КО-1':
@@ -61,35 +62,77 @@ def index():
                                    [{'ОВ6': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
                                     {'ОВ7': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]}]}]}]}]}  # Список строк из базы данных (вторая строка)
 
-    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=dbase.getBuilding(), parlor=parlor1)
+    parlor2 = {'Здание 1':
+                   [{'title': 'КОВИ', 'number': '101', 'child':
+                       [{'Панель 1':[]}]
+                             }],
+               'Территория':
+                    [{'title': 'Левая сторона', 'number': 0, 'child':
+                        [{'Ящик ТК1':[]}]}],
+               'Здание 2':
+               []
+               }
+
+    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=dbase.getBuilding(), parlor=parlor2)
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():
+    if request.method == "POST":
+        if len(request.form['add_items']) > 2:  # Отображение подсказок
+            flash('Данные отправлены', category='success')
+        else:
+            flash('Слишком короткое имя', category='error')
+        print(request.form)
     db = get_db()
-    dbase=FDataBase(db)
-    colours = ['Здание', 'Помещение', 'Панель', 'Кабель', 'Кросс', 'Муфта']
-    return render_template('add.html', title="Optika-add", menu=dbase.getMenu(), colours=colours)
+    dbase = FDataBase(db)
+    return render_template('add.html', title="Optika-add", menu=dbase.getMenu(), add_items=dbase.getItems())
 
 @app.route("/add_building", methods=['GET', 'POST'])
 def add_building():
+    db = get_db()
+    dbase=FDataBase(db)
+    Buld_base=Building(db)
     if request.method == "POST":
         if len(request.form['building_name']) > 1:  # Отображение подсказок
             flash('Данные отправлены', category='success')
         else:
             flash('Слишком короткое имя', category='error')
-    return render_template('add_building.html', title="Добавить здание", menu=menu)
+        Buld_base.addBuilding(request.form['building_name'])
+    return render_template('add_building.html', title="Добавить здание", menu=dbase.getMenu())
 
 @app.route("/add_room", methods=['GET', 'POST'])
 def add_room():
+    db = get_db()
+    dbase = FDataBase(db)
+    Par_base = Parlor(db)
+    parent_item = []                                                          # Пустой список (в него далее добавляем из БД здания и территории предприятия)
+    for d in dbase.getBuilding():                                           # В d находятся строки из БД с зданиями
+        parent_item.append(d[1])                                              # Список далее передаем на страницу add_room в качестве родителя для комнаты или участка
     if request.method == "POST":
         print(request.form)
-    return render_template('add_room.html', title="Добавить помещение", menu=menu)
+        if len(request.form['room_name']) > 1:                          # Отображение подсказок
+            res = Par_base.addParlor(request.form['parent_item'], request.form['room_name'], request.form['room_number'])
+            if not res:
+                flash('Ошибка', category='error')
+            else:
+                flash('Нет ошибки', category='success')
+    return render_template('add_room.html', title="Добавить помещение", menu=dbase.getMenu(), parent_item=parent_item)
 
 @app.route("/add_panel", methods=['GET', 'POST'])
 def add_panel():
+    db = get_db()
+    dbase = FDataBase(db)
+    parent_building = []
+    parent_parlor = []
+    #for b in dbase.getBuilding():
+        #parent_building.append(b[1])
+    #for p in dbase.getParlor():
+        #parent_parlor.append(p[1])
+    print(parent_building)
+    print(parent_parlor)
     if request.method == "POST":
         print(request.form)
-    return render_template('add_panel.html', title="Добавить панель", menu=menu)
+    return render_template('add_panel.html', title="Добавить панель", menu=dbase.getMenu())
 
 @app.route("/add_cross", methods=['GET', 'POST'])
 def add_cross():

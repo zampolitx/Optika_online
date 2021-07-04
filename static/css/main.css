@@ -78,6 +78,20 @@ th.vol_dev {
 th.vol_system {
     width: 80px;
 }
+/* Стили для абзаца с пояснениями на страницах типа add_...*/
+.helper {
+    font-size: 20px;
+    margin: 10px;
+    margin: 10px;
+}
+/* Стили для форм добавления */
+.form_add {
+    padding: 40px;
+}
+.form_submit {
+    margin: 20px;
+    padding: 10px;
+}
 /* Стили для мгновенных сообщений */
 .flash {padding: 10px;}
 .flash.success {
