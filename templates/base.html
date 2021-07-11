@@ -6,6 +6,7 @@
     <title>{{title}}</title>
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='/css/reset.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='/css/main.css') }}">
+    <script src="{{url_for('static', filename='js/main.js') }}"></script>
     {% endblock title %}
 </head>
 <body>
@@ -22,23 +23,28 @@
 {% block content %}
 <table class="main_table">
     <tr>    <!--1 ряд с ячейками зданий-->
-        {% for key, value in parlor.items() %}
-        <th>{{key}}</th>                <!-- Здание1-->
+        {% for key, value in building.items() %}
+        <th>{{key}}</th>                <!-- {'Корпус1': -->
         {% endfor %}
     </tr>
     <tr>                                                    <!--Одна главная строка, в которой все кабинеты в каждом из зданий-->
-        {% for key, value in parlor.items() %}              <!--key это название зданий, value - это список вида ***[{'100': [{'Панель 1': ['Кросс 1', 'Кросс 2']}, {'Панель 2': ['Кросс 3', 'Кросс 4']}]}***-->
+        {% for key, value in building.items() %}              <!--key это название зданий, value - это список вида ***[{'title': 'Серверная 1 этаж', 'number': '101', 'child': [1]},***-->
         <th>                                                <!--Столбец с кабинетами-->
-            {% for element in value %}                            <!-- value это список кабинетов [{'title':'КОВИ', 'number': '101', 'child': [{'Панель 1': -->
+            {% for parlor in value %}                       <!-- value это список кабинетов [{'title':'КОВИ', 'number': '101', 'child': [{'Панель 1': -->
                 <div class="parlor">                        <!--div это кабинет-->
-                    {% if element.number %}
-                        <h5> {{element.number}} {{element.title}} </h5>                 <!--номер кабинета-->
+                    {% if parlor.number %}
+                        <h5> {{parlor.number}} {{parlor.title}} </h5>                 <!--номер кабинета-->
                     {% else %}
-                        <h5> {{element.title}} </h5>                 <!--номер кабинета-->
+                        <h5> {{parlor.title}} </h5>                 <!--номер кабинета-->
                     {% endif %}
-                    {% for panel in element.child %}
+                    {% for panel in parlor.child %}             <!--parlor.child это список-->
                         <div class="panel">
-                            <h1>{{panel}}</h1>
+                            {% if panel.number %}
+                                <h5> {{panel.number}} {{panel.title}} </h5>                 <!--номер панели-->
+                            {% else %}
+                                <h5> {{panel.title}} </h5>                 <!--номер кабинета-->
+                            {% endif %}
+                        </div>
                     {% endfor %}
                 </div>
             {% endfor %}

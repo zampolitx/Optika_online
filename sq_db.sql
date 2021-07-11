@@ -8,6 +8,7 @@ INSERT INTO mainmenu(title, url) VALUES('Главная', '/');
 INSERT INTO mainmenu(title, url) VALUES('Добавить', '/add');
 INSERT INTO mainmenu(title, url) VALUES('Добавить здание', '/add_building');
 INSERT INTO mainmenu(title, url) VALUES('Добавить помещение', '/add_room');
+INSERT INTO mainmenu(title, url) VALUES('Добавить панель', '/add_panel');
 
 CREATE TABLE IF NOT EXISTS items (
 id integer PRIMARY KEY AUTOINCREMENT,
@@ -38,10 +39,7 @@ FOREIGN KEY (building_id) REFERENCES building(id)
 );
 INSERT INTO parlor(number, title, building_id) VALUES('101', 'Серверная 1 этаж', '1');
 INSERT INTO parlor(number, title, building_id) VALUES('102', 'Серверная 1 этаж', '1');
-INSERT INTO parlor(number, title, building_id) VALUES('201', 'Серверная 2 этаж', '1');
-INSERT INTO parlor(number, title, building_id) VALUES('202', 'Серверная 2 этаж', '1');
-INSERT INTO parlor(number, title, building_id) VALUES('101', 'Серверная 1 этаж', '2');
-INSERT INTO parlor(number, title, building_id) VALUES('101', 'Серверная 1 этаж', '3');
+
 
 CREATE TABLE IF NOT EXISTS panel (
 id integer PRIMARY KEY AUTOINCREMENT,
@@ -50,12 +48,13 @@ title text NOT NULL,
 parlor_id INTEGER NOT NULL,
 FOREIGN KEY (parlor_id) REFERENCES parlor(id)
 );
-INSERT INTO panel(number, title, parlor_id) VALUES('7Р12', 'Панель ЛЛОС', '1');
-INSERT INTO panel(number, title, parlor_id) VALUES('7Р13', 'Панель ЛПОС', '1');
-INSERT INTO panel(number, title, parlor_id) VALUES('8Р1', 'Панель ПОС', '1');
-INSERT INTO panel(number, title, parlor_id) VALUES('8Р2', 'Панель ОС', '1');
-INSERT INTO panel(number, title, parlor_id) VALUES('2Р12', 'Панель ППР', '2');
-INSERT INTO panel(number, title, parlor_id) VALUES('3Р15', 'Панель НМС', '3');
+INSERT INTO panel(number, title, parlor_id) VALUES('5Р7', 'Панель оптических штук1', '1');
+INSERT INTO panel(number, title, parlor_id) VALUES('5Р7', 'Панель оптических штук1', '1');
+INSERT INTO panel(number, title, parlor_id) VALUES('5Р7', 'Панель оптических штук2', '2');
+INSERT INTO panel(number, title, parlor_id) VALUES('5Р7', 'Панель оптических штук2', '2');
+INSERT INTO panel(number, title, parlor_id) VALUES('5Р7', 'Панель оптических штук3', '3');
+
+
 
 CREATE TABLE IF NOT EXISTS fiber_cross (
 id integer PRIMARY KEY AUTOINCREMENT,

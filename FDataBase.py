@@ -48,7 +48,10 @@ class FDataBase:
             self.__cur.execute(sql, (building_id, ))
             res = self.__cur.fetchall()
             if res:
-                return res
+                p = {}
+                for elem in res:
+                    p[elem[1]] = self.getPanel(elem[0])
+                return p
         except:
             print("Ошибка чтения базы данных")
         return [1]
@@ -62,9 +65,23 @@ class FDataBase:
             if res:
                 p = {}
                 for elem in res:                   #Для каждой строки, извлеченной из БД
-                    p[elem[1]] = my_dbase.getCross(elem[0])
+                    p[elem[1]] = self.getCross(elem[0])
                 print(p)
                 return p
+        except:
+            print("Ошибка чтения базы данных")
+        return [1]
+
+        # Метод возвращает всю структуру для index.html
+    def getAll(self):
+        try:
+            self.__cur.execute("SELECT * FROM building")
+            res = self.__cur.fetchall()
+            if res:
+                d = {}
+                for i in res:  # Для каждой строки, извлеченной из БД
+                    d[i[1]] = FDataBase.getParlor(i[0])  # d{'Корпус1':[
+                return d
         except:
             print("Ошибка чтения базы данных")
         return [1]

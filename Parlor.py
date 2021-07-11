@@ -12,10 +12,12 @@ class Parlor:
             self.__cur.execute(sql, (building_id, ))
             res = self.__cur.fetchall()
             if res:
-                p = {}
+                l = []
                 for elem in res:
-                    p[elem[1]] = my_dbase.getPanel(elem[0])
-                return p
+                    p = dict(title=elem[2], number=elem[1], child=my_dbase.getPanel(elem[0]))
+                    print(p)
+                    l.append(p)
+                return l
         except:
             print("Ошибка чтения базы данных")
         return [1]

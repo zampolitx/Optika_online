@@ -3,6 +3,7 @@ import sqlite3, os, re
 from FDataBase import FDataBase
 from Building import Building
 from Parlor import Parlor
+from Panel import Panel
 # Конфигурация приложения
 DATABASE = '/tmp/flsite.db'
 DEBUG = True
@@ -34,46 +35,23 @@ def index():
     db = get_db()
     dbase=FDataBase(db)                 #FDataBase - это класс, dbase - экземляр класса FDataBase
     mydbase=Building(db)
-    parlor2=mydbase.getBuilding()       # Возвращает коллекцию из словарей
-    print(parlor2)
-    parlor1={'Здание 1':
-                 [{'title':'КОВИ', 'number': '101', 'child':
-                       [{'Панель 1':
-                             [{'Кросс 1-24SM-ST':
-                                   [{'Кабель КО-1':
-                                         [{'ОВ1': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                          {'ОВ3': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]},
-                                    {'Кабель КО-6':
-                                         [{'ОВ9': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                          {'ОВ10': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]}]},
+    building2=mydbase.getBuilding()       # Возвращает коллекцию из словарей
+    print(building2)
 
-                            {'Кросс 1-24SM-ST':
-                                [{'Кабель КО-1':
-                                   [{'ОВ1': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                    {'ОВ3': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]},
-                                {'Кабель КО-6':
-                                   [{'ОВ9': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                    {'ОВ10': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]}]}]},
-                        {'Панель 2':
-                            [{'Кросс 3-24MM-LC':
-                                [{'Кабель КО-2':
-                                   [{'ОВ4': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]},
-                                {'Кабель КО-4':
-                                   [{'ОВ6': [{'device': 'Moxa nPort', 'system': 'АСУ'}]},
-                                    {'ОВ7': [{'device': 'Moxa nPort', 'system': 'АСУ'}]}]}]}]}]}]}  # Список строк из базы данных (вторая строка)
-
-    parlor2 = {'Здание 1':
+    building1 = {'Здание 1':
                    [{'title': 'КОВИ', 'number': '101', 'child':
-                       [{'Панель 1':[]}]
-                             }],
+                       [{'title': 'Панель 1', 'number': '1', 'child': []}]},
+                     {'title': 'КОВИ2', 'number': '102', 'child':
+                        [{'title': 'Панель 2', 'number': '1', 'child': []}]}
+                             ],
                'Территория':
                     [{'title': 'Левая сторона', 'number': 0, 'child':
-                        [{'Ящик ТК1':[]}]}],
+                        [{'title': 'Ящик ТК1', 'number': '12', 'child': []}]}],
                'Здание 2':
                []
                }
 
-    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=dbase.getBuilding(), parlor=parlor2)
+    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=building2)
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():
@@ -122,17 +100,24 @@ def add_room():
 def add_panel():
     db = get_db()
     dbase = FDataBase(db)
+    Par_base = Panel(db)
     parent_building = []
     parent_parlor = []
-    #for b in dbase.getBuilding():
-        #parent_building.append(b[1])
+    for b in dbase.getBuilding():
+        parent_building.append(b[1])
     #for p in dbase.getParlor():
         #parent_parlor.append(p[1])
     print(parent_building)
     print(parent_parlor)
     if request.method == "POST":
         print(request.form)
-    return render_template('add_panel.html', title="Добавить панель", menu=dbase.getMenu())
+        if len(request.form['panel_name']) > 1:
+            res = Par_base.addPanel(request.form['parent_building'], request.form['panel_name'], request.form['panel_number'])
+            if not res:
+                flash('Ошибка', category='error')
+            else:
+                flash('Добавлено', category='success')
+    return render_template('add_panel.html', title="Добавить панель", menu=dbase.getMenu(), parent_building=parent_building)
 
 @app.route("/add_cross", methods=['GET', 'POST'])
 def add_cross():
