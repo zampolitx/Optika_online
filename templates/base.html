@@ -6,7 +6,6 @@
     <title>{{title}}</title>
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='/css/reset.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='/css/main.css') }}">
-    <script src="{{url_for('static', filename='js/main.js') }}"></script>
     {% endblock title %}
 </head>
 <body>
@@ -53,5 +52,6 @@
     </tr>
 </table>
 {% endblock %}
+<script src="{{url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

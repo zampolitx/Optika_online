@@ -102,7 +102,7 @@ def add_panel():
     dbase = FDataBase(db)
     Par_base = Panel(db)
     parent_building = []
-    parent_parlor = []
+    parent_parlor = ['1', '2', '3']
     for b in dbase.getBuilding():
         parent_building.append(b[1])
     #for p in dbase.getParlor():
@@ -117,7 +117,7 @@ def add_panel():
                 flash('Ошибка', category='error')
             else:
                 flash('Добавлено', category='success')
-    return render_template('add_panel.html', title="Добавить панель", menu=dbase.getMenu(), parent_building=parent_building)
+    return render_template('add_panel.html', title="Добавить панель", menu=dbase.getMenu(), parent_building=parent_building, parent_parlor=parent_parlor)
 
 @app.route("/add_cross", methods=['GET', 'POST'])
 def add_cross():
