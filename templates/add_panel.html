@@ -12,6 +12,7 @@
                     <option value="{{ building }}" SELECTED>{{ building }}</option>
                 {% endfor %}
             </select>
+            <input type="submit" value="Ok" class="1form_submit">
         <p>
             <label for="example"> В кабинете/коридоре/на территории</label>
             <select name="parent_parlor">
@@ -25,6 +26,11 @@
         <p><label>Количество юнитов в панели (если панель) </label> <input type="text" name="units_number" value="" ></p>
         <p><input type="submit" value="Отправить" class="form_submit"></p>
     </form>
+    <div id="mydiv" data-parent='{{parent|tojson}}'></div>
     <!--Подключение java script-->
     <script src="{{url_for('static', filename='js/add_panel.js') }}"></script>
+    <script>
+        //var geocode = JSON.parse('{{ parent|tojson|safe }}');
+        //console.log(geocode);
+    </script>
 {% endblock %}

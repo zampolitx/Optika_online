@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash, g, url_for
-import sqlite3, os, re
+import sqlite3, os, re, json
 from FDataBase import FDataBase
 from Building import Building
 from Parlor import Parlor
@@ -101,6 +101,7 @@ def add_panel():
     db = get_db()
     dbase = FDataBase(db)
     Par_base = Panel(db)
+    parent = {"Корпус1": ['Кабинет11', 'Кабинет12', 'Кабинет13'], "Корпус2": ['Кабинет21', 'Кабинет22', 'Кабинет23'], "Корпус3": ['Кабинет31', 'Кабинет32', 'Кабинет33'], "Территория предприятия": ['Кабинет41', 'Кабинет42', 'Кабинет43']}
     parent_building = []
     parent_parlor = ['1', '2', '3']
     for b in dbase.getBuilding():
@@ -117,7 +118,7 @@ def add_panel():
                 flash('Ошибка', category='error')
             else:
                 flash('Добавлено', category='success')
-    return render_template('add_panel.html', title="Добавить панель", menu=dbase.getMenu(), parent_building=parent_building, parent_parlor=parent_parlor)
+    return render_template('add_panel.html', title="Добавить панель", menu=dbase.getMenu(), parent_building=parent_building, parent_parlor=parent_parlor, parent=parent)
 
 @app.route("/add_cross", methods=['GET', 'POST'])
 def add_cross():

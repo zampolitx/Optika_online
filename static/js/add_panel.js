@@ -2,6 +2,7 @@
 let frm = document.forms.Item_2;
 let building = frm.parent_building;
 let parlor = frm.parent_parlor;
+let proba = frm.proba;
 //building.value = 'Корпус1'
 //parlor.value = '1'
 if (building.value == "Корпус1") {
@@ -19,3 +20,6 @@ console.log(parlor.value)
 let b = Number(parlor.value);
 let c = a/b;
 console.log(c);
+console.dir(frm);
+var mydata = JSON.parse(document.getElementById("mydiv").dataset.parent);
+console.log(mydata);
