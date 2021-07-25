@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, g, url_for
+from flask import Flask, render_template, request, flash, g, url_for, json, jsonify
 import sqlite3, os, re, json
 from FDataBase import FDataBase
 from Building import Building
@@ -101,7 +101,7 @@ def add_panel():
     db = get_db()
     dbase = FDataBase(db)
     Par_base = Panel(db)
-    parent = {"Корпус1": ['Кабинет11', 'Кабинет12', 'Кабинет13'], "Корпус2": ['Кабинет21', 'Кабинет22', 'Кабинет23'], "Корпус3": ['Кабинет31', 'Кабинет32', 'Кабинет33'], "Территория предприятия": ['Кабинет41', 'Кабинет42', 'Кабинет43']}
+    parent = {"Корпус1": ['Кабинет111', 'Кабинет112', 'Кабинет113'], "Корпус2": ['Кабинет21', 'Кабинет22', 'Кабинет23'], "Корпус3": ['Кабинет31', 'Кабинет32', 'Кабинет33'], "Территория предприятия": ['Кабинет41', 'Кабинет42', 'Кабинет43']}
     parent_building = []
     parent_parlor = ['1', '2', '3']
     for b in dbase.getBuilding():
@@ -141,6 +141,15 @@ def add_opt_coupler():
 @app.route("/find")
 def find():
     return render_template('find.html', title="Optika-find", menu=menu)
+
+@app.route("/proba", methods=['GET', 'POST'])
+def proba():
+    return render_template('proba.html')
+
+@app.route('/get_len', methods=['GET', 'POST'])
+def get_len():
+    name = request.form['name'];
+    return json.dumps({'len': len(name)})
 
 #Закрываем соединение с БД
 @app.teardown_appcontext
