@@ -44,6 +44,15 @@
                             {% else %}
                                 <h5> {{panel.title}} </h5>                 <!--номер кабинета-->
                             {% endif %}
+                            {% for device in panel.child %}
+                                <div class="cross">
+                                    {% if device.number %}
+                                        <h5> {{device.number}} {{device.title}} </h5>
+                                    {% else %}
+
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
                         </div>
                     {% endfor %}
                 </div>

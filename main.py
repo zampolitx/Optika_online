@@ -38,19 +38,6 @@ def index():
     building2=mydbase.getBuilding()       # Возвращает коллекцию из словарей
     print(building2)
 
-    building1 = {'Здание 1':
-                   [{'title': 'КОВИ', 'number': '101', 'child':
-                       [{'title': 'Панель 1', 'number': '1', 'child': []}]},
-                     {'title': 'КОВИ2', 'number': '102', 'child':
-                        [{'title': 'Панель 2', 'number': '1', 'child': []}]}
-                             ],
-               'Территория':
-                    [{'title': 'Левая сторона', 'number': 0, 'child':
-                        [{'title': 'Ящик ТК1', 'number': '12', 'child': []}]}],
-               'Здание 2':
-               []
-               }
-
     return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=building2)
 
 @app.route("/add", methods=['GET', 'POST'])
@@ -60,7 +47,7 @@ def add():
             flash('Данные отправлены', category='success')
         else:
             flash('Слишком короткое имя', category='error')
-        print(request.form)
+        #print(request.form)
     db = get_db()
     dbase = FDataBase(db)
     return render_template('add.html', title="Optika-add", menu=dbase.getMenu(), add_items=dbase.getItems())
@@ -101,30 +88,27 @@ def add_panel():
     db = get_db()
     dbase = FDataBase(db)
     Par_base = Panel(db)
-    parent = {"Корпус1": ['Кабинет111', 'Кабинет112', 'Кабинет113'], "Корпус2": ['Кабинет21', 'Кабинет22', 'Кабинет23'], "Корпус3": ['Кабинет31', 'Кабинет32', 'Кабинет33'], "Территория предприятия": ['Кабинет41', 'Кабинет42', 'Кабинет43']}
+    Build_base = Building(db)
     parent_building = []
-    parent_parlor = ['1', '2', '3']
-    for b in dbase.getBuilding():
-        parent_building.append(b[1])
-    #for p in dbase.getParlor():
-        #parent_parlor.append(p[1])
-    print(parent_building)
-    print(parent_parlor)
+    for d in Build_base.getBuilding():
+        parent_building.append(d)
     if request.method == "POST":
         print(request.form)
         if len(request.form['panel_name']) > 1:
-            res = Par_base.addPanel(request.form['parent_building'], request.form['panel_name'], request.form['panel_number'])
+            res = Par_base.addPanel(request.form['parent_parlor'], request.form['panel_name'], request.form['panel_number'], request.form['units_number'])
             if not res:
                 flash('Ошибка', category='error')
             else:
                 flash('Добавлено', category='success')
-    return render_template('add_panel.html', title="Добавить панель", menu=dbase.getMenu(), parent_building=parent_building, parent_parlor=parent_parlor, parent=parent)
+    return render_template('add_panel.html', title="Добавить панель", menu=dbase.getMenu(), parent_building=parent_building)
 
 @app.route("/add_cross", methods=['GET', 'POST'])
 def add_cross():
+    db = get_db()
+    dbase = FDataBase(db)
     if request.method == "POST":
         print(request.form)
-    return render_template('add_cross.html', title="Добавить кросс", menu=menu)
+    return render_template('add_cross.html', title="Добавить кросс", menu=dbase.getMenu())
 
 @app.route("/add_cable", methods=['GET', 'POST'])
 def add_cable():
@@ -155,10 +139,14 @@ def get_len():
 # Обработчик функции AJAX add_panel.js
 @app.route('/get_parlor', methods=['GET', 'POST'])
 def get_parlor():
-    print(request.form)
-    par_building = request.form['parent_building']
-    mylist = ['one', 'two', 'three']
-    return json.dumps({'par_buld_resp': mylist})
+    #print(request.form)
+    par_building = request.form['parent_building']  #Из js получаем название здания, в котором находится кабинет
+    db = get_db()
+    mydbase = Building(db)
+    building_id = mydbase.getBuilding(par_building)  # Обращаемся к БД и получаем id здания, в котором находится кабинет
+    mydbase_par = Parlor(db)
+    parlor_list = mydbase_par.getParlor(building_id)
+    return json.dumps({'par_buld_resp': parlor_list})
 
 #Закрываем соединение с БД
 @app.teardown_appcontext

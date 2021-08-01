@@ -9,6 +9,7 @@ INSERT INTO mainmenu(title, url) VALUES('Добавить', '/add');
 INSERT INTO mainmenu(title, url) VALUES('Добавить здание', '/add_building');
 INSERT INTO mainmenu(title, url) VALUES('Добавить помещение', '/add_room');
 INSERT INTO mainmenu(title, url) VALUES('Добавить панель', '/add_panel');
+INSERT INTO mainmenu(title, url) VALUES('Добавить кросс', '/add_cross');
 
 CREATE TABLE IF NOT EXISTS items (
 id integer PRIMARY KEY AUTOINCREMENT,
@@ -45,14 +46,15 @@ CREATE TABLE IF NOT EXISTS panel (
 id integer PRIMARY KEY AUTOINCREMENT,
 number text NOT NULL,
 title text NOT NULL,
+units INTEGER,
 parlor_id INTEGER NOT NULL,
 FOREIGN KEY (parlor_id) REFERENCES parlor(id)
 );
-INSERT INTO panel(number, title, parlor_id) VALUES('5Р7', 'Панель оптических штук1', '1');
-INSERT INTO panel(number, title, parlor_id) VALUES('5Р7', 'Панель оптических штук1', '1');
-INSERT INTO panel(number, title, parlor_id) VALUES('5Р7', 'Панель оптических штук2', '2');
-INSERT INTO panel(number, title, parlor_id) VALUES('5Р7', 'Панель оптических штук2', '2');
-INSERT INTO panel(number, title, parlor_id) VALUES('5Р7', 'Панель оптических штук3', '3');
+INSERT INTO panel(number, title, units, parlor_id) VALUES('5Р7', 'Панель оптических штук1', 42, '1');
+INSERT INTO panel(number, title, units, parlor_id) VALUES('5Р7', 'Панель оптических штук1', 42, '1');
+INSERT INTO panel(number, title, units, parlor_id) VALUES('5Р7', 'Панель оптических штук2', 42, '2');
+INSERT INTO panel(number, title, units, parlor_id) VALUES('5Р7', 'Панель оптических штук2', 42, '2');
+INSERT INTO panel(number, title, units, parlor_id) VALUES('5Р7', 'Панель оптических штук3', 42, '3');
 
 
 

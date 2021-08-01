@@ -5,26 +5,39 @@ class Parlor:
         self.__db = db
         self.__cur = db.cursor()
 
-    def getParlor(self, building_id):
+    def getParlor(self, building_id, ALL=False):    #ALL=True значит нужна полная структура, нет значит вызывают из js
         my_dbase = Panel(self.__db)
-        sql = "SELECT * FROM parlor where building_id = ?"
-        try:
-            self.__cur.execute(sql, (building_id, ))
-            res = self.__cur.fetchall()
-            if res:
-                l = []
-                for elem in res:
-                    p = dict(title=elem[2], number=elem[1], child=my_dbase.getPanel(elem[0]))
-                    print(p)
-                    l.append(p)
-                return l
-        except:
-            print("Ошибка чтения базы данных")
-        return [1]
+        sql_all = "SELECT * FROM parlor where building_id = ?"
+        sql_some = "SELECT number, title FROM parlor where building_id = ?"
+        if ALL == False:
+            try:
+                self.__cur.execute(sql_some, (building_id, ))
+                res = self.__cur.fetchall()
+                if res:
+                    l = []
+                    for elem in res:
+                        l.append(elem[1])
+                    return l
+            except:
+                print("Ошибка чтения базы данных")
+            return ['']
+        else:
+            try:
+                self.__cur.execute(sql_all, (building_id, ))
+                res = self.__cur.fetchall()
+                if res:
+                    l = []
+                    for elem in res:
+                        p = dict(title=elem[2], number=elem[1], child=my_dbase.getPanel(elem[0], ALL=True))
+                        l.append(p)
+                    return l
+            except:
+                print("Ошибка чтения базы данных")
+            return [1]
 
     def addParlor(self, parent_item, room_name, room_number):       # parent_item - запись из чекбокса, остальное из формы добавления кабинета/участка территории
         try:
-            self.__cur.execute("SELECT id FROM building WHERE title LIKE ?", (parent_item,))        # из таблицы building получить id записи из чекбокса
+            self.__cur.execute("SELECT id FROM building WHERE title=?", (parent_item,))        # из таблицы building получить id записи из чекбокса
             res = self.__cur.fetchall()
             for elem in res:
                 print(elem[0])      # в elem[0] находится id здания/территории куда добавляем кабинет

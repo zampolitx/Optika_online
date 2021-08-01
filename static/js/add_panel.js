@@ -8,9 +8,10 @@ function get_parlor() {
             $('.par').empty();  //Удалить старые записи из списка
             var json = jQuery.parseJSON(response);  //Прочитать ответ сервера
             var resp_list = json.par_buld_resp; //массив с ключем par_buld_resp (из функции get_parlor main.py)
+            console.log(resp_list);
             var option = '';
-            for (var i=0; i<resp_list.length; i++){
-                option += '<option value="'+resp_list[1] + '">' + resp_list[i] + '</option>';
+            for (var i=0; i<resp_list.length; i++){ //по количеству элементов в массиве
+                option += '<option value="'+resp_list[i] + '">' + resp_list[i] + '</option>';   //формируем строку html типа <option value="two">one</option>
                 //$('<option/>').val(resp_list[i]).html(resp_list[i]).appendTo('.par');
             }
             $('.par').append(option);

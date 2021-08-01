@@ -5,26 +5,39 @@ class Building:
         self.__db = db
         self.__cur = db.cursor()
 
-    def getBuilding(self):
+    def getBuilding(self, build_name=False):
         my_dbase = Parlor(self.__db)
-        sql = """SELECT * FROM building"""
-        try:
-            self.__cur.execute(sql)
-            res = self.__cur.fetchall()
-            if res:
-                d = {}
-                for i in res:                   #Для каждой строки, извлеченной из БД
-                    d[i[1]] = my_dbase.getParlor(i[0])      # d{'Корпус1':[
-                return d
-        except:
-            print("Ошибка чтения базы данных")
-        return [1]
+        sql_all = """SELECT * FROM building"""
+        sql_some = "SELECT id FROM building where title = ?"
+        if build_name:
+            #print(build_name)
+            try:
+                self.__cur.execute(sql_some, (build_name, ))
+                res = self.__cur.fetchall()
+                print(res[0][0])
+                if res:
+                    return res[0][0]
+            except:
+                print("Ошибка чтения базы данных")
+            return ['one', 'two', 'four']
+        else:
+            try:
+                self.__cur.execute(sql_all)
+                res = self.__cur.fetchall()
+                if res:
+                    d = {}
+                    for i in res:                   #Для каждой строки, извлеченной из БД
+                        d[i[1]] = my_dbase.getParlor(i[0], ALL=True)      # d{'Корпус1':[
+                    return d
+            except:
+                print("Ошибка чтения базы данных")
+            return [1]
 
     def addBuilding(self, building_name):
         try:
             self.__cur.execute("INSERT INTO building(title) VALUES(?)", (building_name, ))
             self.__db.commit()
-            print(building_name)
+            #print(building_name)
         except sqlite3.Error as e:
             print("Ошибка добавления записи в БД: "+str(e))
         return [1]
