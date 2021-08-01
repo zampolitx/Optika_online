@@ -148,8 +148,17 @@ def proba():
 
 @app.route('/get_len', methods=['GET', 'POST'])
 def get_len():
-    name = request.form['name'];
+    print(request.form)
+    name = request.form['parent_building']
     return json.dumps({'len': len(name)})
+
+# Обработчик функции AJAX add_panel.js
+@app.route('/get_parlor', methods=['GET', 'POST'])
+def get_parlor():
+    print(request.form)
+    par_building = request.form['parent_building']
+    mylist = ['one', 'two', 'three']
+    return json.dumps({'par_buld_resp': mylist})
 
 #Закрываем соединение с БД
 @app.teardown_appcontext
