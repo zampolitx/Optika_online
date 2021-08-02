@@ -49,8 +49,17 @@
                                     {% if device.number %}
                                         <h5> {{device.number}} {{device.title}} </h5>
                                     {% else %}
-
+                                        <h5> {{device.title}} </h5>                 <!--название кросса или муфмы-->
                                     {% endif %}
+                                    {% for cable in device.child %}
+                                        <div class="cable">
+                                            {% if cable.number %}
+                                                <h5> {{cable.number}} {{cable.title}} </h5>
+                                            {% else %}
+                                                <h5> {{cable.title}} </h5>                 <!--Название кабеля-->
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
                                 </div>
                             {% endfor %}
                         </div>

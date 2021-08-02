@@ -1,5 +1,6 @@
 import sqlite3
 from Cross import Cross
+# Предусмотреть защиту от одинаковых названий, чтобы не добавлялось в одно и то же здание
 class Panel:
     def __init__(self, db):
         self.__db = db

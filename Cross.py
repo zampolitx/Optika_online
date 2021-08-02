@@ -20,7 +20,7 @@ class Cross:
                         l.append(p)
                     return l
             except:
-                print("Ошибка чтения базы данных")
+                print("Ошибка чтения базы данных в Cross.py_some")
             return [1]
         else:
             try:
@@ -29,9 +29,9 @@ class Cross:
                 if res:
                     l = []
                     for elem in res:
-                        p = dict(title=elem[2], number=elem[1], child=my_dbase.getCable(elem[0]))
+                        p = dict(title=elem[2], number=elem[1], child=my_dbase.getCable(elem[0], ALL=True))
                         l.append(p)
                     return l
             except:
-                print("Ошибка чтения базы данных")
+                print("Ошибка чтения базы данных cross.py_all")
             return [1]

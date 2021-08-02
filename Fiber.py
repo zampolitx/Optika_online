@@ -3,7 +3,7 @@ class Fiber:
         self.__db = db
         self.__cur = db.cursor()
 
-    def getFiber(self, cable_id):
+    def getFiber(self, cable_id, ALL=False):
         sql = "SELECT * FROM fiber where cable_id = ?"
         try:
             self.__cur.execute(sql, (cable_id, ))
@@ -15,5 +15,5 @@ class Fiber:
                 print(p)
                 return p
         except:
-            print("Ошибка чтения базы данных")
+            print("Ошибка чтения базы данных Fiber.py")
         return [1]
