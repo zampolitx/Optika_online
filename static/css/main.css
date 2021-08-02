@@ -62,6 +62,13 @@ table {
   padding: 10px;
   color: black;
 }
+/*Свойства Кабеля*/
+.cable {
+  margin: 10px;
+  border: solid 3px red;
+  padding: 10px;
+  color: black;
+}
 /* границы ячеек тела таблицы */
 td {
    border: 1px solid grey;

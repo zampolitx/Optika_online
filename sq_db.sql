@@ -65,12 +65,12 @@ type_of_conn text NOT NULL,
 panel_id INTEGER NOT NULL,
 FOREIGN KEY (panel_id) REFERENCES panel(id)
 );
-INSERT INTO fiber_cross(number, title, num_of_conn, type_of_conn, panel_id) VALUES('1', 'ОК', '1', 'FC', 1);
-INSERT INTO fiber_cross(number, title, num_of_conn, type_of_conn, panel_id) VALUES('2', 'ОК', '1', 'SC', 1);
-INSERT INTO fiber_cross(number, title, num_of_conn, type_of_conn, panel_id) VALUES('3', 'ОК', '1', 'FC', 2);
-INSERT INTO fiber_cross(number, title, num_of_conn, type_of_conn, panel_id) VALUES('4', 'ОК', '1', 'SC', 3);
-INSERT INTO fiber_cross(number, title, num_of_conn, type_of_conn, panel_id) VALUES('5', 'ОК', '1', 'SC', 4);
-INSERT INTO fiber_cross(number, title, num_of_conn, type_of_conn, panel_id) VALUES('6', 'ОК', '1', 'SC', 5);
+INSERT INTO fiber_cross(number, title, num_of_conn, type_of_conn, panel_id) VALUES('1', 'Оптический Кросс', '1', 'FC', 1);
+INSERT INTO fiber_cross(number, title, num_of_conn, type_of_conn, panel_id) VALUES('2', 'Оптический Кросс', '1', 'SC', 1);
+INSERT INTO fiber_cross(number, title, num_of_conn, type_of_conn, panel_id) VALUES('3', 'Оптический Кросс', '1', 'FC', 2);
+INSERT INTO fiber_cross(number, title, num_of_conn, type_of_conn, panel_id) VALUES('4', 'Оптический Кросс', '1', 'SC', 3);
+INSERT INTO fiber_cross(number, title, num_of_conn, type_of_conn, panel_id) VALUES('5', 'Оптический Кросс', '1', 'SC', 4);
+INSERT INTO fiber_cross(number, title, num_of_conn, type_of_conn, panel_id) VALUES('6', 'Оптический Кросс', '1', 'SC', 5);
 
 CREATE TABLE IF NOT EXISTS cable (
 id integer PRIMARY KEY AUTOINCREMENT,
@@ -84,9 +84,9 @@ end_of_cable_dev_id text NOT NULL,
 fiber_cross_id INTEGER NOT NULL,
 FOREIGN KEY (fiber_cross_id) REFERENCES fiber_cross(id)
 );
-INSERT INTO cable(length_cable, title, type, start_of_cable_type, start_of_cable_dev_id, end_of_cable_type, end_of_cable_dev_id, fiber_cross_id) VALUES(1000, 'ОК1', 'ДПМ-24-ММ', 'cross',  '1', 'cross', '1', 1);
-INSERT INTO cable(length_cable, title, type, start_of_cable_type, start_of_cable_dev_id, end_of_cable_type, end_of_cable_dev_id, fiber_cross_id) VALUES(1000, 'ОК2', 'ДПМ-24-ММ', 'cross',  '1', 'cross', '1', 2);
-INSERT INTO cable(length_cable, title, type, start_of_cable_type, start_of_cable_dev_id, end_of_cable_type, end_of_cable_dev_id, fiber_cross_id) VALUES(1000, 'ОК3', 'ДПМ-24-ММ', 'cross',  '1', 'cross', '1', 3);
+INSERT INTO cable(length_cable, title, type, start_of_cable_type, start_of_cable_dev_id, end_of_cable_type, end_of_cable_dev_id, fiber_cross_id) VALUES(1000, 'Опт. кабель', 'ДПМ-24-ММ', 'cross',  '1', 'cross', '1', 1);
+INSERT INTO cable(length_cable, title, type, start_of_cable_type, start_of_cable_dev_id, end_of_cable_type, end_of_cable_dev_id, fiber_cross_id) VALUES(1000, 'Опт. кабель', 'ДПМ-24-ММ', 'cross',  '1', 'cross', '1', 1);
+INSERT INTO cable(length_cable, title, type, start_of_cable_type, start_of_cable_dev_id, end_of_cable_type, end_of_cable_dev_id, fiber_cross_id) VALUES(1000, 'Опт. кабель', 'ДПМ-24-ММ', 'cross',  '1', 'cross', '1', 2);
 
 
 CREATE TABLE IF NOT EXISTS fiber (

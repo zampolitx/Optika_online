@@ -11,7 +11,7 @@ class Fiber:
             if res:
                 p = []
                 for i in res:                   #Для каждой строки, извлеченной из БД
-                    p.append(i[1])
+                    p.append(i[2])
                 print(p)
                 return p
         except:
