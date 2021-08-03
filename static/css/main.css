@@ -42,31 +42,31 @@ table {
 }
 /*Свойства кабинета*/
 .parlor {
-  margin: 10px;
+  margin: 5px;
   border: solid 3px brown;
-  padding: 10px;
+  padding: 5px;
   color: brown;
 }
 
 /*Свойства панели (телекоммуникационного шкафа)*/
 .panel {
-  margin: 10px;
-  border: dashed 3px black;
-  padding: 10px;
+  margin: 5px;
+  border: dashed 2px black;
+  padding: 5px;
   color: black;
 }
 /*Свойства кросса*/
 .cross {
-  margin: 10px;
+  margin: 5px;
   border: solid 3px black;
-  padding: 10px;
+  padding: 5px;
   color: black;
 }
 /*Свойства Кабеля*/
 .cable {
-  margin: 10px;
+  margin: 5px;
   border: solid 3px red;
-  padding: 10px;
+  padding: 5px;
   color: black;
 }
 /* границы ячеек тела таблицы */

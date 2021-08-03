@@ -9,11 +9,11 @@ class Fiber:
             self.__cur.execute(sql, (cable_id, ))
             res = self.__cur.fetchall()
             if res:
-                p = []
-                for i in res:                   #Для каждой строки, извлеченной из БД
-                    p.append(i[2])
-                print(p)
-                return p
+                l = []
+                for elem in res:                   #Для каждой строки, извлеченной из БД
+                    p = dict(id=elem[0], number=elem[1], title=elem[2], num_of_conn=elem[3], type_of_conn=elem[4], cable_id=elem[5])
+                    l.append(p)
+                return l
         except:
             print("Ошибка чтения базы данных Fiber.py")
         return [1]

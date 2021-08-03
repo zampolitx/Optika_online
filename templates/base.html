@@ -52,13 +52,25 @@
                                         <h5> {{device.title}} </h5>                 <!--название кросса или муфмы-->
                                     {% endif %}
                                     {% for cable in device.child %}
-                                        <div class="cable">
-                                            {% if cable.number %}
-                                                <h5> {{cable.number}} {{cable.title}} </h5>
+                                        <!--<div class="cable"> Нужно убрать потом этот div-->
+                                            {% if cable.number %}   <!--если кабель разварен-->
+                                                <table class="fiber_tab">   <!--таблица с волокнами-->
+                                                    <tr>
+                                                        <td rowspan="3"> <p style="writing-mode: vertical-rl">asdf</p> </td>
+                                                        <th> # </th>
+                                                        <th> name</th>
+                                                    </tr>
+                                                    {% for fiber in cable.child%}
+                                                        <tr>
+                                                            <th>{{ fiber.number }}</th>
+                                                            <th>{{ fiber.title }}</th>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </table>
                                             {% else %}
                                                 <h5> {{cable.title}} </h5>                 <!--Название кабеля-->
                                             {% endif %}
-                                        </div>
+                                        <!--</div>-->
                                     {% endfor %}
                                 </div>
                             {% endfor %}
