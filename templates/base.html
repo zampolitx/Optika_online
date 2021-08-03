@@ -54,10 +54,11 @@
                                     {% for cable in device.child %}
                                         <!--<div class="cable"> Нужно убрать потом этот div-->
                                             {% if cable.number %}   <!--если кабель разварен-->
-                                                <table class="fiber_tab">   <!--таблица с волокнами-->
+                                                <table cellpadding="0" cellspacing="0" align="center" class="fiber_tab">   <!--таблица с волокнами-->
                                                     <tr>
-                                                        <td rowspan="3"> <p style="writing-mode: vertical-rl">asdf</p> </td>
-                                                        <th> # </th>
+                                                        <td rowspan={{(cable.child|length)+1}} class="rotate"> <div> {{cable.number}} </div> </td>
+                                                        <!--<td rowspan={{(cable.child|length)+1}} class="vertical"> {{cable.number}} </td>-->
+                                                        <th> Номер </th>
                                                         <th> name</th>
                                                     </tr>
                                                     {% for fiber in cable.child%}

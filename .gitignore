@@ -4,3 +4,4 @@ venv/*
 .idea/*
 *.dbs
 *.db
+*.pyc
