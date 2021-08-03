@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="/add_panel" method="post" class="form-add">
+        <p><label>номер: </label> <input type="text" name="panel_number" value="" required></p>
+        <p><label>название: </label> <input type="text" name="panel_name" value="" required></p>
+        <p><input type="submit" value="Отправить"></p>
+    </form>
+{% endblock %}

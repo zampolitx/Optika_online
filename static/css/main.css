@@ -4,14 +4,15 @@ body {
     margin-right: 2px;
 }
 
-.body_header {                      /*Голубое поле сверху*/
+.header {                      /*Голубое поле сверху*/
     background: #def5ff;
-    height: 100px;
+    height: 40px;
+    font-size: 2em;
 }
 
 ul.nav {                       /* Стили панели навигации (оранжевая полоска)*/
-    background: #f03624;
-    height: 70px;
+    background: #959595;
+    height: 40px;
     border-top: 3px solid rgb(0,0,0);       /*Черная полоска сверху над оранжевым блоком*/
     border-bottom: 3px solid rgb(0,0,0);     /*Черная полоска снизу под оранжевым блоком*/
     text-align: center;
@@ -28,7 +29,7 @@ ul.nav {                       /* Стили панели навигации (о
     font-family: Arial;
     color: white;
     text-decoration: none;
-    font-size: 3em;
+    font-size: 2em;
 }
 /* внешние границы таблицы серого цвета толщиной 1px */
 table {
@@ -46,4 +47,14 @@ td {
 
 .internal_table th{
   width: 200px;
+}
+/* Стили для мгновенных сообщений */
+.flash {padding: 10px;}
+.flash.success {
+  border: 1px solid #21DB56;
+  background: #AEFFC5;
+}
+.flash.error {
+  border: 1px solid #FF4343;
+  background: #FF9C9C;
 }
