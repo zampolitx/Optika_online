@@ -69,22 +69,29 @@ table {
   padding: 5px;
   color: black;
 }
-/* границы ячеек тела таблицы */
+.fiber_tab {
+table-layout: auto;
+}
+/*Вертикальный текст в таблице волокон*/
 td {
-   border: 1px solid grey;
+    border: 1px black solid;
+    padding: 5px;
 }
-.internal_table th{
-  width: 150px;                             /*Ширина каждой из колонок вложенной таблицы*/
+.rotate {
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    width: 1.5em;
 }
-/*Стили для колонок тиблицы с волокнами*/
-th.vol_num {
-    width: 60px;
+.rotate div {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  width: auto;  /*Ширина таблицы с названием кабеля*/
 }
-th.vol_dev {
-}
-th.vol_system {
-    width: 80px;
-}
+
 /* Стили для абзаца с пояснениями на страницах типа add_...*/
 .helper {
     font-size: 20px;

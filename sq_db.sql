@@ -85,8 +85,6 @@ fiber_cross_id INTEGER NOT NULL,
 FOREIGN KEY (fiber_cross_id) REFERENCES fiber_cross(id)
 );
 INSERT INTO cable(length_cable, title, type, start_of_cable_type, start_of_cable_dev_id, end_of_cable_type, end_of_cable_dev_id, fiber_cross_id) VALUES(1000, 'Опт. кабель', 'ДПМ-24-ММ', 'cross',  '1', 'cross', '1', 1);
-INSERT INTO cable(length_cable, title, type, start_of_cable_type, start_of_cable_dev_id, end_of_cable_type, end_of_cable_dev_id, fiber_cross_id) VALUES(1000, 'Опт. кабель', 'ДПМ-24-ММ', 'cross',  '1', 'cross', '1', 1);
-INSERT INTO cable(length_cable, title, type, start_of_cable_type, start_of_cable_dev_id, end_of_cable_type, end_of_cable_dev_id, fiber_cross_id) VALUES(1000, 'Опт. кабель', 'ДПМ-24-ММ', 'cross',  '1', 'cross', '1', 2);
 
 
 CREATE TABLE IF NOT EXISTS fiber (
@@ -98,12 +96,16 @@ type_of_conn text NOT NULL,
 cable_id INTEGER NOT NULL,
 FOREIGN KEY (cable_id) REFERENCES cable(id)
 );
+INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa11111111111111122222222222', '1', 'LC', 1);
 INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa1', '1', 'LC', 1);
 INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa1', '1', 'LC', 1);
-INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa1', '1', 'LC', 2);
-INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa1', '1', 'LC', 2);
-INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa1', '1', 'LC', 3);
-INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa1', '1', 'LC', 3);
+INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa1', '1', 'LC', 1);
+INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa1', '1', 'LC', 1);
+INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa1', '1', 'LC', 1);
+INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa1', '1', 'LC', 1);
+INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa1', '1', 'LC', 1);
+INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa1', '1', 'LC', 1);
+INSERT INTO fiber(number, title, num_of_conn, type_of_conn, cable_id) VALUES('1', 'Moxa1', '1', 'LC', 1);
 
 CREATE TABLE IF NOT EXISTS opt_coupler (
 id integer PRIMARY KEY AUTOINCREMENT,
