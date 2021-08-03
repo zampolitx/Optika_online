@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="/add_cable" method="post" class="form-add">
+        <p><label>Тип кабеля: </label> <input type="text" name="type_of_cable" value="" required></p>
+        <p><label>Длинна: </label> <input type="text" name="module_numbers" value="" required></p>
+        <p><label>Начало кабеля: </label> <input type="text" name="start_of_cable" value="" required></p>
+        <p><label>Конец кабеля: </label> <input type="text" name="end_of_cable" value="" required></p>
+        <p><input type="submit" value="Отправить"></p>
+    </form>
+{% endblock %}

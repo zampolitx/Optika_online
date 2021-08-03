@@ -4,39 +4,73 @@
     {% block title -%}
     <meta charset="UTF-8">
     <title>{{title}}</title>
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
-    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    {% endblock %}
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='/css/reset.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='/css/main.css') }}">
+    <script type=text/javascript src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+    {% endblock title %}
 </head>
 <body>
-{% block menu -%}
-<h1>OPTIKA ONLINE</h1>
-<ul>        <!--это меню -->
+{%- block menu -%}
+<div class="header">
+    <h1>OPTIKA ONLINE by zampolit</h1>
+</div>
+<ul class="nav">        <!--это меню -->
     {% for m in menu %}
-        <li><a href="{{m.url}}">{{m.name}}</a></li>
+        <li><a href="{{m.url}}">{{m.title}}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}
 {% block content %}
 <table class="main_table">
-    <tr>    <!--1 ряд с ячейками объектов-->
-        {% for f in facility %}
-        <th>{{f}}</th>
+    <tr>    <!--1 ряд с ячейками зданий-->
+        {% for key, value in building.items() %}
+        <th>{{key}}</th>                <!-- {'Корпус1': -->
         {% endfor %}
     </tr>
-    {% for f in range(1) %}      <!-- количество рядов равно количеству объектов -->
-    <tr>n'
-        {% for f in facility %}
-        <th>
-            <table class="internal_table">
-                <tr><th>1</th> <th> 1 строка </th></tr>
-                <tr><th>2</th> <th> 2 строка </th></tr>
-            </table>
+    <tr>                                                    <!--Одна главная строка, в которой все кабинеты в каждом из зданий-->
+        {% for key, value in building.items() %}              <!--key это название зданий, value - это список вида ***[{'title': 'Серверная 1 этаж', 'number': '101', 'child': [1]},***-->
+        <th>                                                <!--Столбец с кабинетами-->
+            {% for parlor in value %}                       <!-- value это список кабинетов [{'title':'КОВИ', 'number': '101', 'child': [{'Панель 1': -->
+                <div class="parlor">                        <!--div это кабинет-->
+                    {% if parlor.number %}
+                        <h5> {{parlor.number}} {{parlor.title}} </h5>                 <!--номер кабинета-->
+                    {% else %}
+                        <h5> {{parlor.title}} </h5>                 <!--номер кабинета-->
+                    {% endif %}
+                    {% for panel in parlor.child %}             <!--parlor.child это список-->
+                        <div class="panel">
+                            {% if panel.number %}
+                                <h5> {{panel.number}} {{panel.title}} </h5>                 <!--номер панели-->
+                            {% else %}
+                                <h5> {{panel.title}} </h5>                 <!--номер кабинета-->
+                            {% endif %}
+                            {% for device in panel.child %}
+                                <div class="cross">
+                                    {% if device.number %}
+                                        <h5> {{device.number}} {{device.title}} </h5>
+                                    {% else %}
+                                        <h5> {{device.title}} </h5>                 <!--название кросса или муфмы-->
+                                    {% endif %}
+                                    {% for cable in device.child %}
+                                        <div class="cable">
+                                            {% if cable.number %}
+                                                <h5> {{cable.number}} {{cable.title}} </h5>
+                                            {% else %}
+                                                <h5> {{cable.title}} </h5>                 <!--Название кабеля-->
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
         </th>
         {% endfor %}
     </tr>
-    {% endfor %}
 </table>
 {% endblock %}
+<script src="{{url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>

@@ -4,14 +4,15 @@ body {
     margin-right: 2px;
 }
 
-.body_header {                      /*Голубое поле сверху*/
+.header {                      /*Голубое поле сверху*/
     background: #def5ff;
-    height: 100px;
+    height: 30px;
+    font-size: 2em;
 }
 
 ul.nav {                       /* Стили панели навигации (оранжевая полоска)*/
-    background: #f03624;
-    height: 70px;
+    background: #000000;                    /*Цвет панели навигации*/
+    height: 40px;                           /*Высота панели навигации*/
     border-top: 3px solid rgb(0,0,0);       /*Черная полоска сверху над оранжевым блоком*/
     border-bottom: 3px solid rgb(0,0,0);     /*Черная полоска снизу под оранжевым блоком*/
     text-align: center;
@@ -19,7 +20,7 @@ ul.nav {                       /* Стили панели навигации (о
 
 .nav li {
     display: inline-block;
-    border-right: 3px black;
+    border-right: 3px red;
 }
 
 .nav a {
@@ -28,7 +29,7 @@ ul.nav {                       /* Стили панели навигации (о
     font-family: Arial;
     color: white;
     text-decoration: none;
-    font-size: 3em;
+    font-size: 1em;
 }
 /* внешние границы таблицы серого цвета толщиной 1px */
 table {
@@ -36,14 +37,75 @@ table {
 }
 /* границы ячеек первого ряда таблицы */
 .main_table th{
-   border: 1px solid grey;
-   width: 400px;
+   border: 1px solid grey;                  /*Границы основной таблицы*/
+   width: 400px;                            /*Ширина основной таблицы*/
+}
+/*Свойства кабинета*/
+.parlor {
+  margin: 10px;
+  border: solid 3px brown;
+  padding: 10px;
+  color: brown;
+}
+
+/*Свойства панели (телекоммуникационного шкафа)*/
+.panel {
+  margin: 10px;
+  border: dashed 3px black;
+  padding: 10px;
+  color: black;
+}
+/*Свойства кросса*/
+.cross {
+  margin: 10px;
+  border: solid 3px black;
+  padding: 10px;
+  color: black;
+}
+/*Свойства Кабеля*/
+.cable {
+  margin: 10px;
+  border: solid 3px red;
+  padding: 10px;
+  color: black;
 }
 /* границы ячеек тела таблицы */
 td {
    border: 1px solid grey;
 }
-
 .internal_table th{
-  width: 200px;
+  width: 150px;                             /*Ширина каждой из колонок вложенной таблицы*/
+}
+/*Стили для колонок тиблицы с волокнами*/
+th.vol_num {
+    width: 60px;
+}
+th.vol_dev {
+}
+th.vol_system {
+    width: 80px;
+}
+/* Стили для абзаца с пояснениями на страницах типа add_...*/
+.helper {
+    font-size: 20px;
+    margin: 10px;
+    margin: 10px;
+}
+/* Стили для форм добавления */
+.form_add {
+    padding: 40px;
+}
+.form_submit {
+    margin: 20px;
+    padding: 10px;
+}
+/* Стили для мгновенных сообщений */
+.flash {padding: 10px;}
+.flash.success {
+  border: 1px solid #21DB56;
+  background: #AEFFC5;
+}
+.flash.error {
+  border: 1px solid #FF4343;
+  background: #FF9C9C;
 }

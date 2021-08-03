@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title -%}
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='/css/reset.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='/css/main.css') }}">
+    {% endblock title %}
+</head>
+<body>
+{%- block menu -%}
+<div class="header">
+    <h1>OPTIKA ONLINE by zampolit</h1>
+</div>
+<ul class="nav">        <!--это меню -->
+    {% for m in menu %}
+        <li><a href="{{m.url}}">{{m.title}}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}
+{% block content %}
+<table class="main_table">
+    <tr>    <!--1 ряд с ячейками зданий-->
+        {% for key, value in parlor.items() %}
+        <th>{{key}}</th>                <!-- Здание1-->
+        {% endfor %}
+    </tr>
+    <tr>                                                    <!--Одна главная строка, в которой все кабинеты в каждом из зданий-->
+        {% for key, value in parlor.items() %}              <!--key это название зданий, value - это список вида ***[{'100': [{'Панель 1': ['Кросс 1', 'Кросс 2']}, {'Панель 2': ['Кросс 3', 'Кросс 4']}]}***-->
+        <th>                                                <!--Столбец с кабинетами-->
+            {% for v in value %}                            <!-- value это список кабинетов [{'title':'КОВИ', 'number': '101', 'child': [{'Панель 1': -->
+            {% for cab_num, val_it1 in v.items() %}
+
+                <div class="parlor">                        <!--div это кабинет-->
+                    <h5> Кабинет №{{cab_num}} </h5>                 <!--номер кабинета-->
+                    {% for pan_dict in val_it1 %}
+                    {% for pan_key, pan_val in pan_dict.items() %}
+                        <div class="panel">
+                            <h1>{{pan_key}}</h1>
+                            {% for cross_dict in pan_val %}
+                            {% for cross_key, cross_val in cross_dict.items() %}
+                                <div class="cross">
+                                    <h5>{{cross_key}}</h5>
+                                    {% for cable_dict in cross_val %}
+                                    {% for cable_key, cable_val in cable_dict.items() %}
+                                        <div class="cable">
+                                        <h5>{{cable_key}}</h5>
+                                        <table class="internal_table">
+                                            {% for opt_dict in cable_val %}
+                                            {% for opt_key, opt_val in opt_dict.items() %}
+                                            {% for vol_dict in opt_val %}
+                                                <tr><th class="vol_num">{{opt_key}}</th> <th class="vol_device">{{vol_dict['device']}}</th> <th class="vol_system"> {{vol_dict['system']}} </th></tr>
+                                            {% endfor %}
+                                            {% endfor %}
+                                            {% endfor %}
+                                        </table>
+                                        </div>
+                                    {% endfor %}
+                                    {% endfor %}
+                                </div>
+                            {% endfor %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            {% endfor %}
+        </th>
+        {% endfor %}
+    </tr>
+</table>
+{% endblock %}
+</body>
+</html>
