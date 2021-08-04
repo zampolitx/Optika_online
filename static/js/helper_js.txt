@@ -1,0 +1,9 @@
+//Выполняется каждые 3 секунды
+setInterval(function(){
+  //some code
+}, 3000)
+
+//Выполняется с запозданием в 3 секунды
+setTimeout(function(){
+  //some code
+}, 3000)
