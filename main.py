@@ -35,8 +35,7 @@ def index():
     db = get_db()
     dbase=FDataBase(db)                 #FDataBase - это класс, dbase - экземляр класса FDataBase
     mydbase=Building(db)
-    building2=mydbase.getBuilding()       # Возвращает коллекцию из словарей
-    print(building2)
+    building2=mydbase.getBuilding(build_name=False, ALL=True)       # Возвращает коллекцию из словарей
 
     return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=building2)
 
@@ -150,10 +149,21 @@ def get_parlor():
 
 # Обработчик функции AJAX add_building.js
 # Проверяет введенные данные в форму и то, что есть в базе данных
-@app.route('get_building', methods=['GET', 'POST'])
+@app.route('/get_building', methods=['GET', 'POST'])
 def get_building():
+    print(request.form)
+    build_name = request.form['building_name']
     db = get_db()
     mydbase = Building(db)
+    building_id = mydbase.getBuilding(build_name, ALL=False)
+    print('new_building', build_name)
+    print('building_id', building_id)
+    if (building_id):
+        print('Уже есть')
+        return json.dumps({'resp': "Old"})
+    else:
+        print('Новое здание')
+        return json.dumps({'resp': "New"})
 
 #Закрываем соединение с БД
 @app.teardown_appcontext

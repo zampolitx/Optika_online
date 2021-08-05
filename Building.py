@@ -5,11 +5,11 @@ class Building:
         self.__db = db
         self.__cur = db.cursor()
 
-    def getBuilding(self, build_name=False):
+    def getBuilding(self, build_name, ALL=False):
         my_dbase = Parlor(self.__db)
         sql_all = """SELECT * FROM building"""
         sql_some = "SELECT id FROM building where title = ?"
-        if build_name:
+        if ALL==False:
             #print(build_name)
             try:
                 self.__cur.execute(sql_some, (build_name, ))
@@ -19,7 +19,7 @@ class Building:
                     return res[0][0]
             except:
                 print("Ошибка чтения базы данных")
-            return ['one', 'two', 'four']
+            return False
         else:
             try:
                 self.__cur.execute(sql_all)
