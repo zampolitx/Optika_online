@@ -148,6 +148,13 @@ def get_parlor():
     parlor_list = mydbase_par.getParlor(building_id)
     return json.dumps({'par_buld_resp': parlor_list})
 
+# Обработчик функции AJAX add_building.js
+# Проверяет введенные данные в форму и то, что есть в базе данных
+@app.route('get_building', methods=['GET', 'POST'])
+def get_building():
+    db = get_db()
+    mydbase = Building(db)
+
 #Закрываем соединение с БД
 @app.teardown_appcontext
 def close_db(error):
