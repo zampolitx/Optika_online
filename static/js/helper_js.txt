@@ -7,3 +7,88 @@ setInterval(function(){
 setTimeout(function(){
   //some code
 }, 3000)
+##############################################
+#### С помощью javascript добавляем кнопки на страницу: ####
+const parent = document.getElementById("mydiv");
+const data = {
+  one: {
+    info: "Hello1",
+    text: "Text1",
+    btn: "Btn1"
+  },
+  two: {
+    info: "Two info",
+    text: "Text2",
+    btn: "Btn2"
+  },
+  next: {
+    info: "Next info",
+    text: "Text3",
+    btn: "Btn3"
+  }
+}
+
+for (const key in data) {
+  const div = document.createElement("div");
+  div.classList.add("my-class");
+  div.innerText = `info: ${data[key].info}, text: ${data[key].text} `;
+  const btn = document.createElement("button");
+  btn.innerText = data[key].btn;
+  div.appendChild(btn);
+  parent.appendChild(div);
+}
+на html должен быть элемент div
+<div id="mydiv"></div>
+
+#################################################################
+Обращение к элементам формы
+html -
+<form name="Item_2" action="/add_panel" method="post" class="form_add">
+    <label for="example"> В Здании/на территории предприятия</label>
+    <select name="parent_parlor">
+        {% for parlor in parent_parlor %}
+            <option value="{{ parlor }}" SELECTED>{{ parlor }}</option>
+        {% endfor %}
+</select>
+javascript -
+let frm = document.forms.Item_2;
+let building = frm.parent_building;
+let parlor = frm.parent_parlor;
+let proba = frm.proba;
+//building.value = 'Корпус1'
+//parlor.value = '1'
+if (building.value == "Корпус1") {
+	parlor.value = "1"
+};
+if (building.value == "Корпус2") {
+	parlor.value = "2"
+};
+if (building.value == "Корпус3") {
+	parlor.value = "3"
+};
+#########################################################################
+Передача JSON из flask в javascript
+parent = {"Корпус1": ['Кабинет111', 'Кабинет112', 'Кабинет113'], "Корпус2": ['Кабинет21', 'Кабинет22', 'Кабинет23'], "Корпус3": ['Кабинет31', 'Кабинет32', 'Кабинет33'], "Территория предприятия": ['Кабинет41', 'Кабинет42', 'Кабинет43']}
+из flask передаем в шаблон return render template(parent=parent)
+в шаблоне есть див
+<div id="mydiv" data-parent='{{parent|tojson}}'></div>
+javascript файл:
+var mydata = JSON.parse(document.getElementById("mydiv").dataset.parent);
+console.log(mydata.Корпус1); //[ "Кабинет111", "Кабинет112", "Кабинет113" ]
+console.log(Object.keys(mydata)); //[ "Корпус1", "Корпус2", "Корпус3", "Территория предприятия" ]
+###################################################################################################
+Если нужно вернуть JSON из фласк:
+return jsonify(parent)
+###################################################################################################
+Мой файл перед установкой jquery
+"use strict";
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "http://localhost:5000/proba", true);
+let js = {"my":"second"};
+xhr.send(js);
+xhr.onload = function() {
+	console.log(xhr.status);
+	console.log(xhr.response);
+	console.log(xhr);
+}
+####################################################################################################
