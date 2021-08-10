@@ -92,3 +92,37 @@ xhr.onload = function() {
 	console.log(xhr);
 }
 ####################################################################################################
+Асинхронная функция
+
+async function test() {
+    console.log('1');
+    await new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log('2');
+            resolve()
+        }, 3000);
+    });
+    console.log('3');
+}
+
+test();
+################################################
+Еще один анинхронный код
+
+function AJAX(a,b){
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(a+b);
+        }, 2000);
+    });
+}
+
+async function asyncCall() {
+    console.log('calling');
+    const result = await AJAX(12, 4);
+    console.log(result);
+    console.log('finish');
+}
+
+asyncCall();
+##############################################
