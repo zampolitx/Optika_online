@@ -8,7 +8,6 @@ function AJAX(){
             success: function(response) {
                 var json = jQuery.parseJSON(response);  //Прочитать ответ сервера
                 var resp_list = json.resp; //массив с ключем par_buld_resp (из функции get_building main.py)
-                //console.log(resp_list);
                 resolve(resp_list);
             },
             error: function(error) {
@@ -16,33 +15,26 @@ function AJAX(){
             }
             
         })
-        .then(result =>{
-            console.log(result);
-            return result;
-        })
     });
 }
 
+async function my() {
+            var res = await AJAX();
+            return res;
+        }
 
-$(document).ready(function(){
-    var btn = $('.form_submit');
-    btn.click(function(){
-        var title = $('.add_building_form').val();
-        async function my() {
-            let result = await AJAX();
-            return result;
+var btn = $('.form_submit');
+btn.click(function(){
+    var title = $('.add_building_form').val();        
+    let res_my = my();
+    console.log(Object.prototype.toString.call(res_my));
+    if(title=='123'){
+        console.log('no');
+        return false;
         }
-        let res_my = my();
-        console.log(res_my);
-        if(title=='123'){
-            console.log('no');
-            return false;
-            }
-        else {
-            console.log('yes');
-            return false;            
-        }
-            
-        //{form.submit();}
-    })
+    else {
+        console.log('yes');
+        return false;            
+    }
+    //{form.submit();}
 })
