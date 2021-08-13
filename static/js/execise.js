@@ -1,4 +1,2 @@
 'use strict';
-let a = Number(prompt('Введите первое число'));
-let b = Number(prompt('Введите второе число'));
-alert(a+b);
+for (let i=0; i<5; i++) alert(i);
