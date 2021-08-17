@@ -126,3 +126,26 @@ async function asyncCall() {
 
 asyncCall();
 ##############################################
+Промис работающий
+'use strict';
+async function wait(time) {
+  let promise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve('Готово!!!'), time);
+  });
+
+  let result = await promise;
+  console.log(result);
+  console.log(typeof(result));
+  return result;
+  
+  
+}
+
+async function my() {
+  let a = await wait(3000);
+  console.log(a);
+  console.log(typeof(a));
+}
+
+my();
+##################################################
