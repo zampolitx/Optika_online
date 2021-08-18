@@ -22,15 +22,23 @@ function AJAX() {
 }
 
 async function checkForm() {
-    let promise = await AJAX();
+    //let promise = await AJAX();
     var title = $('.add_building_form').val();
     console.log(`это промис ${promise}`);
     console.log(`это title ${title}`);
     return(false);
 }
 
-$(document).ready(function(){
-    btn.click(function(){
+      
+document.querySelector('.form_submit').addEventListener('click', async function() {
+const answer =  await checkForm();
+//const result1 = await Promise.resolve('ok');
+console.log(result1);
+});
+
+
+/*$(document).ready(function(){
+    btn.click(async function(){
         let answer =  checkForm();
         console.log(`Это answer ${answer}`);
         if(answer==false) {
@@ -41,8 +49,4 @@ $(document).ready(function(){
             return false;
         //{form.submit();}
     })
-})
-
-      
-      
-    
+})*/
