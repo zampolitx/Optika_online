@@ -1,5 +1,5 @@
 'use strict';
-var btn = $('.form_submit');
+var btn = document.querySelector('.form_submit');
 function AJAX() {
     return new Promise(function(resolve, reject){
         $.ajax({
@@ -22,31 +22,34 @@ function AJAX() {
 }
 
 async function checkForm() {
-    //let promise = await AJAX();
+    let promise = await AJAX();
     var title = $('.add_building_form').val();
+    if (title == '') {
+        return 'No'
+    }
+    try {
+    let promise = await AJAX();
     console.log(`это промис ${promise}`);
     console.log(`это title ${title}`);
-    return(false);
+    if (promise == 'Old') {
+        return 'No'
+    }
+} catch (error) {
+    console.log(`это error checkForm ${error}`);
+}
+    return('No');
 }
 
-      
-document.querySelector('.form_submit').addEventListener('click', async function() {
-const answer =  await checkForm();
-//const result1 = await Promise.resolve('ok');
-console.log(result1);
+
+
+btn.addEventListener('click', async function() {
+const answer = await AJAX();
+console.log(`Это answer ${answer}`);
+if (answer == 'No') {
+    return false;
+}
+else {
+    return btn.submit();
+}
 });
-
-
-/*$(document).ready(function(){
-    btn.click(async function(){
-        let answer =  checkForm();
-        console.log(`Это answer ${answer}`);
-        if(answer==false) {
-            
-            return false;
-        }
-        else
-            return false;
-        //{form.submit();}
-    })
-})*/
+    
