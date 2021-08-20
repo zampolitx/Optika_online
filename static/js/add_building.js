@@ -1,4 +1,4 @@
-$(document).ready(function(){
+/*$(document).ready(function(){
     var btn = $('.form_submit');
     btn.click(function(){
       console.log(get_data(2, 4));
@@ -31,4 +31,4 @@ function get_data(a, b) {
           return 13;
         }
     });
-}
+}*/
