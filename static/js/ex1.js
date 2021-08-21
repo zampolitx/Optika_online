@@ -1,26 +1,28 @@
-var btn = document.querySelector('.form_submit');
-btn.addEventListener('click', async function() {
-const answer = await AJAX();
-console.log(`Это answer ${answer}`);
-if (answer == 'No') {
-    return false;
-}
-else {
-    return false;
-}
-});
+let building_name = 'bnxgcxgh';
 
-function AJAX() {
-    console.log($('.form_add').serialize());
-    return new Promise(function(resolve, reject){
-        let a = 4 + 4;
-        function(response) {
-            let resp_list = 'NNNN';
-            resolve(resp_list);
-        },
-        function(error) {
-          console.log(`Это AJAX error ${error}`);
-          reject(error);
-        }
-    });
+// Создаем экземпляр класса XMLHttpRequest
+const request = new XMLHttpRequest();
+
+// Указываем путь до файла на сервере, который будет обрабатывать наш запрос 
+const url = "/get_building";
+ 
+// Так же как и в GET составляем строку с данными, но уже без пути к файлу 
+const params = "building_name=" + building_name;
+ 
+/* Указываем что соединение у нас будет POST, говорим что путь к файлу в переменной url, и что запрос у нас
+асинхронный, по умолчанию так и есть не стоит его указывать, еще есть 4-й параметр пароль авторизации, но этот
+    параметр тоже необязателен.*/ 
+request.open("POST", url, true);
+ 
+//В заголовке говорим что тип передаваемых данных закодирован. 
+request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+ 
+request.addEventListener("readystatechange", () => {
+
+    if(request.readyState === 4 && request.status === 200) {       
+        console.log(request.responseText);
     }
+});
+ 
+//  Вот здесь мы и передаем строку с данными, которую формировали выше. И собственно выполняем запрос. 
+request.send(params);

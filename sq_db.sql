@@ -10,6 +10,7 @@ INSERT INTO mainmenu(title, url) VALUES('Добавить здание', '/add_b
 INSERT INTO mainmenu(title, url) VALUES('Добавить помещение', '/add_room');
 INSERT INTO mainmenu(title, url) VALUES('Добавить панель', '/add_panel');
 INSERT INTO mainmenu(title, url) VALUES('Добавить кросс', '/add_cross');
+INSERT INTO mainmenu(title, url) VALUES('Пробная', '/proba');
 
 CREATE TABLE IF NOT EXISTS items (
 id integer PRIMARY KEY AUTOINCREMENT,
