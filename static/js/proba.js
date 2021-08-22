@@ -1,3 +1,2 @@
 'use strict';
-let form = document.forms.form;
-console.log(form);
+console.log(Array.from(document.body.childNodes).filter);

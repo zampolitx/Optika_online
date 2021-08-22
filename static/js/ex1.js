@@ -1,28 +1,30 @@
-let building_name = 'bnxgcxgh';
+const requestURL = '/get_building';
+//const requestURL = 'https://jsonplaceholder.typicode.com/users'
+function sendRequest(method, url, body = null) {
+    return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest()
+        xhr.open(method, url);
+        xhr.responseType = 'json';
+        xhr.setRequestHeader('Content-Type', 'application/json')
+        xhr.onload = () => {
+            if (xhr.status >= 400) {
+                reject(xhr.response)
+            } else {
+                resolve(xhr.response)
+            }
+        }
+        xhr.onerror = () => {
+            reject(xhr.response)
+        }
+        xhr.send(JSON.stringify(body))
+    })
+    
+}
 
-// Создаем экземпляр класса XMLHttpRequest
-const request = new XMLHttpRequest();
+const body = {
+    'building_name=': '123'
+}
 
-// Указываем путь до файла на сервере, который будет обрабатывать наш запрос 
-const url = "/get_building";
- 
-// Так же как и в GET составляем строку с данными, но уже без пути к файлу 
-const params = "building_name=" + building_name;
- 
-/* Указываем что соединение у нас будет POST, говорим что путь к файлу в переменной url, и что запрос у нас
-асинхронный, по умолчанию так и есть не стоит его указывать, еще есть 4-й параметр пароль авторизации, но этот
-    параметр тоже необязателен.*/ 
-request.open("POST", url, true);
- 
-//В заголовке говорим что тип передаваемых данных закодирован. 
-request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
- 
-request.addEventListener("readystatechange", () => {
-
-    if(request.readyState === 4 && request.status === 200) {       
-        console.log(request.responseText);
-    }
-});
- 
-//  Вот здесь мы и передаем строку с данными, которую формировали выше. И собственно выполняем запрос. 
-request.send(params);
+sendRequest("POST", requestURL, body)
+.then(data => console.log(data))
+.catch(err => console.log(err))
