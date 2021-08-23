@@ -2,9 +2,7 @@
 
 {% block content %}
     <p><h3 class="helper">Добавляются здания, сооружения или территория предприятия</h3></p>
-    {% for cat, msg in get_flashed_messages(True) %}
-    <div class="flash {{cat}}">{{msg}}</div>
-    {% endfor %}
+    <div class="flash"></div>
     <form action="/add_building" method="post" class="form_add">
         <p><label>Название: </label> <input type="text" name="building_name" value="" class='add_building_form' placeholder="Введите название здания" required></p>
         <p><button type="button" value="Добавить" class="form_submit">Отправить</button></p>

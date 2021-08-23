@@ -57,10 +57,6 @@ def add_building():
     dbase=FDataBase(db)
     Buld_base=Building(db)
     if request.method == "POST":
-        if len(request.form['building_name']) > 1:  # Отображение подсказок
-            flash('Данные отправлены', category='success')
-        else:
-            flash('Слишком короткое имя', category='error')
         Buld_base.addBuilding(request.form['building_name'])
     return render_template('add_building.html', title="Добавить здание", menu=dbase.getMenu())
 
