@@ -34,11 +34,14 @@ CREATE TABLE IF NOT EXISTS parlor (
 id integer PRIMARY KEY AUTOINCREMENT,
 number text NOT NULL,
 title text NOT NULL,
+par_length INTEGER,
+par_width INTEGER,
+par_height INTEGER,
 building_id INTEGER NOT NULL,
 FOREIGN KEY (building_id) REFERENCES building(id)
 );
-INSERT INTO parlor(number, title, building_id) VALUES('101', 'Серверная 1 этаж', 1);
-INSERT INTO parlor(number, title, building_id) VALUES('102', 'Серверная 2 этаж', 1);
+INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES('КП-2', 'ПСВ-и', 5520, 2460, 4000, 1);
+INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES('102', 'Серверная 2 этаж',1000, 1000, 1000, 1);
 
 
 CREATE TABLE IF NOT EXISTS panel (

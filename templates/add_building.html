@@ -2,11 +2,12 @@
 
 {% block content %}
     <p><h3 class="helper">Добавляются здания, сооружения или территория предприятия</h3></p>
-    <div class="flash"></div>
+    <div class="alert"></div>
     <form action="/add_building" method="post" class="form_add">
         <p><label>Название: </label> <input type="text" name="building_name" value="" class='add_building_form' placeholder="Введите название здания" required></p>
         <p><button type="button" value="Добавить" class="form_submit">Отправить</button></p>
     </form>
     <script src="{{url_for('static', filename='js/add_building.js') }}"></script>
     <script src="{{url_for('static', filename='js/AJAX.js') }}"></script>
+    <script src="{{url_for('static', filename='js/alert.js') }}"></script>
 {% endblock %}

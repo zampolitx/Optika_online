@@ -107,12 +107,16 @@ td {
     padding: 10px;
 }
 /* Стили для мгновенных сообщений */
-.flash {padding: 10px;}
-.flash.success {
+.alert {
+padding: 10px;
+border-radius: 4px;
+color: black;   /*цвет шрифта в сообщении*/
+}
+.alert.success {
   border: 1px solid #21DB56;
   background: #AEFFC5;
 }
-.flash.error {
+.alert.error {
   border: 1px solid #FF4343;
   background: #FF9C9C;
 }
