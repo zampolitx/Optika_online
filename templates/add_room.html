@@ -2,6 +2,7 @@
 
 {% block content %}
     <p><h3 class="helper">Добавляются кабинеты, коридоры или участки территории предприятия</h3></p>
+    <div class="alert"></div>
     <form name="Item_2" action="/add_room" method="post" class="form_add">
         <label for="example"> В Здании/на территории</label>
             <select name="parent_item">
@@ -14,10 +15,10 @@
         <p><label>Длинна помещения: </label> <input type="text" name="par_length" value="" class='add_room' placeholder="Длинна помещения (мм)" ></p>
         <p><label>Ширина помещения: </label> <input type="text" name="par_width" value="" class='add_room' placeholder="Ширина помещения (мм)" ></p>
         <p><label>Высота помещения: </label> <input type="text" name="par_height" value="" class='add_room' placeholder="Высота помещения (мм)"></p>
-        <p><input type="submit" value="Отправить" class="form_submit"></p>
+        <p><button type="button" value="Отправить" class="form_submit">Отправить</p>
     </form>
 
-    <!--<script src="{{url_for('static', filename='js/proba.js') }}"></script>-->
-    <!--<script src="{{url_for('static', filename='js/execise.js') }}"></script>-->
-    <!--<script src="{{url_for('static', filename='js/ex1.js') }}"></script>-->
+    <script src="{{url_for('static', filename='js/add_room.js') }}"></script>
+    <script src="{{url_for('static', filename='js/AJAX.js') }}"></script>
+    <script src="{{url_for('static', filename='js/alert.js') }}"></script>
 {% endblock %}

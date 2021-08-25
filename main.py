@@ -145,21 +145,37 @@ def get_parlor():
 
 # Обработчик функции AJAX add_building.js
 # Проверяет введенные данные в форму и то, что есть в базе данных
-@app.route('/get_building', methods=['GET', 'POST'])
+def retAJAX(response):
+    if (response):
+        return json.dumps({'resp': 'Old'})
+    else: return json.dumps(({'resp': 'New'}))
+
+@app.route('/get_AJAX', methods=['GET', 'POST'])
 def get_building():
-    print(request.form)
-    build_name = request.form['building_name']
     db = get_db()
     mydbase = Building(db)
-    building_id = mydbase.getBuilding(build_name, ALL=False)
-    print('new_building', build_name)
-    print('building_id', building_id)
-    if (building_id):
-        print('Уже есть')
-        return json.dumps({'resp': "Old"})
-    else:
-        print('Новое здание')
-        return json.dumps({'resp': "New"})
+    print(request.form['building_name'])
+    if (request.form['building_name']):             # Если в запросе AJAX есть building_name
+        build_name = request.form['building_name']
+        print('new_building', build_name)
+        building_id = mydbase.getBuilding(build_name, ALL=False)
+        return retAJAX(building_id)
+    elif (request.form['room_name']):
+        room_name = request.form['room_name']
+        print('new_building', room_name)
+        """
+        room_id = mydbase.getBuilding(room_name, ALL=False)
+
+
+        print('building_id', room_id)
+        if (room_id):
+            print('Уже есть')
+            return json.dumps({'resp': "Old"})
+        else:
+            print('Новое здание')
+            return json.dumps({'resp': "New"})
+
+"""
 
 #Закрываем соединение с БД
 @app.teardown_appcontext
