@@ -51,6 +51,14 @@ def add():
     dbase = FDataBase(db)
     return render_template('add.html', title="Optika-add", menu=dbase.getMenu(), add_items=dbase.getItems())
 
+@app.route("/showBuilding1", methods=['GET', 'POST'])
+def showBuilding():
+    db = get_db()
+    dbase=FDataBase(db)
+    if request.method == "POST":
+        print('ok')
+    return render_template('showBuilding.html', title="Показать здание", menu=dbase.getMenu())
+
 @app.route("/add_building", methods=['GET', 'POST'])
 def add_building():
     db = get_db()
@@ -147,35 +155,32 @@ def get_parlor():
 # Проверяет введенные данные в форму и то, что есть в базе данных
 def retAJAX(response):
     if (response):
+        print('oldsss')
         return json.dumps({'resp': 'Old'})
-    else: return json.dumps(({'resp': 'New'}))
+    else:
+        print('Newwww')
+        return json.dumps(({'resp': 'New'}))
+
 
 @app.route('/get_AJAX', methods=['GET', 'POST'])
 def get_building():
     db = get_db()
-    mydbase = Building(db)
-    print(request.form['building_name'])
-    if (request.form['building_name']):             # Если в запросе AJAX есть building_name
+    request_key = list(request.form.keys())[0]      # Ключ в запросе AJAX (building_name, room_name ...)
+    if (request_key=='building_name'):             # Если в запросе AJAX есть building_name
+        mydbase = Building(db)
         build_name = request.form['building_name']
         print('new_building', build_name)
         building_id = mydbase.getBuilding(build_name, ALL=False)
         return retAJAX(building_id)
-    elif (request.form['room_name']):
+    elif (request_key=='room_name'):
+        mydbase = Parlor(db)
         room_name = request.form['room_name']
-        print('new_building', room_name)
-        """
-        room_id = mydbase.getBuilding(room_name, ALL=False)
+        print('new_room', room_name)
+        room_id = mydbase.getParlor(room_name, ALL=False)[0]
+        print(type(room_id))
+        print('room_id', room_id)
+        return retAJAX(room_id)
 
-
-        print('building_id', room_id)
-        if (room_id):
-            print('Уже есть')
-            return json.dumps({'resp': "Old"})
-        else:
-            print('Новое здание')
-            return json.dumps({'resp': "New"})
-
-"""
 
 #Закрываем соединение с БД
 @app.teardown_appcontext

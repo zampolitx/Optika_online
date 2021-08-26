@@ -28,7 +28,7 @@ class Parlor:
                 if res:
                     l = []
                     for elem in res:
-                        p = dict(title=elem[2], number=elem[1], child=my_dbase.getPanel(elem[0], ALL=True))
+                        p = dict(id=elem[0], title=elem[2], number=elem[1], child=my_dbase.getPanel(elem[0], ALL=True))
                         l.append(p)
                     return l
             except:
