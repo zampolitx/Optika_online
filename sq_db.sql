@@ -37,6 +37,7 @@ title text NOT NULL,
 par_length INTEGER,
 par_width INTEGER,
 par_height INTEGER,
+plan BLOB DEFAULT NULL,
 building_id INTEGER NOT NULL,
 FOREIGN KEY (building_id) REFERENCES building(id)
 );

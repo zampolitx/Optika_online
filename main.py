@@ -8,6 +8,7 @@ from Panel import Panel
 DATABASE = '/tmp/flsite.db'
 DEBUG = True
 SECRET_KEY = ';askldjfa;skdljfas;kldfj'
+MAX_CONTENT_LENGTH = 1024 * 1024            # Максимальный размер загружаемого изображения 1 Мб)
 # Конец конфигурации
 app = Flask(__name__)
 app.config.from_object(__name__)                                                # Загружаем конфигурацию из текущего модуля
@@ -51,13 +52,14 @@ def add():
     dbase = FDataBase(db)
     return render_template('add.html', title="Optika-add", menu=dbase.getMenu(), add_items=dbase.getItems())
 
-@app.route("/showBuilding1", methods=['GET', 'POST'])
-def showBuilding():
+@app.route("/showBuilding/<id>", methods=['GET', 'POST'])
+def showBuilding(id):
+    url = "showBuilding/"+id
     db = get_db()
     dbase=FDataBase(db)
     if request.method == "POST":
         print('ok')
-    return render_template('showBuilding.html', title="Показать здание", menu=dbase.getMenu())
+    return render_template(url, title="Показать здание", menu=dbase.getMenu())
 
 @app.route("/add_building", methods=['GET', 'POST'])
 def add_building():

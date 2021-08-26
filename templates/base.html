@@ -32,9 +32,9 @@
             {% for parlor in value %}                       <!-- value это список кабинетов [{'title':'КОВИ', 'number': '101', 'child': [{'Панель 1': -->
                 <div class="parlor">                        <!--div это кабинет-->
                     {% if parlor.number %}
-                        <h5><a href=showBuilding{{parlor.id}}> {{parlor.number}} {{parlor.title}} </a> </h5>                 <!--номер кабинета-->
+                        <h5><a href=showBuilding/{{parlor.id}}> {{parlor.number}} {{parlor.title}} </a> </h5>                 <!--номер кабинета-->
                     {% else %}
-                        <h5> <a href=showBuilding{{parlor.id}}> {{parlor.title}} </a> </h5>                 <!--номер кабинета-->
+                        <h5> <a href=showBuilding/{{parlor.id}}> {{parlor.title}} </a> </h5>                 <!--номер кабинета-->
                     {% endif %}
                     {% for panel in parlor.child %}             <!--parlor.child это список-->
                         <div class="panel">
