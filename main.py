@@ -51,13 +51,16 @@ def add():
     dbase = FDataBase(db)
     return render_template('add.html', title="Optika-add", menu=dbase.getMenu(), add_items=dbase.getItems())
 
-@app.route("/showBuilding1", methods=['GET', 'POST'])
-def showBuilding():
+@app.route("/showBuilding<id>", methods=['GET', 'POST'])
+def showBuilding(id):
     db = get_db()
     dbase=FDataBase(db)
+    mydbase = Parlor(db)
+    parlor = mydbase.getParlor(parlor_id=id, ALL=False, building_id=False)
+    print('it is parlor', parlor)
     if request.method == "POST":
-        print('ok')
-    return render_template('showBuilding.html', title="Показать здание", menu=dbase.getMenu())
+        print('it is parlor', parlor)
+    return render_template('showBuilding.html', title="Показать здание", menu=dbase.getMenu(), parlor=parlor)
 
 @app.route("/add_building", methods=['GET', 'POST'])
 def add_building():

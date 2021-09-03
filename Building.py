@@ -27,7 +27,7 @@ class Building:
                 if res:
                     d = {}
                     for i in res:                   #Для каждой строки, извлеченной из БД
-                        d[i[1]] = my_dbase.getParlor(i[0], ALL=True)      # d{'Корпус1':[
+                        d[i[1]] = my_dbase.getParlor(building_id=i[0], ALL=True, parlor_id=False)      # d{'Корпус1':[
                     return d
             except:
                 print("Ошибка чтения базы данных")

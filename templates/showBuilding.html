@@ -1,5 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    .rectangle {
+    height: {{parlor.width/5}}px;
+    width: {{parlor.length/5}}px;
+    border: 5px solid black;
+    background: #DDDDDD;
+    margin: auto;
+    }
+</style>
     <h1>Показать здание html</h1>
+    <div class="rectangle"></div>
+    <p><h4>Ширина помещения: {{parlor.width}}</h4></p>
+    <p><h>Длинна помещения: {{parlor.length}}</h></p>
+    <p><h>Высота помещения: {{parlor.height}}</h></p>
 {% endblock %}

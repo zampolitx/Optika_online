@@ -5,11 +5,12 @@ class Parlor:
         self.__db = db
         self.__cur = db.cursor()
 
-    def getParlor(self, building_id, ALL=False):    #ALL=True значит нужна полная структура, нет значит вызывают из js
+    def getParlor(self, building_id, parlor_id, ALL=False):    #ALL=True значит нужна полная структура, нет значит вызывают из js
         my_dbase = Panel(self.__db)
         sql_all = "SELECT * FROM parlor where building_id = ?"
         sql_some = "SELECT number, title FROM parlor where building_id = ?"
-        if ALL == False:
+        sql_one = "SELECT * FROM parlor where id = ?"
+        if ALL == False and parlor_id == False:
             try:
                 self.__cur.execute(sql_some, (building_id, ))
                 res = self.__cur.fetchall()
@@ -19,7 +20,21 @@ class Parlor:
                         l.append(elem[1])
                     return l
             except:
-                print("Ошибка чтения базы данных")
+                print("Ошибка чтения базы данных для parlor 1")
+            return ['']
+        elif ALL == False and parlor_id:
+            print("parlor_id in BD is", parlor_id)
+            try:
+                self.__cur.execute(sql_one, (parlor_id, ))
+                res = self.__cur.fetchall()
+                print(res)
+                if res:
+                    for elem in res:
+                        print(elem[1])
+                        p=dict(number=elem[1], title=elem[2], length=elem[3], width=elem[4], height=elem[5])
+                    return p
+            except:
+                print("Ошибка чтения базы данных для parlor 2")
             return ['']
         else:
             try:
@@ -32,7 +47,7 @@ class Parlor:
                         l.append(p)
                     return l
             except:
-                print("Ошибка чтения базы данных")
+                print("Ошибка чтения базы данных для parlor 3")
             return [1]
 
     def addParlor(self, parent_item, room_name, room_number):       # parent_item - запись из чекбокса, остальное из формы добавления кабинета/участка территории

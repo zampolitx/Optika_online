@@ -43,6 +43,15 @@ FOREIGN KEY (building_id) REFERENCES building(id)
 INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES('КП-2', 'ПСВ-и', 5520, 2460, 4000, 1);
 INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES('102', 'Серверная 2 этаж',1000, 1000, 1000, 1);
 
+CREATE TABLE IF NOT EXISTS door (
+id integer PRIMARY KEY AUTOINCREMENT,
+height INTEGER,
+width INTEGER,
+type text NOT NULL,
+parlor_id INTEGER NOT NULL,
+FOREIGN KEY (parlor_id) REFERENCES parlor(id)
+);
+INSERT INTO door(height, width, type, parlor_id) VALUES(2000, 1000, 'left', 1);
 
 CREATE TABLE IF NOT EXISTS panel (
 id integer PRIMARY KEY AUTOINCREMENT,
