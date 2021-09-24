@@ -106,6 +106,13 @@ td {
     margin: 20px;
     padding: 10px;
 }
+/*Стили для дверей в помещениях*/
+.door {
+    width: 40px;
+    height: 40px;
+    border: 3px;
+    background: black;
+}
 /* Стили для мгновенных сообщений */
 .alert {
 padding: 10px;

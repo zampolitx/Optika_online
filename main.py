@@ -4,6 +4,7 @@ from FDataBase import FDataBase
 from Building import Building
 from Parlor import Parlor
 from Panel import Panel
+from Door import Door
 # Конфигурация приложения
 DATABASE = '/tmp/flsite.db'
 DEBUG = True
@@ -36,7 +37,7 @@ def index():
     dbase=FDataBase(db)                 #FDataBase - это класс, dbase - экземляр класса FDataBase
     mydbase=Building(db)
     building2=mydbase.getBuilding(build_name=False, ALL=True)       # Возвращает коллекцию из словарей
-
+    print(building2)
     return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=building2)
 
 @app.route("/add", methods=['GET', 'POST'])
@@ -108,6 +109,21 @@ def add_panel():
                 flash('Добавлено', category='success')
     return render_template('add_panel.html', title="Добавить панель", menu=dbase.getMenu(), parent_building=parent_building)
 
+@app.route("/add_door", methods=['GET', 'POST'])
+def add_door():
+    db = get_db()
+    dbase = FDataBase(db)
+    Par_base = Door(db)
+    Build_base = Building(db)
+    parent_building = []
+    for d in Build_base.getBuilding(ALL=True):
+        parent_building.append(d)
+    if request.method == "POST":
+        print(request.form)
+        res = Par_base.addDoor(request.form['parent_parlor'], request.form['door_width'], request.form['door_height'], request.form['type'])
+    return render_template('add_door.html', title="Добавить дверь", menu=dbase.getMenu(), parent_building=parent_building)
+
+
 @app.route("/add_cross", methods=['GET', 'POST'])
 def add_cross():
     db = get_db()
@@ -145,13 +161,15 @@ def get_len():
 # Обработчик функции AJAX add_panel.js
 @app.route('/get_parlor', methods=['GET', 'POST'])
 def get_parlor():
-    #print(request.form)
+    print(request.form)
     par_building = request.form['parent_building']  #Из js получаем название здания, в котором находится кабинет
     db = get_db()
     mydbase = Building(db)
     building_id = mydbase.getBuilding(par_building)  # Обращаемся к БД и получаем id здания, в котором находится кабинет
+    print('b_id is', building_id)
     mydbase_par = Parlor(db)
-    parlor_list = mydbase_par.getParlor(building_id)
+    parlor_list = mydbase_par.getParlor(building_id, parlor_id=False, ALL=False)
+    print('par_list', parlor_list)
     return json.dumps({'par_buld_resp': parlor_list})
 
 # Обработчик функции AJAX add_building.js

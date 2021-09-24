@@ -5,7 +5,7 @@ class Building:
         self.__db = db
         self.__cur = db.cursor()
 
-    def getBuilding(self, build_name, ALL=False):
+    def getBuilding(self, build_name=False, ALL=False):
         my_dbase = Parlor(self.__db)
         sql_all = """SELECT * FROM building"""
         sql_some = "SELECT id FROM building where title = ?"

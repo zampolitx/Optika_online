@@ -8,6 +8,7 @@ INSERT INTO mainmenu(title, url) VALUES('Главная', '/');
 INSERT INTO mainmenu(title, url) VALUES('Добавить', '/add');
 INSERT INTO mainmenu(title, url) VALUES('Добавить здание', '/add_building');
 INSERT INTO mainmenu(title, url) VALUES('Добавить помещение', '/add_room');
+INSERT INTO mainmenu(title, url) VALUES('Добавить дверь', '/add_door');
 INSERT INTO mainmenu(title, url) VALUES('Добавить панель', '/add_panel');
 INSERT INTO mainmenu(title, url) VALUES('Добавить кросс', '/add_cross');
 INSERT INTO mainmenu(title, url) VALUES('Пробная', '/proba');
@@ -51,10 +52,11 @@ type text NOT NULL,
 parlor_id INTEGER NOT NULL,
 positionX INTEGER,
 positionY INTEGER,
+angle_of_rotation INTEGER,
 FOREIGN KEY (parlor_id) REFERENCES parlor(id)
 );
-INSERT INTO door(height, width, type, parlor_id, positionX, positionY) VALUES(2000, 1000, 'left', 1, 123, 123);
-INSERT INTO door(height, width, type, parlor_id) VALUES(2000, 1000, 'left', 1);
+INSERT INTO door(height, width, type, parlor_id, positionX, positionY, angle_of_rotation) VALUES(2000, 1000, 'Left', 1, 123, 123, 90);
+INSERT INTO door(height, width, type, parlor_id, positionX, positionY, angle_of_rotation) VALUES(2000, 1000, 'Right', 1, 123, 123, 90);
 
 CREATE TABLE IF NOT EXISTS panel (
 id integer PRIMARY KEY AUTOINCREMENT,
