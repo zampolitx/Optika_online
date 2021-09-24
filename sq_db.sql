@@ -49,8 +49,11 @@ height INTEGER,
 width INTEGER,
 type text NOT NULL,
 parlor_id INTEGER NOT NULL,
+positionX INTEGER,
+positionY INTEGER,
 FOREIGN KEY (parlor_id) REFERENCES parlor(id)
 );
+INSERT INTO door(height, width, type, parlor_id, positionX, positionY) VALUES(2000, 1000, 'left', 1, 123, 123);
 INSERT INTO door(height, width, type, parlor_id) VALUES(2000, 1000, 'left', 1);
 
 CREATE TABLE IF NOT EXISTS panel (
