@@ -18,7 +18,7 @@ class Building:
                 if res:
                     return res[0][0]
             except:
-                print("Ошибка чтения базы данных")
+                print("Ошибка чтения базы данных ALL==False")
             return False
         else:
             try:
@@ -30,14 +30,14 @@ class Building:
                         d[i[1]] = my_dbase.getParlor(building_id=i[0], ALL=True, parlor_id=False)      # d{'Корпус1':[
                     return d
             except:
-                print("Ошибка чтения базы данных")
+                print("Ошибка чтения базы данных ALL==True")
             return [1]
 
     def addBuilding(self, building_name):
         try:
             self.__cur.execute("INSERT INTO building(title) VALUES(?)", (building_name, ))
             self.__db.commit()
-            #print(building_name)
+            print(building_name)
         except sqlite3.Error as e:
-            print("Ошибка добавления записи в БД: "+str(e))
+            print("Ошибка добавления записи в БД : "+str(e))
         return [1]

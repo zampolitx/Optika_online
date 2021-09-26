@@ -40,11 +40,13 @@ class Door:
             res = self.__cur.fetchall()
             for elem in res:
                 print('parent item=', parent_item)
-                #print('element0', elem[0])      # в elem[0] находится id кабинета куда добавляем панель
-            positionX=123
-            positionY=124
-            self.__cur.execute("INSERT INTO door(parlor_id, height, width, type, positionX, positionY) VALUES(?, ?, ?, ?, ?, ?)", (elem[0], door_height, door_width, type, positionX, positionY))
-            self.__db.commit()
+                print('element0', elem[0])      # в elem[0] находится id кабинета куда добавляем панель
+                positionX=123
+                positionY=124
+                angle_of_rotation = 90
+                self.__cur.execute("INSERT INTO door(parlor_id, height, width, type, positionX, positionY, angle_of_rotation) VALUES(?, ?, ?, ?, ?, ?, ?)", (elem[0], door_height, door_width, type, positionX, positionY, angle_of_rotation))
+                self.__db.commit()
+                print('Запись двери добавлена')
         except sqlite3.Error as e:
             print("Ошибка добавления записи в БД: "+str(e))
         return [1]

@@ -121,6 +121,7 @@ def add_door():
     if request.method == "POST":
         print(request.form)
         res = Par_base.addDoor(request.form['parent_parlor'], request.form['door_width'], request.form['door_height'], request.form['type'])
+        print('res', res)
     return render_template('add_door.html', title="Добавить дверь", menu=dbase.getMenu(), parent_building=parent_building)
 
 
