@@ -108,10 +108,12 @@ td {
 }
 /*Стили для дверей в помещениях*/
 .door {
+    /*position: absolute;*/
+    margin: 10px;
     width: 40px;
     height: 40px;
     border: 3px;
-    background: black;
+    background: grey;
 }
 /* Стили для мгновенных сообщений */
 .alert {

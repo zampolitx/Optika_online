@@ -57,11 +57,13 @@ def showBuilding(id):
     db = get_db()
     dbase=FDataBase(db)
     mydbase = Parlor(db)
+    doorBase = Door(db)
     parlor = mydbase.getParlor(parlor_id=id, ALL=False, building_id=False)
+    doors = doorBase.getDoor(parlor_id=id, ALL=False)
     print('it is parlor', parlor)
     if request.method == "POST":
         print('it is parlor', parlor)
-    return render_template('showBuilding.html', title="Показать здание", menu=dbase.getMenu(), parlor=parlor)
+    return render_template('showBuilding.html', title="Показать здание", menu=dbase.getMenu(), parlor=parlor, doors=doors)
 
 @app.route("/add_building", methods=['GET', 'POST'])
 def add_building():

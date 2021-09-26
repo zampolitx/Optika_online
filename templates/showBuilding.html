@@ -11,7 +11,18 @@
     }
 </style>
     <h1>Показать здание html</h1>
-    <div class="rectangle"></div>
+    <div class="rectangle"> <!-- div class='rectangle' это помещение-->
+        {% for list_elem in doors %}
+                <div class="door"> <!-- div class='door' это дверь-->
+                    <style>
+                        top:
+                    </style>
+                    {{list_elem[1]}}                <!-- {'Корпус1': -->
+                </div>
+        {% endfor %}
+        <!-- div class='panel' это шкафы телекоммуникационные (добавить ниже)-->
+
+    </div>
     <p><h4>Ширина помещения: {{parlor.width}}</h4></p>
     <p><h>Длинна помещения: {{parlor.length}}</h></p>
     <p><h>Высота помещения: {{parlor.height}}</h></p>
