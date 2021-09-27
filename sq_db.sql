@@ -19,6 +19,7 @@ title text NOT NULL
 );
 INSERT INTO items(title) VALUES('Здание');
 INSERT INTO items(title) VALUES('Помещение');
+INSERT INTO items(title) VALUES('Дверь');
 INSERT INTO items(title) VALUES('Панель');
 INSERT INTO items(title) VALUES('Кабель');
 INSERT INTO items(title) VALUES('Кросс');
@@ -55,8 +56,8 @@ positionY INTEGER,
 angle_of_rotation INTEGER,
 FOREIGN KEY (parlor_id) REFERENCES parlor(id)
 );
-INSERT INTO door(height, width, type, parlor_id, positionX, positionY, angle_of_rotation) VALUES(2000, 1000, 'Left', 1, 123, 123, 90);
-INSERT INTO door(height, width, type, parlor_id, positionX, positionY, angle_of_rotation) VALUES(2000, 1000, 'Right', 1, 123, 123, 90);
+INSERT INTO door(height, width, type, parlor_id, positionX, positionY, angle_of_rotation) VALUES(2000, 1000, 'left', 1, 150, -73, -90);
+INSERT INTO door(height, width, type, parlor_id, positionX, positionY, angle_of_rotation) VALUES(2000, 1000, 'right', 1, 150, -13, 90);
 
 CREATE TABLE IF NOT EXISTS panel (
 id integer PRIMARY KEY AUTOINCREMENT,

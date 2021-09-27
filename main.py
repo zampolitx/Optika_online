@@ -99,6 +99,7 @@ def add_panel():
     Par_base = Panel(db)
     Build_base = Building(db)
     parent_building = []
+    print('parent_building', parent_building)
     for d in Build_base.getBuilding():
         parent_building.append(d)
     if request.method == "POST":

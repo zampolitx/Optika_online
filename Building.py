@@ -20,6 +20,16 @@ class Building:
             except:
                 print("Ошибка чтения базы данных ALL==False")
             return False
+        elif ALL==True and build_name==False:
+            try:
+                self.__cur.execute(sql_all)
+                res = self.__cur.fetchall()
+                print(res[0][0])
+                if res:
+                    return res[0][0]
+            except:
+                print("Ошибка чтения базы данных ALL==False")
+            return False
         else:
             try:
                 self.__cur.execute(sql_all)

@@ -3,6 +3,7 @@
 {% block content %}
 <style>
     .rectangle {
+    position: relative;
     height: {{parlor.width/5}}px;
     width: {{parlor.length/5}}px;
     border: 5px solid black;
@@ -10,14 +11,18 @@
     margin: auto;
     }
 </style>
-    <h1>Показать здание html</h1>
+    <h1>Экспликация помещения: {{ parlor.title }}</h1>
     <div class="rectangle"> <!-- div class='rectangle' это помещение-->
         {% for list_elem in doors %}
-                <div class="door"> <!-- div class='door' это дверь-->
-                    <style>
-                        top:
-                    </style>
-                    {{list_elem[1]}}                <!-- {'Корпус1': -->
+                <div class="door" style="top:{{list_elem[5]}}px;left:{{list_elem[6]}}px;transform:rotate({{list_elem[7]}}deg)"> <!-- div class='door' это дверь позиционируем в соотв. с positionX, positionY из БД двери-->
+                    {% if list_elem[3]=='right' %}
+                        <div class="door_right"></div>  <!-- Правая дверь -->
+                    {% elif list_elem[3]=='left' %}
+                        <div class="door_left"></div>   <!-- Левая дверь -->
+                    {% else %}
+                        <div class="door_doble"></div>  <!-- Двойная дверь -->
+                    {%endif%}
+                    <div class="wall"></div>
                 </div>
         {% endfor %}
         <!-- div class='panel' это шкафы телекоммуникационные (добавить ниже)-->
