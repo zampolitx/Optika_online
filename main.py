@@ -59,14 +59,17 @@ def add():
 def showBuilding(id):
     db = get_db()
     dbase=FDataBase(db)
-    mydbase = Parlor(db)
+    parBase = Parlor(db)
     doorBase = Door(db)
-    parlor = mydbase.getParlor(parlor_id=id, ALL=False, building_id=False)
+    panelBase = Panel(db)
+    parlor = parBase.getParlor(parlor_id=id, ALL=False, building_id=False)
     doors = doorBase.getDoor(parlor_id=id, ALL=False)
+    panel = panelBase.getPanel(parlor_id=id, ALL=False) # Список строк панелей из БД
     print('it is parlor', parlor)
+    print('it is a panel', panel)
     if request.method == "POST":
         print('it is parlor', parlor)
-    return render_template('showBuilding.html', title="Показать здание", menu=dbase.getMenu(), parlor=parlor, doors=doors)
+    return render_template('showBuilding.html', title="Показать здание", menu=dbase.getMenu(), parlor=parlor, doors=doors, panel=panel)
 
 @app.route("/add_building", methods=['GET', 'POST'])
 def add_building():
@@ -88,12 +91,25 @@ def add_room():
     if request.method == "POST":
         print(request.form)
         if len(request.form['room_name']) > 1:                          # Отображение подсказок
-            res = Par_base.addParlor(request.form['parent_item'], request.form['room_name'], request.form['room_number'])
+            res = Par_base.addParlor(request.form['parent_item'], request.form['room_name'], request.form['room_number'], request.form['par_length'], request.form['par_width'], request.form['par_height'])
             if not res:
                 flash('Ошибка', category='error')
             else:
                 flash('Нет ошибки', category='success')
     return render_template('add_room.html', title="Добавить помещение", menu=dbase.getMenu(), parent_item=parent_item)
+
+@app.route("/showPanel<id>", methods=['GET', 'POST'])
+def showPanel(id):
+    db = get_db()
+    dbase=FDataBase(db)
+    panelBase = Panel(db)
+    #doorBase = Door(db)
+    panel = panelBase.getPanel(panel_id=id, ALL=False, parlor_id=False)
+    #doors = doorBase.getDoor(parlor_id=id, ALL=False)
+    print('it is panel', panel)
+    if request.method == "POST":
+        print('it is parlor', panel)
+    return render_template('showPanel.html', title="Показать панель", menu=dbase.getMenu(), panel=panel)
 
 @app.route("/add_panel", methods=['GET', 'POST'])
 def add_panel():
@@ -104,7 +120,7 @@ def add_panel():
     parent_building = []
     print('parent_building', parent_building)
     for d in Build_base.getBuilding():
-        parent_building.append(d)
+        parent_building.append(d[1])
     if request.method == "POST":
         print(request.form)
         if len(request.form['panel_name']) > 1:

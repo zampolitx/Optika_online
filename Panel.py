@@ -6,22 +6,37 @@ class Panel:
         self.__db = db
         self.__cur = db.cursor()
 
-    def getPanel(self, parlor_id, ALL=False):
+    def getPanel(self, parlor_id=False, panel_id=False, ALL=False):
         my_dbase = Cross(self.__db)
         sql_some = "SELECT * FROM panel where parlor_id = ?"
         sql_all = "SELECT * FROM panel where parlor_id = ?"
-        if ALL==False: # Если нужно только про шкафы
+        sql_one = "SELECT * FROM panel where id = ?"
+        if ALL==False and parlor_id: # Если нужно только про шкафы
             try:
-                self.__cur.execute(sql_some, (parlor_id, ))
+                self.__cur.execute(sql_all, (parlor_id, ))
                 res = self.__cur.fetchall()
+                print('Это res in panel', res)
                 if res:
-                    l = []
-                    for elem in res:                   #Для каждой строки, извлеченной из БД
-                        l.append(elem)
-                    return l
+                    return res
             except:
-                print("Ошибка чтения базы данных")
+                print("Ошибка чтения базы данных panel (только шкафы)")
             return [False]
+
+        elif ALL==False and panel_id: # Если нужно только один шкаф
+            print('Это panel_id одного шкафа', panel_id)
+            try:
+                self.__cur.execute(sql_one, (panel_id, ))
+                res = self.__cur.fetchall()
+                print('Это res одного шкафа', res)
+                if res:
+                    for elem in res:
+                        print(elem[1])
+                        p = dict(number=elem[1], title=elem[2], width=elem[3], depth=elem[4], units=elem[5], positionX=elem[6], positionY=elem[7], angle_of_rotate=elem[8])
+                    return p
+            except:
+                print("Ошибка чтения базы данных panel (только один шкаф)")
+            return [False]
+
         else:   #Если запрашивает главная страница (полное дерево)
             try:
                 self.__cur.execute(sql_all, (parlor_id, ))
@@ -29,7 +44,7 @@ class Panel:
                 if res:
                     l = []
                     for elem in res:                   #Для каждой строки, извлеченной из БД
-                        p = dict(title=elem[2], number=elem[1], child=my_dbase.getCross(elem[0], ALL=True))
+                        p = dict(id=elem[0], title=elem[2], number=elem[1], child=my_dbase.getCross(elem[0], ALL=True))
                         l.append(p)
                     return l
             except:

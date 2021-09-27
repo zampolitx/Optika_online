@@ -26,6 +26,19 @@
                     {%endif%}
                 </div>
         {% endfor %}
+        {% for list_elem in panel %}
+                <div class="panels" style="top:{{list_elem[6]}}px;left:{{list_elem[7]}}px;transform:rotate({{list_elem[8]}}deg)"> <!-- div class='panel' это шкаф, позиционируем в соотв. с positionX, positionY из БД panel-->
+                    {% if list_elem[3]=='right' %}
+                        <div class="panel"></div>  <!-- Правая дверь -->
+                        <div class="panel"></div>
+                    {% elif list_elem[3]=='left' %}
+                        <div class="door_left"></div>   <!-- Левая дверь -->
+                        <div class="wall"></div>
+                    {% else %}
+                        <div class="door_doble"></div>  <!-- Двойная дверь -->
+                    {%endif%}
+                </div>
+        {% endfor %}
         <!-- div class='panel' это шкафы телекоммуникационные (добавить ниже)-->
 
     </div>

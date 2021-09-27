@@ -63,15 +63,20 @@ CREATE TABLE IF NOT EXISTS panel (
 id integer PRIMARY KEY AUTOINCREMENT,
 number text NOT NULL,
 title text NOT NULL,
+width INTEGER NOT NULL,
+depth INTEGER NOT NULL,
 units INTEGER,
+positionX INTEGER NOT NULL,
+positionY INTEGER NOT NULL,
+angle_of_rotation INTEGER NOT NULL,
 parlor_id INTEGER NOT NULL,
 FOREIGN KEY (parlor_id) REFERENCES parlor(id)
 );
-INSERT INTO panel(number, title, units, parlor_id) VALUES('5Р7', 'Панель оптических штук1', 42, 2);
-INSERT INTO panel(number, title, units, parlor_id) VALUES('5Р7', 'Панель оптических штук1', 42, 2);
-INSERT INTO panel(number, title, units, parlor_id) VALUES('5Р7', 'Панель оптических штук2', 42, 2);
-INSERT INTO panel(number, title, units, parlor_id) VALUES('5Р7', 'Панель оптических штук2', 42, 2);
-INSERT INTO panel(number, title, units, parlor_id) VALUES('5Р7', 'Панель оптических штук3', 42, 2);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 1', 600, 600, 42, 0, 100, 0, 2);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 1', 600, 600, 42, 0, 100, 0, 2);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 12', 600, 600, 42, 0, 100, 0, 1);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 12', 600, 600, 42, 0, 100, 0, 1);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 13', 600, 600, 42, 0, 100, 0, 1);
 
 
 

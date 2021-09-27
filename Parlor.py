@@ -65,13 +65,13 @@ class Parlor:
                 print("Ошибка чтения базы данных для parlor 3")
             return [1]
 
-    def addParlor(self, parent_item, room_name, room_number):       # parent_item - запись из чекбокса, остальное из формы добавления кабинета/участка территории
+    def addParlor(self, parent_item, room_name, room_number, par_length, par_width, par_height):       # parent_item - запись из чекбокса, остальное из формы добавления кабинета/участка территории
         try:
             self.__cur.execute("SELECT id FROM building WHERE title=?", (parent_item,))        # из таблицы building получить id записи из чекбокса
             res = self.__cur.fetchall()
             for elem in res:
                 print(elem[0])      # в elem[0] находится id здания/территории куда добавляем кабинет
-            self.__cur.execute("INSERT INTO parlor(building_id, title, number) VALUES(?, ?, ?)", (elem[0], room_name, room_number))
+            self.__cur.execute("INSERT INTO parlor(building_id, title, number, par_length, par_width, par_height) VALUES(?, ?, ?, ?, ?, ?)", (elem[0], room_name, room_number, par_length, par_width, par_height))
             self.__db.commit()
         except sqlite3.Error as e:
             print("Ошибка добавления записи в БД: "+str(e))

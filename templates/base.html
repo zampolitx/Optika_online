@@ -39,7 +39,7 @@
                     {% for panel in parlor.child %}             <!--parlor.child это список-->
                         <div class="panel">
                             {% if panel.number %}
-                                <h5> {{panel.number}} {{panel.title}} </h5>                 <!--номер панели-->
+                            <h5> <a href="showPanel{{panel.id}}"> {{panel.number}} {{panel.title}} </h5> </h5>                 <!--номер панели-->
                             {% else %}
                                 <h5> {{panel.title}} </h5>                 <!--номер кабинета-->
                             {% endif %}
