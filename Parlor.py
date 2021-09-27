@@ -5,12 +5,13 @@ class Parlor:
         self.__db = db
         self.__cur = db.cursor()
 
-    def getParlor(self, building_id, parlor_id, ALL=False):    #ALL=True значит нужна полная структура, нет значит вызывают из js
+    def getParlor(self, building_id=False, parlor_id=False, parlor_name=False, ALL=False):    #ALL=True значит нужна полная структура, нет значит вызывают из js
         my_dbase = Panel(self.__db)
         sql_all = "SELECT * FROM parlor where building_id = ?"
         sql_some = "SELECT number, title FROM parlor where building_id = ?"
         sql_one = "SELECT * FROM parlor where id = ?"
-        if ALL == False and parlor_id == False:
+        sql_roomID = "SELECT * FROM parlor where title = ?"     # Для AJAX нужен id помещения, при известном названии помещения
+        if ALL == False and building_id:
             try:
                 self.__cur.execute(sql_some, (building_id, ))
                 res = self.__cur.fetchall()
@@ -36,6 +37,20 @@ class Parlor:
             except:
                 print("Ошибка чтения базы данных для parlor 2")
             return ['']
+
+        elif ALL == False and parlor_name:
+            print("parlor_name in BD is", parlor_name)
+            try:
+                self.__cur.execute(sql_roomID, (parlor_name, ))
+                res = self.__cur.fetchall()
+                print(res)
+                if not res:
+                    return False
+                else: return res    # Возвращаем ID помещения
+            except:
+                print("Ошибка чтения базы данных для parlor 2")
+            return ['']
+
         else:
             try:
                 self.__cur.execute(sql_all, (building_id, ))

@@ -5,6 +5,7 @@ from Building import Building
 from Parlor import Parlor
 from Panel import Panel
 from Door import Door
+from ALL import ALL
 # Конфигурация приложения
 DATABASE = '/tmp/flsite.db'
 DEBUG = True
@@ -35,10 +36,12 @@ def get_db():
 def index():
     db = get_db()
     dbase=FDataBase(db)                 #FDataBase - это класс, dbase - экземляр класса FDataBase
+    ALLdbase=ALL(db)
     mydbase=Building(db)
-    building2=mydbase.getBuilding(build_name=False, ALL=True)       # Возвращает коллекцию из словарей
-    print(building2)
-    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=building2)
+    building2=mydbase.getBuilding(build_name=False)       # Возвращает коллекцию из словарей
+    building3 = ALLdbase.getALL()
+    print(building3)
+    return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=building3)
 
 @app.route("/add", methods=['GET', 'POST'])
 def add():
@@ -119,8 +122,8 @@ def add_door():
     Par_base = Door(db)
     Build_base = Building(db)
     parent_building = []
-    for d in Build_base.getBuilding(ALL=True):
-        parent_building.append(d)
+    for d in Build_base.getBuilding():
+        parent_building.append(d[1])
     if request.method == "POST":
         print(request.form)
         res = Par_base.addDoor(request.form['parent_parlor'], request.form['door_width'], request.form['door_height'], request.form['type'])
@@ -195,13 +198,13 @@ def get_building():
         mydbase = Building(db)
         build_name = request.form['building_name']
         print('new_building', build_name)
-        building_id = mydbase.getBuilding(build_name, ALL=False)
+        building_id = mydbase.getBuilding(build_name)
         return retAJAX(building_id)
     elif (request_key=='room_name'):
         mydbase = Parlor(db)
-        room_name = request.form['room_name']
-        print('new_room', room_name)
-        room_id = mydbase.getParlor(room_name, ALL=False)[0]
+        parlor_name = request.form['room_name']
+        print('new_room', parlor_name)
+        room_id = mydbase.getParlor(parlor_name=parlor_name)
         print(type(room_id))
         print('room_id', room_id)
         return retAJAX(room_id)
