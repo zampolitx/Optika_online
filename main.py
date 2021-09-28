@@ -108,10 +108,14 @@ def showPanel(id):
     unitBase = Unit(db)
     deviceBase = Device(db)
     panel = panelBase.getPanel(panel_id=id, ALL=False, parlor_id=False)
-    unit = unitBase.getUnit(panel_id=id)   #Вычисляем id всех юнитов для этой панели. Получаем список
+    listOfUnit = unitBase.getUnit(panel_id=id, unit_id=False)   #Вычисляем id всех юнитов для этой панели. Получаем список словарей
+    unit=[]
+    for elem in listOfUnit:
+        unit.append(elem[0])
     print('list of units is', unit)
-    device = deviceBase.getDevice() # Мы должны передать id панели, в которой находится юнит, вычислить id юнитов а потом получить оборудование в этих юнитах.
+    device = deviceBase.getDevice(unit_id=unit, device_id=False) # Мы передаем unit_id всех юнитов в этой панели и должны получить.
     print('it is panel', panel)
+    print('it is device in panel', device)
     if request.method == "POST":
         print('it is parlor', panel)
     return render_template('showPanel.html', title="Показать панель", menu=dbase.getMenu(), panel=panel)

@@ -5,26 +5,27 @@ class Unit:
         self.__db = db
         self.__cur = db.cursor()
 
-    def getUnit(self, panel_id, id=False):
+    def getUnit(self, panel_id, unit_id):
         #my_dbase = Panel(self.__db)
-        sql_all = "SELECT * FROM unit where panel_id = ?"
+        sql_all = "SELECT * FROM unit where panel_id = ?"   # Все юниты в этой панели
         sql_one = "SELECT * FROM unit where id = ?"
         if panel_id:
             try:
                 self.__cur.execute(sql_all, (panel_id, ))
                 res = self.__cur.fetchall()
                 if res:
-                    l = []
+                    unit_list = []
                     for elem in res:
-                        l.append(elem)  # убрал [1] потому что нужно найти все для юнита, возможно придется переделать под словарь
-                    return l
+                        p = dict(id=elem[0], number=elem[1], panel_id=elem[2])
+                        unit_list.append(p)
+                    return unit_list
             except:
                 print("Ошибка чтения базы данных для unit=panel_id", panel_id)
             return ['']
         elif id:
             print("id in BD is", id)
             try:
-                self.__cur.execute(sql_one, (id, ))
+                self.__cur.execute(sql_one, (unit_id, ))
                 res = self.__cur.fetchall()
                 print(res)
                 if res:

@@ -5,33 +5,31 @@ class Device:
         self.__db = db
         self.__cur = db.cursor()
 
-    def getDevice(self, panel_id):
+    def getDevice(self, unit_id, device_id):
         #my_dbase = Panel(self.__db)
-        sql_all = "SELECT * FROM unit where panel_id = ?"
-        sql_one = "SELECT * FROM devices where unit_id = ?"
-        if panel_id:
+        sql_all = "SELECT * FROM devices where unit_id = ?"
+        sql_one = "SELECT * FROM devices where id = ?"
+        if id:
             try:
-                self.__cur.execute(sql_all, (panel_id, ))
+                self.__cur.execute(sql_one, (device_id, ))
                 res = self.__cur.fetchall()
                 if res:
-                    l = []
-                    for elem in res:
-                        l.append(elem[1])
-                    return l
+                    return res  # Возвращаем строку из БД
             except:
-                print("Ошибка чтения базы данных для unit=panel_id", panel_id)
+                print("Ошибка чтения базы данных для id", id)
             return ['']
-        elif id:
-            print("id in BD is", id)
+        elif unit_id:   # Нужены девайсы, которые установлены в конкретный unit. Должен быть список словарей
+            print("id in BD is", unit_id)
             try:
-                self.__cur.execute(sql_one, (id, ))
+                self.__cur.execute(sql_all, (unit_id, ))
                 res = self.__cur.fetchall()
-                print(res)
-                if res:
+                print('Это res in Device.py/getDevice/unit_id=', unit_id)
+                if res:     # Список строк из БД
+                    dev_list = []
                     for elem in res:
-                        print(elem[1])
-                        p=dict(number=elem[1], title=elem[2], length=elem[3], width=elem[4], height=elem[5])
-                    return p
+                        p=dict(id=elem[0], title=elem[1], description=elem[2], model=elem[3], unit_id=elem[4])
+                        dev_list.append(p)
+                    return dev_list
             except:
                 print("Ошибка чтения базы данных для parlor 2")
             return ['']
