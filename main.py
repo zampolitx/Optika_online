@@ -4,7 +4,9 @@ from FDataBase import FDataBase
 from Building import Building
 from Parlor import Parlor
 from Panel import Panel
+from Device import Device
 from Door import Door
+from Unit import Unit
 from ALL import ALL
 # Конфигурация приложения
 DATABASE = '/tmp/flsite.db'
@@ -103,9 +105,12 @@ def showPanel(id):
     db = get_db()
     dbase=FDataBase(db)
     panelBase = Panel(db)
-    #doorBase = Door(db)
+    unitBase = Unit(db)
+    deviceBase = Device(db)
     panel = panelBase.getPanel(panel_id=id, ALL=False, parlor_id=False)
-    #doors = doorBase.getDoor(parlor_id=id, ALL=False)
+    unit = unitBase.getUnit(panel_id=id)   #Вычисляем id всех юнитов для этой панели. Получаем список
+    print('list of units is', unit)
+    device = deviceBase.getDevice() # Мы должны передать id панели, в которой находится юнит, вычислить id юнитов а потом получить оборудование в этих юнитах.
     print('it is panel', panel)
     if request.method == "POST":
         print('it is parlor', panel)
@@ -130,6 +135,17 @@ def add_panel():
             else:
                 flash('Добавлено', category='success')
     return render_template('add_panel.html', title="Добавить панель", menu=dbase.getMenu(), parent_building=parent_building)
+
+@app.route("/showUnit<id>", methods=['GET', 'POST'])
+def showUnit(id):
+    db = get_db()
+    dbase=FDataBase(db)
+    unitBase = Unit(db)
+    unit = unitBase.getUnit(panel_id=id)
+    print('it is unit', unit)
+    if request.method == "POST":
+        print('it is parlor', unit)
+    return render_template('showUnit.html', title="Показать юнит", menu=dbase.getMenu(), unit=unit)
 
 @app.route("/add_door", methods=['GET', 'POST'])
 def add_door():

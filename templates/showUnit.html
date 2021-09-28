@@ -12,13 +12,13 @@
     margin: auto;
     }
 </style>
-
-    <h1>Экспликация панели: {{ panel.title }}</h1>
+Вообще ничего не менял, нужно все переделывать!!!
+    <h1>Отображается оборудование в данном юните: {{ unit.title }}</h1>
     <table class="maintable">
         <tr>    <!-- 1 строка с панелями-->
             <th>    <!-- DIV Вид спереди -->
                 <div class="panels_expl" >  <!-- div class='panel' это шкаф вид спереди -->
-                    {% for unit in range(panel.units, 0, -1) %}
+                    {% for unit in range(1, (panel.units)+1) %}
                         <div class="unit">   <!-- div class='unit' это каждый юнит в шкафу -->
                             <h5> <a href=showUnit{{unit}}> Unit{{unit}} </a> </h5>                 <!--номер кабинета-->
                         </div>

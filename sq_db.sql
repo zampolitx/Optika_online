@@ -73,12 +73,30 @@ parlor_id INTEGER NOT NULL,
 FOREIGN KEY (parlor_id) REFERENCES parlor(id)
 );
 INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 1', 600, 600, 42, 0, 100, 0, 2);
-INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 1', 600, 600, 42, 0, 100, 0, 2);
-INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 12', 600, 600, 42, 0, 100, 0, 1);
-INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 12', 600, 600, 42, 0, 100, 0, 1);
-INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 13', 600, 600, 42, 0, 100, 0, 1);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 1', 600, 600, 36, 0, 100, 0, 2);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 12', 600, 600, 18, 0, 100, 0, 1);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 12', 600, 600, 10, 0, 100, 0, 1);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 13', 600, 600, 24, 0, 100, 0, 1);
 
+CREATE TABLE IF NOT EXISTS unit (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+number INTEGER NOT NULL,
+panel_id INTEGER NOT NULL,
+FOREIGN KEY (panel_id) REFERENCES panel(id)
+);
+INSERT INTO unit(number, panel_id) VALUES(1, 1);
+INSERT INTO unit(number, panel_id) VALUES(2, 1);
+INSERT INTO unit(number, panel_id) VALUES(3, 1);
 
+CREATE TABLE IF NOT EXISTS devices (
+id integer PRIMARY KEY AUTOINCREMENT,
+title text NOT NULL,
+description text NOT NULL,
+model text NOT NULL,
+unit_id INTEGER NOT NULL,
+FOREIGN KEY (unit_id) REFERENCES unit(id)
+);
+INSERT INTO devices(title, description, model, unit_id) VALUES('ОП-1', 'Оптический кросс', 'ДПРСС-24-SM', 1);
 
 CREATE TABLE IF NOT EXISTS fiber_cross (
 id integer PRIMARY KEY AUTOINCREMENT,
