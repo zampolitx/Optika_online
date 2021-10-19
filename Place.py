@@ -1,13 +1,12 @@
 import sqlite3
-from Cross import Cross
 from Unit import Unit
 # Предусмотреть защиту от одинаковых названий, чтобы не добавлялось в одно и то же здание
-class Panel:
+class Place:
     def __init__(self, db):
         self.__db = db
         self.__cur = db.cursor()
 
-    def getPanel(self, parlor_id=False, panel_id=False, ALL=False):
+    def getPlace(self, parlor_id=False, panel_id=False, ALL=False):
         my_dbase = Cross(self.__db)
         sql_some = "SELECT * FROM panel where parlor_id = ?"
         sql_all = "SELECT * FROM panel where parlor_id = ?"
@@ -59,9 +58,9 @@ class Panel:
             return [1]
 
     # Метод добавляет шкаф, панель или конкретное место на территории
-    def addPanel(self, parent_parlor, panel_name, panel_number, units, width, depth, positionX=0, positionY=100, angle_of_rotation=0):       # parent_item - запись из чекбокса, остальное из формы добавления кабинета/участка территории
+    def addPlace(self, ):       # parent_item - запись из чекбокса, остальное из формы добавления кабинета/участка территории
         try:
-            self.__cur.execute("SELECT id FROM parlor WHERE title=?", (parent_parlor,))        # из таблицы parlor получить id записи из чекбокса
+            self.__cur.execute("SELECT id FROM  WHERE title=?", (parent_parlor,))        # из таблицы parlor получить id записи из чекбокса
             res = self.__cur.fetchall()
             for elem in res:
                 print('parent parlor=', parent_parlor)      # Название здания, куда добавляется панель

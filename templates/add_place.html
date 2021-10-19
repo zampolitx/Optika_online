@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for cat, msg in get_flashed_messages(True) %}
+    <div class="flash {{cat}}">{{msg}}</div>
+    {% endfor %}
+    <p><h3 class="helper">Добавляется место в панели, где располагается оборудование </h3></p>
+    <form name="Item_2" action="/add_place" method="post" class="form_add">
+        <!--Селектор (значения из python)-->
+        <label for="example"> В Здании/на территории предприятия</label>
+            <select name="parent_building">
+                {% for building in parent_building %}
+                    <option value="{{ building }}" SELECTED>{{ building }}</option>
+                {% endfor %}
+            </select>
+            <input type="button" value="Ok" class="1form_submit" onclick="get_parlor();">
+        <!--Селектор (значения из AJAX)-->
+        <p>
+            <label for="example"> В кабинете/коридоре/на территории</label>
+            <select name="parent_parlor" class="par">
+
+            </select>
+            <input type="button" value="Ok" class="1form_submit" onclick="get_panels();">
+        </p>
+        <!--Селектор (значения из AJAX)-->
+        <p>
+            <label for="example"> В панели</label>
+            <select name="parent_panel" class="pan">
+            </select>
+            <input type="button" value="Ok" class="1form_submit" onclick="get_units();">
+        </p>
+        <!-- Начинаются юниты для данной панели -->
+        <table class="maintable">
+        <tr>    <!-- 1 строка с панелями-->
+            <th>    <!-- DIV Вид спереди -->
+                <div class="panels_expl" >  <!-- div class='panel' это шкаф вид спереди -->
+                    {% for unit in range(10, 0, -1) %}
+                        <div class="unit">   <!-- div class='unit' это каждый юнит в шкафу -->
+                            <label class="container">{{unit}}
+                                <input type="checkbox" name="check">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </th>
+            <th>    <!-- DIV Вид сзади -->
+                <div class="panels_expl">  <!-- div class='panel' это шкаф вид сзади -->
+                    {% for unit in range(10, 0, -1) %}
+                        <div class="unit">   <!-- div class='unit' это каждый юнит в шкафу -->
+                            <label class="container">{{unit}}
+                                <input type="checkbox" name="check">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </th>
+        </tr>
+        <tr>    <!-- 2 строка с комментариями-->
+            <th>Вид спереди</th>
+            <th>Вид сзади</th>
+        </tr>
+    </table>
+        <p><input type="submit" value="Отправить" class="form_submit"></p>
+    </form>
+    <div id="mydiv"></div>
+    <!-- Чекбоксы для юнитов-->
+
+
+
+    <!--Подключение java script-->
+    <script src="{{url_for('static', filename='js/add_panel.js') }}"></script>
+    <script src="{{url_for('static', filename='js/get_panels.js') }}"></script>
+    <script src="{{url_for('static', filename='js/get_units.js') }}"></script>
+    <script src="{{url_for('static', filename='js/AJAX.js') }}"></script>
+{% endblock %}
+

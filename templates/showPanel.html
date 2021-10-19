@@ -18,24 +18,52 @@
         <tr>    <!-- 1 строка с панелями-->
             <th>    <!-- DIV Вид спереди -->
                 <div class="panels_expl" >  <!-- div class='panel' это шкаф вид спереди -->
-                    {% for unit in range(panel.units, 0, -1) %}
-                        <div class="unit">   <!-- div class='unit' это каждый юнит в шкафу -->
-                            <h5> <a href=showUnit{{unit}}> Unit{{unit}} </a> </h5>                 <!--номер кабинета-->
-                        </div>
-                    {% endfor %}
+                    <table class="unit">
+
+                        {% for unit in range(panel.units, 0, -1) %}     <!-- unit = 42, 41, 40 ...  -->
+                            {% if unit == panel.units %}
+                                <tr>
+                                    <th>
+                                        <h5> <a href=showUnit{{unit}}> {{unit}} </a> </h5>                 <!--номер кабинета-->
+                                    </th>
+                                    <td rowspan="42">cisco</td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <th>
+                                        <h5> <a href=showUnit{{unit}}> {{unit}} </a> </h5>                 <!--номер кабинета-->
+                                    </th>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        <tr>
+                            <>
+                                <h5>Cisco C3560</h5>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </th>
             <th>    <!-- DIV Вид сзади -->
                 <div class="panels_expl">  <!-- div class='panel' это шкаф вид сзади -->
-                    <div class="unit">   <!-- div class='unit' это каждый юнит в шкафу -->
+                    {% for unit in range(panel.units, 0, -1) %}
+                        <div class="unit">   <!-- div class='unit' это каждый юнит в шкафу -->
+                            <h5> <a href=showUnit{{unit}}> {{unit}} </a> </h5>                 <!--номер кабинета-->
+                        </div>
+                    {% endfor %}
+                </div>
+            </th>
+            <th>    <!-- DIV дополнительное оборудование -->
+                <div class="panels_expl">  <!-- div class='panel' это шкаф вид сзади -->
 
-                    </div>
+
                 </div>
             </th>
         </tr>
         <tr>    <!-- 2 строка с комментариями-->
             <th>Вид спереди</th>
             <th>Вид сзади</th>
+            <th>Дополнительно в шкафу</th>
         </tr>
     </table>
 

@@ -4,6 +4,7 @@ from FDataBase import FDataBase
 from Building import Building
 from Parlor import Parlor
 from Panel import Panel
+from Place import Place
 from Device import Device
 from Door import Door
 from Unit import Unit
@@ -36,6 +37,20 @@ def get_db():
 
 @app.route("/")
 def index():
+    db = get_db()
+    dbase=FDataBase(db)                 #FDataBase - это класс, dbase - экземляр класса FDataBase
+    ALLdbase=ALL(db)
+    mydbase=Building(db)
+    building2=mydbase.getBuilding(build_name=False)       # Возвращает коллекцию из словарей
+    building3 = ALLdbase.getALL()
+    if(building3):  #Если база данных уже заполнена
+        print(building3)
+        return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=building3)
+    else:   #Если база данных пустая
+        return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=building3)
+
+@app.route("/optika")
+def optika():
     db = get_db()
     dbase=FDataBase(db)                 #FDataBase - это класс, dbase - экземляр класса FDataBase
     ALLdbase=ALL(db)
@@ -108,10 +123,12 @@ def showPanel(id):
     unitBase = Unit(db)
     deviceBase = Device(db)
     panel = panelBase.getPanel(panel_id=id, ALL=False, parlor_id=False)
+    print('panel in showPanel main.py', panel)
     listOfUnit = unitBase.getUnit(panel_id=id, unit_id=False)   #Вычисляем id всех юнитов для этой панели. Получаем список словарей
+    print('unit in showPanel main.py', listOfUnit)
     unit=[]
     for elem in listOfUnit:
-        unit.append(elem[0])
+        unit.append(elem['id']) # список всех id юнитов для данной панели
     print('list of units is', unit)
     device = deviceBase.getDevice(unit_id=unit, device_id=False) # Мы передаем unit_id всех юнитов в этой панели и должны получить.
     print('it is panel', panel)
@@ -126,6 +143,7 @@ def add_panel():
     dbase = FDataBase(db)
     Par_base = Panel(db)
     Build_base = Building(db)
+    unitBase = Unit(db)
     parent_building = []
     print('parent_building', parent_building)
     for d in Build_base.getBuilding():
@@ -133,10 +151,12 @@ def add_panel():
     if request.method == "POST":
         print(request.form)
         if len(request.form['panel_name']) > 1:
-            res = Par_base.addPanel(request.form['parent_parlor'], request.form['panel_name'], request.form['panel_number'], request.form['units_number'])
+            res = Par_base.addPanel(request.form['parent_parlor'], request.form['panel_name'], request.form['panel_number'], request.form['units_number'], request.form['width'], request.form['depth'])
+            print('Это res из add_panel', res)      # id последней добавленной панели
             if not res:
                 flash('Ошибка', category='error')
             else:
+                unitBase.addUnit(panel_id=res, numOfUnits=request.form['units_number'])
                 flash('Добавлено', category='success')
     return render_template('add_panel.html', title="Добавить панель", menu=dbase.getMenu(), parent_building=parent_building)
 
@@ -150,6 +170,33 @@ def showUnit(id):
     if request.method == "POST":
         print('it is parlor', unit)
     return render_template('showUnit.html', title="Показать юнит", menu=dbase.getMenu(), unit=unit)
+
+@app.route("/add_place", methods=['GET', 'POST'])   # Новый, переделать
+def add_place():
+    db = get_db()
+    dbase = FDataBase(db)
+    Par_base = Panel(db)
+    Build_base = Building(db)
+    Place_base = Place(db)
+    unitBase = Unit(db)
+    parent_building = []
+    print('parent_building', parent_building)
+    for d in Build_base.getBuilding():
+        parent_building.append(d[1])
+    if request.method == "POST":
+        print('requst.form in add place:', request.form)
+        print('requst.form.getlist in add place:', request.form.getlist('check'))
+        if len(request.form['parent_panel']) > 1:
+            res = Par_base.addPlace(request.form['parent_parlor'])
+            print('Это res из add_panel', res)      # id последней добавленной панели
+            if not res:
+                flash('Ошибка', category='error')
+            else:
+                unitBase.addUnit(panel_id=res, numOfUnits=request.form['units_number'])
+                flash('Добавлено', category='success')
+    return render_template('add_place.html', title="Добавить панель", menu=dbase.getMenu(), parent_building=parent_building)
+
+
 
 @app.route("/add_door", methods=['GET', 'POST'])
 def add_door():
@@ -214,6 +261,48 @@ def get_parlor():
     parlor_list = mydbase_par.getParlor(building_id, parlor_id=False, ALL=False)
     print('par_list', parlor_list)
     return json.dumps({'par_buld_resp': parlor_list})
+
+# Обработчик функции AJAX get_panels.js
+# Получаем все панели для этого здания/территории
+@app.route('/get_panels', methods=['GET', 'POST'])
+def get_panels():
+    print(request.form)
+    par_parlor = request.form['parent_parlor']  #Из js получаем название кабинета, в котором находится панель
+    db = get_db()
+    Par_base = Parlor(db)
+    Pan_base = Panel(db)
+    parlor_id = []
+    for d in Par_base.getParlor(parlor_name=par_parlor):  # Обращаемся к БД и получаем id кабинета, в котором находится панель
+        parlor_id.append(d[0])
+    print('parlor_id is', parlor_id)
+    panel_list = []
+    li = Pan_base.getPanel(parlor_id[0], ALL=False)
+    print('li is', li)
+    for l in li:
+        print('l is ', l)
+        panel_list.append(l['title'])   # Список с названиями панелей в AJAX функцию, например: par_list ['Шкаф связи', '1234']
+    print('par_list', panel_list)
+    return json.dumps({'par_par_resp': panel_list})
+
+# Обработчик функции AJAX get_units.js
+# Получаем все юниты для этой панели
+# Должна возвращать так же уже занятые места (существующие)
+@app.route('/get_units', methods=['GET', 'POST'])
+def get_units():
+    db = get_db()
+    Pan_base = Panel(db)
+    parlor_id = []
+    for d in Par_base.getParlor(parlor_name=par_parlor):  # Обращаемся к БД и получаем id кабинета, в котором находится панель
+        parlor_id.append(d[0])
+    print('parlor_id is', parlor_id)
+    panel_list = []
+    li = Pan_base.getPanel(parlor_id[0], ALL=False)
+    print('li is', li)
+    for l in li:
+        print('l is ', l)
+        panel_list.append(l['title'])   # Список с названиями панелей в AJAX функцию, например: par_list ['Шкаф связи', '1234']
+    print('par_list', panel_list)
+    return json.dumps({'par_par_resp': panel_list})
 
 # Обработчик функции AJAX add_building.js
 # Проверяет введенные данные в форму и то, что есть в базе данных

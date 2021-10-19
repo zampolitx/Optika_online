@@ -6,12 +6,17 @@ url text NOT NULL
 );
 INSERT INTO mainmenu(title, url) VALUES('Главная', '/');
 INSERT INTO mainmenu(title, url) VALUES('Добавить', '/add');
+INSERT INTO mainmenu(title, url) VALUES('Изменить', '/change');
 INSERT INTO mainmenu(title, url) VALUES('Добавить здание', '/add_building');
 INSERT INTO mainmenu(title, url) VALUES('Добавить помещение', '/add_room');
 INSERT INTO mainmenu(title, url) VALUES('Добавить дверь', '/add_door');
 INSERT INTO mainmenu(title, url) VALUES('Добавить панель', '/add_panel');
+INSERT INTO mainmenu(title, url) VALUES('Добавить место', '/add_place');
 INSERT INTO mainmenu(title, url) VALUES('Добавить кросс', '/add_cross');
+INSERT INTO mainmenu(title, url) VALUES('Добавить устройство', '/add_device');
+INSERT INTO mainmenu(title, url) VALUES('Оптика', '/optika');
 INSERT INTO mainmenu(title, url) VALUES('Пробная', '/proba');
+
 
 CREATE TABLE IF NOT EXISTS items (
 id integer PRIMARY KEY AUTOINCREMENT,
@@ -24,12 +29,20 @@ INSERT INTO items(title) VALUES('Панель');
 INSERT INTO items(title) VALUES('Кабель');
 INSERT INTO items(title) VALUES('Кросс');
 INSERT INTO items(title) VALUES('Муфта');
+INSERT INTO items(title) VALUES('Устройство');
+
 
 CREATE TABLE IF NOT EXISTS building (
 id integer PRIMARY KEY AUTOINCREMENT,
 title text NOT NULL
 );
-INSERT INTO building(title) VALUES('Корпус1');
+INSERT INTO building(title) VALUES('Помещение-1');
+INSERT INTO building(title) VALUES('Помещение-2');
+INSERT INTO building(title) VALUES('Помещение-3');
+INSERT INTO building(title) VALUES('Помещение-4');
+INSERT INTO building(title) VALUES('Помещение-5');
+INSERT INTO building(title) VALUES('Помещение-6');
+INSERT INTO building(title) VALUES('Помещение-7');
 
 
 CREATE TABLE IF NOT EXISTS parlor (
@@ -42,8 +55,15 @@ par_height INTEGER,
 building_id INTEGER NOT NULL,
 FOREIGN KEY (building_id) REFERENCES building(id)
 );
-INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES('КП-2', 'ПСВ-и', 5520, 2460, 4000, 1);
-INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES('102', 'Серверная 2 этаж',1000, 1000, 1000, 1);
+INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES('К-2', 'Помещение 1', 5520, 2460, 4000, 5);
+INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES('101-1', 'ЛФА', 5520, 2460, 4000, 1);
+INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES('101-2', 'Помещение 2', 5520, 2460, 4000, 1);
+INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES('101-б', 'Помещение 3', 5520, 2460, 4000, 1);
+INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES('101-5', 'Помещение 4', 5520, 2460, 4000, 1);
+INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES('4', 'Серверная',1000, 1000, 1000, 1);
+INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES('3-КП', 'Помещение 5', 5520, 2460, 4000, 6);
+INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES(' ', 'Левый', 5520, 2460, 4000, 7);
+INSERT INTO parlor(number, title, par_length, par_width, par_height, building_id) VALUES(' ', 'Правый', 5520, 2460, 4000, 7);
 
 CREATE TABLE IF NOT EXISTS door (
 id integer PRIMARY KEY AUTOINCREMENT,
@@ -66,27 +86,48 @@ title text NOT NULL,
 width INTEGER NOT NULL,
 depth INTEGER NOT NULL,
 units INTEGER,
-positionX INTEGER NOT NULL,
-positionY INTEGER NOT NULL,
-angle_of_rotation INTEGER NOT NULL,
+positionX INTEGER,
+positionY INTEGER,
+angle_of_rotation INTEGER,
 parlor_id INTEGER NOT NULL,
 FOREIGN KEY (parlor_id) REFERENCES parlor(id)
 );
-INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 1', 600, 600, 42, 0, 100, 0, 2);
-INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 1', 600, 600, 36, 0, 100, 0, 2);
-INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 12', 600, 600, 18, 0, 100, 0, 1);
-INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 12', 600, 600, 10, 0, 100, 0, 1);
-INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('5Р7', 'Панель оптическая 13', 600, 600, 24, 0, 100, 0, 1);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('ШК1', 'Шкаф связи', 600, 600, 42, 0, 100, 0, 2);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('ШК2', 'Шкаф связи', 1000, 1000, 42, 0, 100, 0, 6);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('ШК3', 'Шкаф связи', 600, 600, 18, 0, 100, 0, 1);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('ШК4', 'Шкаф связи', 600, 600, 10, 0, 100, 0, 1);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('ШК5', 'Шкаф связи', 600, 600, 24, 0, 100, 0, 6);
+INSERT INTO panel(number, title, width, depth, units, positionX, positionY, angle_of_rotation, parlor_id) VALUES('ШК6', 'Шкаф связи', 600, 600, 24, 0, 100, 0, 6);
+
+CREATE TABLE IF NOT EXISTS place (
+id INTEGER PRIMARY KEY AUTOINCREMENT
+);
 
 CREATE TABLE IF NOT EXISTS unit (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 number INTEGER NOT NULL,
 panel_id INTEGER NOT NULL,
-FOREIGN KEY (panel_id) REFERENCES panel(id)
+place_id INTEGER,
+FOREIGN KEY (panel_id) REFERENCES panel(id),
+FOREIGN KEY (place_id) REFERENCES place(id)
 );
-INSERT INTO unit(number, panel_id) VALUES(1, 1);
-INSERT INTO unit(number, panel_id) VALUES(2, 1);
-INSERT INTO unit(number, panel_id) VALUES(3, 1);
+
+INSERT INTO unit(number, panel_id) VALUES(1, 2);
+INSERT INTO unit(number, panel_id) VALUES(2, 2);
+INSERT INTO unit(number, panel_id) VALUES(3, 2);
+INSERT INTO unit(number, panel_id) VALUES(4, 2);
+INSERT INTO unit(number, panel_id) VALUES(5, 2);
+INSERT INTO unit(number, panel_id) VALUES(6, 2);
+INSERT INTO unit(number, panel_id) VALUES(7, 2);
+INSERT INTO unit(number, panel_id) VALUES(8, 2);
+INSERT INTO unit(number, panel_id) VALUES(9, 2);
+INSERT INTO unit(number, panel_id) VALUES(10, 2);
+INSERT INTO unit(number, panel_id) VALUES(11, 2);
+INSERT INTO unit(number, panel_id) VALUES(12, 2);
+INSERT INTO unit(number, panel_id) VALUES(13, 2);
+INSERT INTO unit(number, panel_id) VALUES(14, 2);
+INSERT INTO unit(number, panel_id) VALUES(15, 2);
+INSERT INTO unit(number, panel_id) VALUES(16, 2);
 
 CREATE TABLE IF NOT EXISTS devices (
 id integer PRIMARY KEY AUTOINCREMENT,
@@ -96,7 +137,7 @@ model text NOT NULL,
 unit_id INTEGER NOT NULL,
 FOREIGN KEY (unit_id) REFERENCES unit(id)
 );
-INSERT INTO devices(title, description, model, unit_id) VALUES('ОП-1', 'Оптический кросс', 'ДПРСС-24-SM', 1);
+INSERT INTO devices(title, description, model, unit_id) VALUES('C1', 'Коммутатор', 'Cisco C3567', 7);
 
 CREATE TABLE IF NOT EXISTS fiber_cross (
 id integer PRIMARY KEY AUTOINCREMENT,
