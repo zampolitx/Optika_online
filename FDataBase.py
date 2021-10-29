@@ -18,15 +18,15 @@ class FDataBase:
     ### Метод для добавления сущностей в БД (под удаление)###
     def getItems(self):
         try:
-            self.__cur.execute("SELECT * FROM items")
+            self.__cur.execute("SELECT * FROM mainmenu WHERE url LIKE '/add_%'")
             res = self.__cur.fetchall()
-            res_list = []
+            menu_addDict = {}
             if res:
                 for m in res:
-                    res_list.append(m[1])
-                return res_list
+                    menu_addDict[m[1]] = m[2]
+                return menu_addDict
         except:
-            print("Ошибка чтения базы данных")
+            print("Ошибка чтения базы данных FDataBase getItems")
         return [1]
 
     ### Метод ###

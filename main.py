@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, g, url_for, json, jsonify
+from flask import Flask, render_template, request, flash, g, url_for, json, jsonify, redirect
 import sqlite3, os, re, json
 from FDataBase import FDataBase
 from Building import Building
@@ -43,6 +43,7 @@ def index():
     mydbase=Building(db)
     building2=mydbase.getBuilding(build_name=False)       # Возвращает коллекцию из словарей
     building3 = ALLdbase.getALL()
+    print('it is building3', building3)
     if(building3):  #Если база данных уже заполнена
         print(building3)
         return render_template('index.html', title="Optika-главная", menu=dbase.getMenu(), building=building3)
@@ -67,10 +68,14 @@ def add():
             flash('Данные отправлены', category='success')
         else:
             flash('Слишком короткое имя', category='error')
-        #print(request.form)
-    db = get_db()
-    dbase = FDataBase(db)
-    return render_template('add.html', title="Optika-add", menu=dbase.getMenu(), add_items=dbase.getItems())
+        print(request.form)
+#        return redirect(url_for('add_building'))
+#        if (request.form!='/add'):  # Если запрашивается /add
+#            pass
+#        else:   # Если была вызвана страница /add
+        db = get_db()
+        dbase = FDataBase(db)
+        return render_template('add.html', title="Optika-add", menu=dbase.getMenu(), add_items=dbase.getItems())
 
 @app.route("/showBuilding<id>", methods=['GET', 'POST'])
 def showBuilding(id):

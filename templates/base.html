@@ -21,6 +21,11 @@
 {% endblock %}
 {% block content %}
 <table class="main_table">
+    <!--Пока база данных пустая показываем это-->
+    {% if building == False %}
+        <h1> Пока ничего нет </h1>
+    {% else %}
+
     <tr>    <!--1 ряд с ячейками зданий-->
         {% for key, value in building.items() %}
         <th>{{key}}</th>                <!-- {'Корпус1': -->
@@ -81,6 +86,7 @@
         </th>
         {% endfor %}
     </tr>
+    {% endif %}
 </table>
 {% endblock %}
 <script type=text/javascript src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
