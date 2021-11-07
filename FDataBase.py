@@ -16,72 +16,17 @@ class FDataBase:
         return [1]
 
     ### Метод для добавления сущностей в БД (под удаление)###
-    def getItems(self):
+    def getItems(self, prefix):
         try:
-            self.__cur.execute("SELECT * FROM mainmenu WHERE url LIKE '/add_%'")
+            self.__cur.execute("SELECT * FROM AllPagesMenu")
             res = self.__cur.fetchall()
             menu_addDict = {}
             if res:
                 for m in res:
-                    menu_addDict[m[1]] = m[2]
+                    print(m[1])
+                    menu_addDict[m[1]] = str(prefix + m[1])     # Если prefix='/add_' то получаем урл типа '/add_building'
                 return menu_addDict
         except:
             print("Ошибка чтения базы данных FDataBase getItems")
         return [1]
 
-    ### Метод ###
-    def getBuilding(self):
-        sql = """SELECT * FROM building"""
-        try:
-            self.__cur.execute(sql)
-            res2=self.__cur.fetchall()
-            if res2:
-                return res2
-        except:
-            print("Ошибка чтения базы данных")
-        return [1]
-
-    ### Метод ###
-    def getParlor(self, building_id):
-        sql = "SELECT * FROM parlor where building_id = ?"
-        try:
-            self.__cur.execute(sql, (building_id, ))
-            res = self.__cur.fetchall()
-            if res:
-                p = {}
-                for elem in res:
-                    p[elem[1]] = self.getPanel(elem[0])
-                return p
-        except:
-            print("Ошибка чтения базы данных")
-        return [1]
-
-    # Метод возвращает
-    def getPanel(self, parlor_id):
-        sql = "SELECT * FROM panel where parlor_id = ?"
-        try:
-            self.__cur.execute(sql, (parlor_id, ))
-            res = self.__cur.fetchall()
-            if res:
-                p = {}
-                for elem in res:                   #Для каждой строки, извлеченной из БД
-                    p[elem[1]] = self.getCross(elem[0])
-                print(p)
-                return p
-        except:
-            print("Ошибка чтения базы данных")
-        return [1]
-
-        # Метод возвращает всю структуру для index.html
-    def getAll(self):
-        try:
-            self.__cur.execute("SELECT * FROM building")
-            res = self.__cur.fetchall()
-            if res:
-                d = {}
-                for i in res:  # Для каждой строки, извлеченной из БД
-                    d[i[1]] = FDataBase.getParlor(i[0])  # d{'Корпус1':[
-                return d
-        except:
-            print("Ошибка чтения базы данных")
-        return [1]

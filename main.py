@@ -66,16 +66,41 @@ def add():
     if request.method == "POST":
         if len(request.form['add_items']) > 2:  # Отображение подсказок
             flash('Данные отправлены', category='success')
+            return redirect(url_for(request.form['add_items']))     # Если выбрали пункт в меню, делаем редирект
         else:
             flash('Слишком короткое имя', category='error')
+        print(request.form['add_items'])
+    db = get_db()
+    dbase = FDataBase(db)
+    return render_template('add.html', title="Optika-add", menu=dbase.getMenu(), add_items=dbase.getItems(prefix='/add_'))
+
+@app.route("/change", methods=['GET', 'POST'])
+def change():
+    if request.method == "POST":
         print(request.form)
-#        return redirect(url_for('add_building'))
-#        if (request.form!='/add'):  # Если запрашивается /add
-#            pass
-#        else:   # Если была вызвана страница /add
-        db = get_db()
-        dbase = FDataBase(db)
-        return render_template('add.html', title="Optika-add", menu=dbase.getMenu(), add_items=dbase.getItems())
+        if (request.form['change_items']) == 'change_building':  # Если выбрали изменить здание
+            return redirect('/change_building')  # Редирект
+        elif (request.form['change_items']) == 'change_parlor':  # Если выбрали изменить помещение
+            return redirect('/change_parlor')  # Редирект
+    db = get_db()
+    dbase = FDataBase(db)
+    return render_template('change.html', title="change", menu=dbase.getMenu(), add_items=dbase.getItems(prefix='/change_'))
+
+@app.route("/change_building", methods=['GET', 'POST'])
+def change_building():
+    if request.method == "POST":
+        pass
+    db = get_db()
+    dbase = FDataBase(db)
+    return render_template('change_building.html', title="change_building", menu=dbase.getMenu())
+
+@app.route("/delete", methods=['GET', 'POST'])
+def delete():
+    if request.method == "POST":
+        pass
+    db = get_db()
+    dbase = FDataBase(db)
+    return render_template('delete.html', title="delete", menu=dbase.getMenu(), add_items=dbase.getItems(prefix='/delete'))
 
 @app.route("/showBuilding<id>", methods=['GET', 'POST'])
 def showBuilding(id):
@@ -96,19 +121,22 @@ def showBuilding(id):
 @app.route("/add_building", methods=['GET', 'POST'])
 def add_building():
     db = get_db()
-    dbase=FDataBase(db)
-    Buld_base=Building(db)
+    dbase=FDataBase(db)     #Используется для получения меню
+    Build_base=Building(db)
     if request.method == "POST":
-        Buld_base.addBuilding(request.form['building_name'])
+        Build_base.addBuilding(request.form['building_name'])
     return render_template('add_building.html', title="Добавить здание", menu=dbase.getMenu())
 
 @app.route("/add_room", methods=['GET', 'POST'])
 def add_room():
     db = get_db()
     dbase = FDataBase(db)
+    Build_base = Building(db)
     Par_base = Parlor(db)
     parent_item = []                                                          # Пустой список (в него далее добавляем из БД здания и территории предприятия)
-    for d in dbase.getBuilding():                                           # В d находятся строки из БД с зданиями
+    if Build_base.getBuilding()==False:
+        return redirect('add_building')
+    for d in Build_base.getBuilding():                                        # В d находятся строки из БД с зданиями
         parent_item.append(d[1])                                              # Список далее передаем на страницу add_room в качестве родителя для комнаты или участка
     if request.method == "POST":
         print(request.form)

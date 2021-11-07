@@ -1,40 +1,31 @@
 PRAGMA foreign_keys=on;
 CREATE TABLE IF NOT EXISTS mainmenu (
-id integer PRIMARY KEY AUTOINCREMENT,
-title text NOT NULL,
-url text NOT NULL
+title text NOT NULL UNIQUE,
+url text NOT NULL UNIQUE
 );
-INSERT INTO mainmenu(title, url) VALUES('Главная', '/');
-INSERT INTO mainmenu(title, url) VALUES('Добавить', '/add');
-INSERT INTO mainmenu(title, url) VALUES('Изменить', '/change');
-INSERT INTO mainmenu(title, url) VALUES('Добавить здание', '/add_building');
-INSERT INTO mainmenu(title, url) VALUES('Добавить помещение', '/add_room');
-INSERT INTO mainmenu(title, url) VALUES('Добавить дверь', '/add_door');
-INSERT INTO mainmenu(title, url) VALUES('Добавить панель', '/add_panel');
-INSERT INTO mainmenu(title, url) VALUES('Добавить место', '/add_place');
-INSERT INTO mainmenu(title, url) VALUES('Добавить кросс', '/add_cross');
-INSERT INTO mainmenu(title, url) VALUES('Добавить устройство', '/add_device');
-INSERT INTO mainmenu(title, url) VALUES('Оптика', '/optika');
-INSERT INTO mainmenu(title, url) VALUES('Пробная', '/proba');
+INSERT OR IGNORE INTO mainmenu(title, url) VALUES('Главная', '/');
+INSERT OR IGNORE INTO mainmenu(title, url) VALUES('Добавить', '/add');
+INSERT OR IGNORE INTO mainmenu(title, url) VALUES('Изменить', '/change');
+INSERT OR IGNORE INTO mainmenu(title, url) VALUES('Удалить', '/delete');
+INSERT OR IGNORE INTO mainmenu(title, url) VALUES('Найти', '/find');
+INSERT OR IGNORE INTO mainmenu(title, url) VALUES('Оптика', '/optika');
 
-
-CREATE TABLE IF NOT EXISTS items (
-id integer PRIMARY KEY AUTOINCREMENT,
-title text NOT NULL
+CREATE TABLE IF NOT EXISTS AllPagesMenu (
+title text NOT NULL UNIQUE,
+url text NOT NULL UNIQUE
 );
-INSERT INTO items(title) VALUES('Здание');
-INSERT INTO items(title) VALUES('Помещение');
-INSERT INTO items(title) VALUES('Дверь');
-INSERT INTO items(title) VALUES('Панель');
-INSERT INTO items(title) VALUES('Кабель');
-INSERT INTO items(title) VALUES('Кросс');
-INSERT INTO items(title) VALUES('Муфта');
-INSERT INTO items(title) VALUES('Устройство');
-
+INSERT OR IGNORE INTO AllPagesMenu(title, url) VALUES('Здание', 'building');
+INSERT OR IGNORE INTO AllPagesMenu(title, url) VALUES('Помещение', 'room');
+INSERT OR IGNORE INTO AllPagesMenu(title, url) VALUES('Дверь', 'door');
+INSERT OR IGNORE INTO AllPagesMenu(title, url) VALUES('Панель', 'panel');
+INSERT OR IGNORE INTO AllPagesMenu(title, url) VALUES('Место', 'place');
+INSERT OR IGNORE INTO AllPagesMenu(title, url) VALUES('Кросс', 'cross');
+INSERT OR IGNORE INTO AllPagesMenu(title, url) VALUES('Устройство', 'device');
 
 CREATE TABLE IF NOT EXISTS building (
 id integer PRIMARY KEY AUTOINCREMENT,
-title text NOT NULL
+title text NOT NULL,
+UNIQUE(id, title)
 );
 
 CREATE TABLE IF NOT EXISTS parlor (

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p><h3 class="helper">Изменить здание, территорию</h3></p>
+    <div class="alert"></div>
+    <form action="/change_building" method="post" class="form_add">
+        <p><label>Название:
+            <select name="parent_parlor" class="par">   <!--форма заполняется через AJAX-->
+            </select>
+            </label> <input type="text" name="building_name" value="" class='add_building_form' placeholder="Новое название" required></p>  <!--Вводится новое название здания вручную-->
+        <p><button type="button" value="Изменить" class="form_submit">Изменить</button></p>
+    </form>
+    <script src="{{url_for('static', filename='js/change_building.js') }}"></script>
+    <script src="{{url_for('static', filename='js/AJAX.js') }}"></script>
+    <script src="{{url_for('static', filename='js/alert.js') }}"></script>
+{% endblock %}
