@@ -37,3 +37,23 @@ class Building:
         except sqlite3.Error as e:
             print("Ошибка добавления записи в БД : "+str(e))
         return [1]
+
+    def changeBuilding(self, old_name, new_name):
+        change_sql = "UPDATE building SET title=? WHERE title=?"
+        try:
+            self.__cur.execute(change_sql, (new_name, old_name))
+            self.__db.commit()
+            print(old_name, new_name)
+        except sqlite3.Error as e:
+            print("Ошибка изменения записи в БД : "+str(e))
+        return [1]
+
+    def deleteBuilding(self, building):
+        change_sql = "DELETE FROM building WHERE title=?"
+        try:
+            self.__cur.execute(change_sql, (building, ))
+            self.__db.commit()
+            print(building, )
+        except sqlite3.Error as e:
+            print("Ошибка удаления записи из БД : "+str(e))
+        return [1]

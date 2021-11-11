@@ -80,27 +80,74 @@ def change():
         print(request.form)
         if (request.form['change_items']) == 'change_building':  # Если выбрали изменить здание
             return redirect('/change_building')  # Редирект
-        elif (request.form['change_items']) == 'change_parlor':  # Если выбрали изменить помещение
+        elif (request.form['change_items']) == 'change_room':  # Если выбрали изменить помещение
             return redirect('/change_parlor')  # Редирект
+        elif (request.form['change_items']) == 'change_door':  # Если выбрали изменить дверь
+            return redirect('/change_door')  # Редирект
     db = get_db()
     dbase = FDataBase(db)
     return render_template('change.html', title="change", menu=dbase.getMenu(), add_items=dbase.getItems(prefix='/change_'))
 
 @app.route("/change_building", methods=['GET', 'POST'])
 def change_building():
-    if request.method == "POST":
-        pass
     db = get_db()
     dbase = FDataBase(db)
-    return render_template('change_building.html', title="change_building", menu=dbase.getMenu())
+    Build_base = Building(db)
+    if request.method == "POST":
+        print(request.form)
+        Build_base.changeBuilding(request.form['old_name'], request.form['new_name'])
+    building = Build_base.getBuilding(build_name=False)     # Список всех зданий
+    print('it is building in change_building', building)
+    return render_template('change_building.html', title="change_building", menu=dbase.getMenu(), old_name=building)
+
+@app.route("/change_parlor", methods=['GET', 'POST'])
+def change_parlor():
+    db = get_db()
+    dbase = FDataBase(db)
+    Par_base = Building(db)
+    if request.method == "POST":
+        print(request.form)
+        Par_base.changeBuilding(request.form['old_name'], request.form['new_name'])
+    building = Par_base.getBuilding(build_name=False)     # Список всех зданий
+    print('it is building in change_building', building)
+    return render_template('change_parlor.html', title="change_parlor", menu=dbase.getMenu(), old_name=building)
+
+@app.route("/change_door", methods=['GET', 'POST'])
+def change_door():
+    db = get_db()
+    dbase = FDataBase(db)
+    Door_base = Door(db)
+    if request.method == "POST":
+        print(request.form)
+        Door_base.changeBuilding(request.form['old_name'], request.form['new_name'])
+    door = Door_base.getDoor(door_name=False)     # Список всех дверей
+    print('it is building in change_building', door)
+    return render_template('change_door.html', title="change_door", menu=dbase.getMenu(), old_door=door)
 
 @app.route("/delete", methods=['GET', 'POST'])
 def delete():
-    if request.method == "POST":
-        pass
     db = get_db()
     dbase = FDataBase(db)
+    if request.method == "POST":
+        print(request.form)
+        if (request.form['delete_items']) == 'deletebuilding':  # Если выбрали изменить здание
+            return redirect('/delete_building')  # Редирект
+        elif (request.form['change_items']) == 'change_parlor':  # Если выбрали изменить помещение
+            return redirect('/change_parlor')  # Редирект
+
     return render_template('delete.html', title="delete", menu=dbase.getMenu(), add_items=dbase.getItems(prefix='/delete'))
+
+@app.route("/delete_building", methods=['GET', 'POST'])
+def delete_building():
+    db = get_db()
+    dbase = FDataBase(db)
+    Build_base = Building(db)
+    if request.method == "POST":
+        print(request.form)
+        Build_base.deleteBuilding(request.form['building'])
+    building = Build_base.getBuilding(build_name=False)     # Список всех зданий
+    print('it is building in delete_building', building)
+    return render_template('delete_building.html', title="delete_building", menu=dbase.getMenu(), building=building)
 
 @app.route("/showBuilding<id>", methods=['GET', 'POST'])
 def showBuilding(id):
@@ -355,9 +402,12 @@ def get_building():
     if (request_key=='building_name'):             # Если в запросе AJAX есть building_name
         mydbase = Building(db)
         build_name = request.form['building_name']
-        print('new_building', build_name)
-        building_id = mydbase.getBuilding(build_name)
-        return retAJAX(building_id)
+        if (build_name=='all'):                     # Если нужно вывести список всех зданий (например в change_building)
+            pass
+        else:                                       # Если нужен id конкретного здания:
+            print('new_building', build_name)
+            building_id = mydbase.getBuilding(build_name)
+            return retAJAX(building_id)
     elif (request_key=='room_name'):
         mydbase = Parlor(db)
         parlor_name = request.form['room_name']

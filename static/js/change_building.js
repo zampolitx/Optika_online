@@ -1,6 +1,11 @@
 'use strict';
-
+// Нужно получить список всех зданий
 const requestURL = '/get_AJAX';
+let frm = document.forms[0];
+let buildings = frm.building;
+buildings.value = 'sdkjf';
+console.log(frm.building);
+/*const requestURL = '/get_AJAX';
 let frm = document.forms[0];
 let but = frm.elements[2];
 but.onclick = async function(event) {
@@ -30,4 +35,4 @@ but.onclick = async function(event) {
     })
     .catch(err => console.log(err))
 }
-
+*/

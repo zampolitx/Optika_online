@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p><h3 class="helper">Удалить здание, территорию</h3></p>
+    <div class="alert"></div>
+    <form action="/delete_building" method="post" class="form_add">
+        <p><label>Название:
+            <select name="building" class="par">   <!--форма заполняется через AJAX-->
+                {% for items in building %}
+                    <option value="{{ items[1] }}" SELECTED>{{ items[1] }}</option>
+                {% endfor %}
+            </select>
+        <p><button type="submit" value="Удалить" class="form_submit">Удалить</button></p>
+    </form>
+    <!--<script src="{{url_for('static', filename='js/change_building.js') }}"></script>
+    <script src="{{url_for('static', filename='js/AJAX.js') }}"></script>
+    <script src="{{url_for('static', filename='js/alert.js') }}"></script>-->
+{% endblock %}

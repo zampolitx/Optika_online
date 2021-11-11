@@ -24,7 +24,7 @@ class FDataBase:
             if res:
                 for m in res:
                     print(m[1])
-                    menu_addDict[m[1]] = str(prefix + m[1])     # Если prefix='/add_' то получаем урл типа '/add_building'
+                    menu_addDict[m[0]] = str(prefix + m[1])     # Если prefix='/add_' то получаем урл типа '/add_building'
                 return menu_addDict
         except:
             print("Ошибка чтения базы данных FDataBase getItems")

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p><h3 class="helper">Изменяются кабинеты, коридоры или участки территории предприятия</h3></p>
+    <div class="alert"></div>
+    <form name="Item_2" action="/change_parlor" method="post" class="form_add">
+        <label for="example"> В Здании/на территории</label>
+            <select name="parent_item">
+                {% for items in parent_item %}
+                    <option value="{{ items }}" SELECTED>{{ items }}</option>
+                {% endfor %}
+            </select>
+        <p><label>Название кабинета или территории: </label> <input type="text" name="room_name" value="" required></p>
+        <p><label>Номер кабинета (если кабинет): </label> <input type="text" name="room_number" value=""></p>           <!--required - обязательно заполнить-->
+        <p><label>Длинна помещения: </label> <input type="text" name="par_length" value="" class='add_room' placeholder="Длинна помещения (мм)" ></p>
+        <p><label>Ширина помещения: </label> <input type="text" name="par_width" value="" class='add_room' placeholder="Ширина помещения (мм)" ></p>
+        <p><label>Высота помещения: </label> <input type="text" name="par_height" value="" class='add_room' placeholder="Высота помещения (мм)"></p>
+        <p><button type="submit" value="Отправить" class="form_submit">Изменить</p>
+    </form>
+
+    <script src="{{url_for('static', filename='js/add_room.js') }}"></script>
+    <script src="{{url_for('static', filename='js/AJAX.js') }}"></script>
+    <script src="{{url_for('static', filename='js/alert.js') }}"></script>
+{% endblock %}

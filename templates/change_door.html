@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for cat, msg in get_flashed_messages(True) %}
+    <div class="flash {{cat}}">{{msg}}</div>
+    {% endfor %}
+    <p><h3 class="helper">Добавляются двери в существующие помещения </h3></p>
+    <form name="Item_2" action="/add_door" method="post" class="form_add">
+        <label for="example"> В здании/на территории</label>
+            <select name="parent_building">
+                {% for building in parent_building %}
+                    <option value="{{ building }}" SELECTED>{{ building }}</option>
+                {% endfor %}
+            </select>
+            <input type="button" value="Ok" class="1form_submit" onclick="get_parlor();">
+        <p>
+            <label for="example"> В кабинете/коридоре/на территории</label>
+            <select name="parent_parlor" class="par">
+
+            </select>
+        </p>
+        <p><label>Ширина: </label> <input type="text" name="door_width" value="" required></p>
+        <p><label>Высота: </label> <input type="text" name="door_height" value=""required></p>           <!--required - обязательно заполнить-->
+        <p>
+            <input type="radio" name="type" value="left"> Левая
+            <input type="radio" name="type" value="right"> Правая
+        </p>
+        <label><input type="checkbox"/> Противопожарная </label>
+        <p><input type="submit" value="Отправить" class="form_submit"></p>
+    </form>
+    <div id="mydiv"></div>
+    <!--Подключение java script-->
+    <script src="{{url_for('static', filename='js/add_panel.js') }}"></script>
+    <script>
+
+    </script>
+{% endblock %}
